@@ -5,7 +5,7 @@ import 'animate.css';
 import App from './App.vue'
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import library from "./plugins"
+import library from "./plugins/font"
 createApp(App)
-.component("font-awesome-icon", FontAwesomeIcon)
-.mount('#app')
+    .component("font-awesome-icon", FontAwesomeIcon)
+    .mount('#app')
