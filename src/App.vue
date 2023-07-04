@@ -59,7 +59,9 @@
 
 <style scoped>
 /* 主体盒子 */
-.content {}
+.content {
+  height: 3000px;
+}
 
 /* 第一行导航栏 */
 .content .nav-containter {
@@ -123,7 +125,7 @@
 </style>
 
 <script>
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 import HeaderNav from '@/components/HeaderNav.vue';
 import ImitateIO from '@/components/ImitateIO.vue';
 import MyButton from '@/components/MyButton.vue';
@@ -143,6 +145,16 @@ export default {
     let subtitle = ref(["Never really desperate, only the lost of the soul", "从来没有真正的绝境，只有心灵的迷途"])
     let qqNumer = "1052818122"
     let isScroll = ref(false)
+    onMounted(() => {
+    window.addEventListener("scroll", function () {
+        let scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrolltop > 60) {
+          isScroll.value = true
+        } else {
+          isScroll.value = false
+        }
+    })
+  })
     return {
       title,
       subtitle,
