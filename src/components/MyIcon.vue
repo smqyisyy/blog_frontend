@@ -1,8 +1,8 @@
 <!-- 自带hover效果的a链接icon -->
 <template>
     <a class="my-icon-link" :href="hrefLink">
-        <!-- <div class="pop-layer">{{ popContent }}</div> -->
-        <el-popover placement="top"  trigger="hover" :content="popContent" effect="dark" popper-style="white-space:nowrap;text-align:center;" width="180"> 
+        <el-popover placement="top" trigger="hover" :content="popContent" effect="dark"
+            popper-style="white-space:nowrap;text-align:center;" width="180">
             <template #reference>
                 <slot name="icon"></slot>
             </template>
@@ -28,11 +28,7 @@ export default {
 
 <style  scoped>
 .my-icon-link {
-    font-size: 20px;
     cursor: pointer;
-    display: block;
     position: relative;
 }
-
-
 </style>

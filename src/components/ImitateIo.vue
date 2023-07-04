@@ -40,7 +40,7 @@ export default {
         onMounted(() => {
             setInterval(() => {
                 autoTyping()
-            }, 100);
+            }, 150);
 
 
         })
