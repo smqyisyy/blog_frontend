@@ -1,12 +1,14 @@
 <template>
-    <!-- 导航栏左侧标题 -->
     <div class="nav">
-        <div class="title">
-            <a href="">
-                <img src="@/assets/images/logo.png" alt="">
-                <span>{{ blogTitle }}</span>
-            </a>
-        </div>
+        <!-- 导航栏左侧标题 -->
+        <router-link to="/">
+            <div class="title">
+                <a href="">
+                    <img src="@/assets/images/logo.png" alt="">
+                    <span>{{ blogTitle }}</span>
+                </a>
+            </div>
+        </router-link>
         <!-- 导航栏右侧的列表选项 -->
         <div class="nav_list">
             <router-link to="/">
@@ -40,8 +42,6 @@
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-gamepad" style="color: #fff;" /><span>小游戏</span>
                 </div>
             </a>
-
-
         </div>
     </div>
 </template>
@@ -99,5 +99,4 @@ export default {
 
 .nav .nav_list .list_item span {
     margin-left: 3px;
-}
-</style>
+}</style>
