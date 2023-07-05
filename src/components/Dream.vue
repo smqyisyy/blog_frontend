@@ -1,8 +1,11 @@
 <template>
-        <div class="dream-title">
-            <span>{{ dreamTile }}</span>
+    <div class="dream-card">
+        <div class="dream-title-containter">
+            <font-awesome-icon icon="fa-regular fa-lightbulb" />
+            <span class="dream-title">{{ dreamTile }}</span>
         </div>
-        <div class="dream-content">{{ dreamContent }}</div>
+        <span class="dream-content">{{ dreamContent }}</span>
+    </div>
 </template>
 <script>
 export default {
@@ -26,5 +29,33 @@ export default {
 </script>
 
 <style scoped>
+.dream-card {
+    border-radius: 10px;
+    color: black;
+    background-color: #fff;
+    padding: 20px 40px;
+
+}
+
+.dream-card .dream-title-containter {
+    text-align: center;
+    font-size: 30px;
+    margin: 30px 0;
+    font-weight: 700;
+}
+
+.dream-card .dream-title-containter .dream-title {
+    margin: 0 10px;
+
+}
+.dream-card .dream-content {
+    color:rgb(150,150,150) ;
+    width: 60%;
+    display: block;
+    text-align: center;
+    margin: 30px auto;
+    font-size: 16.5px;
+    line-height: 1.5;
+}
 
 </style>

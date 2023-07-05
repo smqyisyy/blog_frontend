@@ -58,5 +58,6 @@ export default {
 .subtitle {
     font-size: 18px;
     color: #eee;
+
 }
 </style>

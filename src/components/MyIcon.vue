@@ -29,6 +29,5 @@ export default {
 <style  scoped>
 .my-icon-link {
     cursor: pointer;
-    position: relative;
 }
 </style>
