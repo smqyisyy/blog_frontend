@@ -17,6 +17,9 @@
             <Dream></Dream>
         </div>
         <!-- 博客卡片 -->
+        <div class="blog-card-containter">
+            <BlogCard></BlogCard>
+        </div>
         <!-- 分页 -->
         <!-- footer -->
     </div>
@@ -27,27 +30,27 @@ import Dream from '@/components/Dream.vue';
 import HomeButtons from '@/components/home/HomeButtons.vue';
 import HomeIcons from '@/components/home/HomeIcons.vue';
 import HomeTitle from '@/components/home/HomeTitle.vue';
+import BlogCard from '@/components/BlogCard.vue';
 import { onMounted, ref } from "vue"
 export default {
     components: {
         HomeButtons,
         Dream,
         HomeIcons,
-        HomeTitle
+        HomeTitle,
+        BlogCard
     },
 
     setup() {
-       
+
         return {
-         
+
         }
     }
 }
 </script>
 
 <style scoped>
-
-
 /* 中间标题 */
 .home .home-title-containter {
     margin: 0 auto;
@@ -77,5 +80,11 @@ export default {
     margin-top: 170px;
     overflow: hidden;
     box-sizing: border-box;
+}
+.home .blog-card-containter {
+    margin: 0 auto;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
 }
 </style>

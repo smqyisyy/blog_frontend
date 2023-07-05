@@ -17,18 +17,31 @@
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-tags" style="color: #fff;" /><span>标签</span>
                 </div>
             </router-link>
-            <router-link to="/classify ">
+            <router-link to="/categories ">
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-bookmark" style="color: #fff;" /><span>分类</span>
                 </div>
             </router-link>
-            <div class="list_item"><font-awesome-icon icon="fa-solid fa-box-archive" style="color: #fff;" /><span>归档</span>
-            </div>
-            <div class="list_item"><font-awesome-icon icon="fa-solid fa-circle-user" style="color: #fff;" /><span>关于</span>
-            </div>
-            <div class="list_item"><font-awesome-icon icon="fa-solid fa-comments" style="color: #fff;" /><span>留言板</span>
-            </div>
-            <div class="list_item"><font-awesome-icon icon="fa-solid fa-gamepad" style="color: #fff;" /><span>小游戏</span>
-            </div>
+            <router-link to="/archive ">
+                <div class="list_item"><font-awesome-icon icon="fa-solid fa-box-archive"
+                        style="color: #fff;" /><span>归档</span>
+                </div>
+            </router-link>
+            <router-link to="/about">
+                <div class="list_item"><font-awesome-icon icon="fa-solid fa-circle-user"
+                        style="color: #fff;" /><span>关于</span>
+                </div>
+            </router-link>
+            <router-link to="/contact">
+                <div class="list_item"><font-awesome-icon icon="fa-solid fa-comments"
+                        style="color: #fff;" /><span>留言板</span>
+                </div>
+            </router-link>
+            <a href="">
+                <div class="list_item"><font-awesome-icon icon="fa-solid fa-gamepad" style="color: #fff;" /><span>小游戏</span>
+                </div>
+            </a>
+
+
         </div>
     </div>
 </template>
@@ -81,7 +94,7 @@ export default {
 }
 
 .nav .nav_list .list_item:hover {
-    background-color: rgb(103, 160, 186);
+    background-color: rgb(0, 0, 0, 0.1);
 }
 
 .nav .nav_list .list_item span {

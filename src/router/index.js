@@ -1,11 +1,10 @@
-import { createRouter,createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
     {
         path: "/",
         name: "home",
         component: () =>
             import("@/pages/Home.vue")
-
     },
     {
         path: "/tag",
@@ -14,10 +13,28 @@ const routes = [
             import("@/pages/Tag.vue")
     },
     {
-        path: "/classify ",
-        name: "classify ",
+        path: "/categories ",
+        name: "categories ",
         component: () =>
-            import("@/pages/Classify .vue")
+            import("@/pages/Categories.vue")
+    },
+    {
+        path: "/archives ",
+        name: "archives ",
+        component: () =>
+            import("@/pages/Archives.vue")
+    },
+    {
+        path: "/about ",
+        name: "about ",
+        component: () =>
+            import("@/pages/About.vue")
+    },
+    {
+        path: "/contact ",
+        name: "contact ",
+        component: () =>
+            import("@/pages/Contact.vue")
     }
 ]
 const router = createRouter({
