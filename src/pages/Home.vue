@@ -18,7 +18,9 @@
         </div>
         <!-- 博客卡片 -->
         <div class="blog-card-containter">
-            <BlogCard></BlogCard>
+            <BlogCard v-for="item in blogInfoArr" :key="item.blogTitle" :blogTitle="item.blogTitle"
+                :blogContent="item.blogContent" :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" />
+
         </div>
         <!-- 分页 -->
         <!-- footer -->
@@ -38,13 +40,50 @@ export default {
         Dream,
         HomeIcons,
         HomeTitle,
-        BlogCard
+        BlogCard,
     },
 
     setup() {
-
+        const blogInfoArr = ref([
+            {
+                blogTitle: "111",
+                releaseDate: "2023-06-09",
+                blogContent: "2023年6月6日，星期二，我在镇江的极客营进行Java认知实习的第二天。今天的主要内容是使用Java编写一个”万年历”程序，并了解了Java的程序",
+                blogAuthor: "Dish"
+            },
+            {
+                blogTitle: "222",
+                releaseDate: "2023-06-09",
+                blogContent: "2023年6月7日，星期二，我在镇江的极客营进行Java认知实习的第二天。今天的主要内容是使用Java编写一个”万年历”程序，并了解了Java的程序",
+                blogAuthor: "Dish"
+            },
+            {
+                blogTitle: "333",
+                releaseDate: "2023-06-09",
+                blogContent: "2023年6月8日，星期二，我在镇江的极客营进行Java认知实习的第二天。今天的主要内容是使用Java编写一个”万年历”程序，并了解了Java的程序",
+                blogAuthor: "Dish"
+            },
+            {
+                blogTitle: "444",
+                releaseDate: "2023-06-09",
+                blogContent: "2023年6月9日，星期二，我在镇江的极客营进行Java认知实习的第二天。今天的主要内容是使用Java编写一个”万年历”程序，并了解了Java的程序",
+                blogAuthor: "Dish"
+            },
+            {
+                blogTitle: "555",
+                releaseDate: "2023-06-09",
+                blogContent: "2023年6月10日，星期二，我在镇江的极客营进行Java认知实习的第二天。今天的主要内容是使用Java编写一个”万年历”程序，并了解了Java的程序",
+                blogAuthor: "Dish"
+            },
+            {
+                blogTitle: "666",
+                releaseDate: "2023-06-09",
+                blogContent: "2023年6月11日，星期二，我在镇江的极客营进行Java认知实习的第二天。今天的主要内容是使用Java编写一个”万年历”程序，并了解了Java的程序",
+                blogAuthor: "Dish"
+            },
+        ])
         return {
-
+            blogInfoArr
         }
     }
 }
@@ -81,10 +120,15 @@ export default {
     overflow: hidden;
     box-sizing: border-box;
 }
+
 .home .blog-card-containter {
+    width: 1125px;
     margin: 0 auto;
-    margin-top: 30px;
+    margin-top: 20px;
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+
 }
 </style>
