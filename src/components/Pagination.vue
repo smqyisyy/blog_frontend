@@ -1,17 +1,33 @@
 <template>
     <div class="pagination-block">
-        <el-pagination layout="prev, pager, next" :total="50" />
+        <el-pagination background layout="prev, pager, next" :total="totalBlogs" :size="pageSize" />
     </div>
 </template>
 
 <script>
 export default {
-    setup() {
+    props: {
+        totalBlogs: {
+            default: 10
+        },
+        pageSize: {
+            default: 6
+        }
 
-
-        return {}
+    },
+    setup(props) {
+        const totalBlogs = props.totalBlogs
+        const pageSize = props.pageSize
+        return { 
+            totalBlogs,
+            pageSize 
+        }
     }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.pagination-block {
+    background: none;
+}
+</style>

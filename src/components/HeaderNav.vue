@@ -19,11 +19,11 @@
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-tags" style="color: #fff;" /><span>标签</span>
                 </div>
             </router-link>
-            <router-link to="/categories ">
+            <router-link to="/categories">
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-bookmark" style="color: #fff;" /><span>分类</span>
                 </div>
             </router-link>
-            <router-link to="/archive ">
+            <router-link to="/archives">
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-box-archive"
                         style="color: #fff;" /><span>归档</span>
                 </div>
@@ -99,4 +99,5 @@ export default {
 
 .nav .nav_list .list_item span {
     margin-left: 3px;
-}</style>
+}
+</style>

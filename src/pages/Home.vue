@@ -20,9 +20,11 @@
         <div class="blog-card-containter">
             <BlogCard v-for="item in blogInfoArr" :key="item.blogTitle" :blogTitle="item.blogTitle"
                 :blogContent="item.blogContent" :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" />
-
         </div>
         <!-- 分页 -->
+        <div class="pagination-containter">
+            <pagination :totalBlogs="60"/>
+        </div>
         <!-- footer -->
     </div>
 </template>
@@ -33,6 +35,7 @@ import HomeButtons from '@/components/home/HomeButtons.vue';
 import HomeIcons from '@/components/home/HomeIcons.vue';
 import HomeTitle from '@/components/home/HomeTitle.vue';
 import BlogCard from '@/components/BlogCard.vue';
+import pagination from '@/components/pagination.vue';
 import { onMounted, ref } from "vue"
 export default {
     components: {
@@ -41,6 +44,7 @@ export default {
         HomeIcons,
         HomeTitle,
         BlogCard,
+        pagination
     },
 
     setup() {
@@ -130,5 +134,10 @@ export default {
     justify-content: space-between;
 
 
+}
+.home .pagination-containter {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
 </style>
