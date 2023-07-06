@@ -5,6 +5,10 @@
   </nav>
   <!-- 路由切换的内容展示位置 -->
   <router-view />
+  <!-- footer -->
+  <footer class="footer-containter">
+    <MyFooter />
+  </footer>
 </template>
 
 <style scoped>
@@ -16,22 +20,32 @@
   height: 64px;
   position: fixed;
   top: 0;
-  z-index: 0;
+  z-index: 100;
 }
 
 .nav-containter.red-bgc {
   background-color: #ee6e73;
+}
+
+.footer-containter {
+  margin-top: 20px;
+  height: 147px;
+  background-color: #ee6e73;
+  display: flex;
+  justify-content: center;
 }
 </style>
 
 <script>
 import Home from '@/pages/Home.vue';
 import HeaderNav from '@/components/HeaderNav.vue';
+import MyFooter from '@/components/MyFooter.vue';
 import { ref, onMounted } from "vue"
 export default {
   components: {
     Home,
-    HeaderNav
+    HeaderNav,
+    MyFooter
   },
   setup() {
     let isScroll = ref(false)

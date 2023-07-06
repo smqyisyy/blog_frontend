@@ -25,7 +25,7 @@
         <div class="pagination-containter">
             <pagination :totalBlogs="60"/>
         </div>
-        <!-- footer -->
+
     </div>
 </template>
 
