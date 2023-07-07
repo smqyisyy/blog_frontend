@@ -9,7 +9,7 @@
 export default {
     props: {
         totalBlogs: {
-            default: 10
+            default: 0
         },
         pageSize: {
             default: 6

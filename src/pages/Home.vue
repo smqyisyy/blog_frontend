@@ -6,14 +6,14 @@
         </div>
         <!-- 两个按钮 -->
         <div class="home-buttons-containter">
-            <HomeButtons />
+            <HomeButtons @startRead="startRead" />
         </div>
         <!-- icon联系链接 -->
         <div class="social-link-containter">
             <HomeIcons></HomeIcons>
         </div>
         <!-- 我的梦想卡片 -->
-        <div class="dream-card-containter">
+        <div class="dream-card-containter" ref="dreamCard">
             <Dream></Dream>
         </div>
         <!-- 博客卡片 -->
@@ -24,7 +24,7 @@
         </div>
         <!-- 分页 -->
         <div class="pagination-containter">
-            <pagination :totalBlogs="100" @ChangePage="handleChangePage" />
+            <pagination :totalBlogs="totalBlogs" @ChangePage="handleChangePage" />
         </div>
 
     </div>
@@ -48,76 +48,40 @@ export default {
         BlogCard,
         pagination
     },
-
     setup() {
-        let blogInfoArr = ref([
-            {
-                blogTitle: "111",
-                releaseDate: "2023-06-09",
-                blogContent: "2023年6月6日，星期二，我在镇江的极客营进行Java认知实习的第二天。今天的主要内容是使用Java编写一个”万年历”程序，并了解了Java的程序",
-                blogAuthor: "Dish",
-                imgUrl: null || undefined
-            },
-            {
-                blogTitle: "222",
-                releaseDate: "2023-06-09",
-                blogContent: "2023年6月7日，星期二，我在镇江的极客营进行Java认知实习的第二天。今天的主要内容是使用Java编写一个”万年历”程序，并了解了Java的程序",
-                blogAuthor: "Dish"
-            },
-            {
-                blogTitle: "333",
-                releaseDate: "2023-06-09",
-                blogContent: "2023年6月8日，星期二，我在镇江的极客营进行Java认知实习的第二天。今天的主要内容是使用Java编写一个”万年历”程序，并了解了Java的程序",
-                blogAuthor: "Dish"
-            },
-            {
-                blogTitle: "444",
-                releaseDate: "2023-06-09",
-                blogContent: "2023年6月9日，星期二，我在镇江的极客营进行Java认知实习的第二天。今天的主要内容是使用Java编写一个”万年历”程序，并了解了Java的程序",
-                blogAuthor: "Dish"
-            },
-            {
-                blogTitle: "555",
-                releaseDate: "2023-06-09",
-                blogContent: "2023年6月10日，星期二，我在镇江的极客营进行Java认知实习的第二天。今天的主要内容是使用Java编写一个”万年历”程序，并了解了Java的程序",
-                blogAuthor: "Dish"
-            },
-            {
-                blogTitle: "666",
-                releaseDate: "2023-06-09",
-                blogContent: "2023年6月11日，星期二，我在镇江的极客营进行Java认知实习的第二天。今天的主要内容是使用Java编写一个”万年历”程序，并了解了Java的程序",
-                blogAuthor: "Dish"
-            },
-        ])
-        let totalPage = ref()
+        let blogInfoArr = ref([])
+        let totalBlogs = ref()
         onMounted(() => {
             getBlogInfo()
                 .then(res => {
                     if (res.status === 200) {
-                        blogInfoArr.value.length = 0
-                        console.log(res.data);
-                        totalPage = res.data.totalPage
-                        res.data.data.forEach(val => {
-                            blogInfoArr.value.push({ blogTitle: val.Title, releaseDate: val.Release_Time ? val.Release_Time.slice(0, 10) : undefined, blogContent: val.Content, blogAuthor: val.Author, imgUrl: val.Image_Url || undefined })
-                        })
+                        totalBlogs.value = res.data.totalBlogs
+                        blogInfoArr.value = res.data.data
                     }
                 })
         })
         function handleChangePage(curPage) {
             getBlogInfo(curPage).then(res => {
                 if (res.status === 200) {
-                    blogInfoArr.value.length = 0
-                    totalPage = res.data.totalPage || 10
-                    res.data.data.forEach(val => {
-                        blogInfoArr.value.push({ blogTitle: val.Title, releaseDate: val.Release_Time ? val.Release_Time.slice(0, 10) : undefined, blogContent: val.Content, blogAuthor: val.Author, imgUrl: val.Image_Url || undefined })
-                    })
+                    totalBlogs.value = res.data.totalBlogs
+                    blogInfoArr.value = res.data.data
                 }
+            })
+        }
+        // 点击开始阅读按钮滚动到文章部分
+        const dreamCard = ref()
+        function startRead() {
+            dreamCard.value.scrollIntoView({
+                behavior: "smooth",  // 平滑过渡
+                block: "start"    // 上边框与视窗顶部平齐
             })
         }
         return {
             blogInfoArr,
-            totalPage,
-            handleChangePage
+            totalBlogs,
+            handleChangePage,
+            startRead,
+            dreamCard
         }
     }
 }

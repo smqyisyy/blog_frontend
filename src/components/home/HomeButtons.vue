@@ -1,6 +1,6 @@
 <template>
     <div class="home-buttons">
-        <MyButton buttonContent="开始阅读">
+        <MyButton buttonContent="开始阅读" @click="handleRead">
             <template #icon>
                 <font-awesome-icon icon="fa-solid fa-angles-down" style="color: #fff;" />
             </template>
@@ -19,9 +19,13 @@ export default {
     components: {
         MyButton
     },
-    setup() {
-
-        return {}
+    setup(_, context) {
+        function handleRead() {
+            context.emit("startRead")
+        }
+        return {
+            handleRead
+        }
     }
 }
 </script>
@@ -31,5 +35,4 @@ export default {
     display: flex;
     justify-content: space-between;
 }
-
 </style>
