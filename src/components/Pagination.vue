@@ -1,6 +1,7 @@
 <template>
     <div class="pagination-block">
-        <el-pagination background layout="prev, pager, next" :total="totalBlogs" :size="pageSize" />
+        <el-pagination background layout="prev, pager, next" :total="totalBlogs" :page-size="pageSize"
+            @current-change="handleCurrentChange" />
     </div>
 </template>
 
@@ -12,15 +13,19 @@ export default {
         },
         pageSize: {
             default: 6
-        }
+        },
 
     },
-    setup(props) {
+    setup(props, context) {
         const totalBlogs = props.totalBlogs
         const pageSize = props.pageSize
-        return { 
+        function handleCurrentChange(curPage) {
+            context.emit("changePage", curPage)
+        }
+        return {
             totalBlogs,
-            pageSize 
+            pageSize,
+            handleCurrentChange
         }
     }
 }

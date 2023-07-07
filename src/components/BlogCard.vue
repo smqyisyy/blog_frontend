@@ -40,11 +40,11 @@ export default {
         }
     },
     setup(props) {
-        const blogTitle = props.blogTitle
+        const blogTitle = props.blogTitle || "第一个blog"
         const releaseDate = props.releaseDate
         const blogContent = props.blogContent
         const blogAuthor = props.blogAuthor
-        const imgUrl = props.imgUrl
+        const imgUrl = props.imgUrl || "https://www.gtrinee.top/medias/featureimages/5.jpg"
         return {
             releaseDate,
             blogContent,
@@ -73,7 +73,7 @@ export default {
 
 .blog-card .image {
     width: 100%;
-    height: 60%;
+    height: 220px;
     cursor: pointer;
 }
 

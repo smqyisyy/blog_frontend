@@ -19,11 +19,12 @@
         <!-- 博客卡片 -->
         <div class="blog-card-containter">
             <BlogCard v-for="item in blogInfoArr" :key="item.blogTitle" :blogTitle="item.blogTitle"
-                :blogContent="item.blogContent" :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" />
+                :blogContent="item.blogContent" :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate"
+                :imgUrl="item.imgUrl" />
         </div>
         <!-- 分页 -->
         <div class="pagination-containter">
-            <pagination :totalBlogs="60"/>
+            <pagination :totalBlogs="100" @ChangePage="handleChangePage" />
         </div>
 
     </div>
@@ -36,7 +37,8 @@ import HomeIcons from '@/components/home/HomeIcons.vue';
 import HomeTitle from '@/components/home/HomeTitle.vue';
 import BlogCard from '@/components/BlogCard.vue';
 import pagination from '@/components/pagination.vue';
-import { onMounted, ref } from "vue"
+import { onMounted, ref } from "vue";
+import { getBlogInfo } from '@/request/api/getBlogInfo'
 export default {
     components: {
         HomeButtons,
@@ -48,12 +50,13 @@ export default {
     },
 
     setup() {
-        const blogInfoArr = ref([
+        let blogInfoArr = ref([
             {
                 blogTitle: "111",
                 releaseDate: "2023-06-09",
                 blogContent: "2023年6月6日，星期二，我在镇江的极客营进行Java认知实习的第二天。今天的主要内容是使用Java编写一个”万年历”程序，并了解了Java的程序",
-                blogAuthor: "Dish"
+                blogAuthor: "Dish",
+                imgUrl: null || undefined
             },
             {
                 blogTitle: "222",
@@ -86,8 +89,35 @@ export default {
                 blogAuthor: "Dish"
             },
         ])
+        let totalPage = ref(null)
+        onMounted(() => {
+            getBlogInfo()
+                .then(res => {
+                    if (res.status === 200) {
+                        blogInfoArr.value.length = 0
+                        console.log(res.data);
+                        totalPage = res.data.totalPage
+                        res.data.data.forEach(val => {
+                            blogInfoArr.value.push({ blogTitle: val.Title, releaseDate: val.Release_Time ? val.Release_Time.slice(0, 10) : undefined, blogContent: val.Content, blogAuthor: val.Author, imgUrl: val.Image_Url || undefined })
+                        })
+                    }
+                })
+        })
+        function handleChangePage(curPage) {
+            getBlogInfo(curPage).then(res => {
+                if (res.status === 200) {
+                    blogInfoArr.value.length = 0
+                    totalPage = res.data.totalPage || 10
+                    res.data.data.forEach(val => {
+                        blogInfoArr.value.push({ blogTitle: val.Title, releaseDate: val.Release_Time ? val.Release_Time.slice(0, 10) : undefined, blogContent: val.Content, blogAuthor: val.Author, imgUrl: val.Image_Url || undefined })
+                    })
+                }
+            })
+        }
         return {
-            blogInfoArr
+            blogInfoArr,
+            totalPage,
+            handleChangePage
         }
     }
 }
@@ -135,6 +165,7 @@ export default {
 
 
 }
+
 .home .pagination-containter {
     display: flex;
     justify-content: center;
