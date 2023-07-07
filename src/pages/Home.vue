@@ -89,7 +89,7 @@ export default {
                 blogAuthor: "Dish"
             },
         ])
-        let totalPage = ref(null)
+        let totalPage = ref()
         onMounted(() => {
             getBlogInfo()
                 .then(res => {

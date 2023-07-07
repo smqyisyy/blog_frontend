@@ -22,15 +22,24 @@ export default {
         HomesIcons
     },
     setup() {
-        let buildTime = "2023-7-6-16:00"
-        let nowTime = ref(new Date())
-        const runTime = ref(" 5 年 300 天 16 小时 32 分钟 39 秒")
+        let runTime = ref()
+        const buildTime = new Date('2023-01-01 00:00:00')
         onMounted(() => {
-            console.log(nowTime);
+            // 计算运行时间
+            window.setInterval(function logname() {
+                let staytimeGap = new Date().getTime() - buildTime.getTime();
+                let stayDay = Math.floor(staytimeGap / (3600 * 1000 * 24));
+                let leave = staytimeGap % (3600 * 1000 * 24);
+                let stayHour = Math.floor(leave / (3600 * 1000));
+                let leave1 = leave % (3600 * 1000);
+                let stayMin = Math.floor(leave1 / (60 * 1000));
+                let leave2 = leave1 % (60 * 1000);
+                let staySec = Math.floor(leave2 / 1000);
+                runTime.value = stayDay + "天" + stayHour + "时" + stayMin + "分" + staySec + "秒";
+            }, 1000)
         })
         return {
             runTime,
-            nowTime
         }
     }
 }
