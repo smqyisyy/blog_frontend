@@ -3,7 +3,7 @@
         <!-- 左边 -->
         <div class="footer-left">
             <div>Copyright © 2022 - 2023 <router-link to="/about">smqy</router-link> | Powered by
-                <a href="https://cn.vuejs.org/guide/introduction.html">vue3</a>
+                <a href="https://cn.vuejs.org/guide/introduction.html" target="_blank">vue3</a>
             </div>
             <div>本站已运行 {{ runTime }}</div>
         </div>
