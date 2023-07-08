@@ -9,6 +9,11 @@
   <footer class="footer-containter">
     <MyFooter />
   </footer>
+  <!-- 返回顶部按钮 -->
+  <div class="back-top-btn-containter animate__animated"
+    :class="{ animate__slideOutDown: !backTopBtnShow, animate__slideInUp: backTopBtnShow }" @click="handleBackTop">
+    <BackTopBtn />
+  </div>
 </template>
 
 <style scoped>
@@ -34,34 +39,60 @@
   display: flex;
   justify-content: center;
 }
+
+.back-top-btn-containter {
+  width: 48px;
+  height: 48px;
+  font-size: 27px;
+  line-height: 48px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.animate__slideOutDown,
+.animate__slideInUp {
+  animation-duration: 300ms;
+}
 </style>
 
 <script>
 import Home from '@/pages/Home.vue';
 import HeaderNav from '@/components/HeaderNav.vue';
 import MyFooter from '@/components/MyFooter.vue';
+import BackTopBtn from '@/components/BackTopBtn.vue';
 import { ref, onMounted } from "vue"
 export default {
   components: {
     Home,
     HeaderNav,
-    MyFooter
+    MyFooter,
+    BackTopBtn
   },
   setup() {
     let isScroll = ref(false)
+    let backTopBtnShow = ref(false)
     onMounted(() => {
       window.addEventListener("scroll", function () {
-        // 获取滑动位置，超过64之后上边导航加一个类，变为红色背景
+        // 获取滑动位置，超过64之后上边导航加一个类，变为红色背景,并添加回到顶部按钮
         let scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
         if (scrolltop >= 64) {
           isScroll.value = true
+          backTopBtnShow.value = true
         } else {
           isScroll.value = false
+          backTopBtnShow.value = false
         }
       })
     })
+    // 回到顶部
+    function handleBackTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
     return {
-      isScroll
+      isScroll,
+      backTopBtnShow,
+      handleBackTop
     }
   }
 }
