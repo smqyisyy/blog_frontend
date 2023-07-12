@@ -36,7 +36,7 @@ import HomeButtons from '@/components/home/HomeButtons.vue';
 import HomeIcons from '@/components/home/HomeIcons.vue';
 import HomeTitle from '@/components/home/HomeTitle.vue';
 import BlogCard from '@/components/BlogCard.vue';
-import pagination from '@/components/pagination.vue';
+import pagination from '@/components/Pagination.vue';
 import { onMounted, ref } from "vue";
 import { getBlogInfo } from '@/request/api/getBlogInfo'
 export default {
