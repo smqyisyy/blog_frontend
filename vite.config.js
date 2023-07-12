@@ -23,9 +23,20 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://10.3.7.13:8080',
+        target: 'http://web.hugoyyds.cn/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
+      }
+    }
+  },
+  build: {
+    // 小于1024kb的图片被转为base64
+    assetsInlineLimit: 1024,
+    rollupOptions: {
+      output: {
+        chunkFileNames: 'static/js/[name]-[hash].js',
+        entryFileNames: 'static/js/[name]-[hash].js',
+        assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
       }
     }
   }
