@@ -23,7 +23,8 @@ export default {
     },
     setup() {
         let runTime = ref()
-        const buildTime = new Date('2023-01-01 00:00:00')
+        let startTime="2023-01-01 00:00:00"
+        const buildTime = new Date(startTime)
         onMounted(() => {
             // 计算运行时间
             window.setInterval(function logname() {

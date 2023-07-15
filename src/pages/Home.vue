@@ -60,6 +60,10 @@ export default {
                     }
                 })
         })
+        /**
+         * 
+         * @param {} curPage 
+         */
         function handleChangePage(curPage) {
             getBlogInfo(curPage).then(res => {
                 if (res.status === 200) {
