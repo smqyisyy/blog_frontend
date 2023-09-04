@@ -1,3 +1,4 @@
+<!-- 博客缩略预览卡片组件 -->
 <template>
     <el-card :body-style="{ padding: '0' }" class="blog-card">
         <img :src="imgUrl" class="image" />
@@ -20,7 +21,6 @@
 </template>
 
 <script >
-import { ref } from 'vue'
 export default {
     props: {
         blogTitle: {

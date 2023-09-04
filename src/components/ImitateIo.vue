@@ -1,9 +1,10 @@
+
+<!-- 此组件用于实现动态输入与删除文字的显示效果 -->
 <template>
     <span class="subtitle" @click="showText">{{ subtitle }}</span>
     <span :class="{ animate__animated: isShow, animate__flash: isShow }" class="subtitle">|</span>
 </template>
 
-<!-- 此组件用于实现动态输入与删除文字的显示效果 -->
 <script>
 import { ref, onMounted } from "vue"
 export default {

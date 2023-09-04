@@ -1,3 +1,4 @@
+<!-- 关于页 -->
 <template>
     <div>
         this is about page

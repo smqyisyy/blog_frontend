@@ -1,3 +1,4 @@
+<!-- 中间大标题组件 -->
 <template>
     <div class="middle-title">
         <h1>{{ title }}</h1>

@@ -1,3 +1,4 @@
+<!-- 通用按钮组件 -->
 <template>
     <a class="my-button" :href="hrefLink" target="_blank">
         <slot name="icon"></slot>

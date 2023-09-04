@@ -1,4 +1,4 @@
-<!-- 自带hover效果的a链接icon -->
+<!-- 自带hover效果的a链接icon组件 -->
 <template>
     <a class="my-icon-link" :href="hrefLink">
         <el-popover placement="top" trigger="hover" :content="popContent" effect="dark"

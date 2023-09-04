@@ -1,3 +1,4 @@
+<!-- 首页的按钮组件 -->
 <template>
     <div class="home-buttons">
         <MyButton buttonContent="开始阅读" @click="handleRead">

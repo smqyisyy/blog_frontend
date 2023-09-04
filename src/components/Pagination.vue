@@ -1,29 +1,35 @@
+<!-- 分页组件 -->
 <template>
     <div class="pagination-block">
-        <el-pagination background layout="prev, pager, next" :total="totalBlogs" :page-size="pageSize"
+        <el-pagination background layout="prev, pager, next" :total="totalBlog" :page-size="pageSize"
             @current-change="handleCurrentChange" />
     </div>
 </template>
 
 <script>
+import { getBlogInfo } from '@/request/api/getBlogInfo';
+import { ref, onMounted } from "vue"
 export default {
     props: {
-        totalBlogs: {
-            default: 0
-        },
         pageSize: {
             default: 6
         },
-
     },
     setup(props, context) {
-        const totalBlogs = props.totalBlogs
+        let totalBlog = ref()
+        onMounted(() => {
+            getBlogInfo().then(res => {
+                if (res.status === 200) {
+                    totalBlog.value = res.data.totalBlog
+                }
+            })
+        })
         const pageSize = props.pageSize
         function handleCurrentChange(curPage) {
             context.emit("changePage", curPage)
         }
         return {
-            totalBlogs,
+            totalBlog,
             pageSize,
             handleCurrentChange
         }

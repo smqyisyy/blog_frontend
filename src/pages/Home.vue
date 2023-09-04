@@ -1,3 +1,4 @@
+<!-- 首页 -->
 <template>
     <div class="home">
         <!-- 中间大标题 -->
@@ -18,13 +19,13 @@
         </div>
         <!-- 博客卡片 -->
         <div class="blog-card-containter">
-            <BlogCard v-for="item in blogInfoArr" :key="item.blogTitle" :blogTitle="item.blogTitle"
+            <BlogCard v-for="item in blogInfoArr" :key="item.id" :blogTitle="item.blogTitle"
                 :blogContent="item.blogContent" :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate"
                 :imgUrl="item.imgUrl" />
         </div>
         <!-- 分页 -->
         <div class="pagination-containter">
-            <pagination :totalBlogs="totalBlogs" @ChangePage="handleChangePage" />
+            <pagination  @ChangePage="handleChangePage" />
         </div>
 
     </div>
@@ -38,7 +39,7 @@ import HomeTitle from '@/components/home/HomeTitle.vue';
 import BlogCard from '@/components/BlogCard.vue';
 import pagination from '@/components/Pagination.vue';
 import { onMounted, ref } from "vue";
-import { getBlogInfo } from '@/request/api/getBlogInfo'
+import { getBlogInfo } from '@/request/api/getBlogInfo';
 export default {
     components: {
         HomeButtons,
@@ -46,33 +47,31 @@ export default {
         HomeIcons,
         HomeTitle,
         BlogCard,
-        pagination
+        pagination,
     },
     setup() {
         let blogInfoArr = ref([])
-        let totalBlogs = ref()
         onMounted(() => {
             getBlogInfo()
                 .then(res => {
                     if (res.status === 200) {
-                        totalBlogs.value = res.data.totalBlogs
                         blogInfoArr.value = res.data.data
                     }
                 })
         })
         /**
-         * 
+         * 换页之后按照页码重新请求数据
          * @param {} curPage 
          */
         function handleChangePage(curPage) {
             getBlogInfo(curPage).then(res => {
                 if (res.status === 200) {
-                    totalBlogs.value = res.data.totalBlogs
                     blogInfoArr.value = res.data.data
+                    console.log(blogInfoArr);
                 }
             })
         }
-        // 点击开始阅读按钮滚动到文章部分
+        // 点击开始阅读按钮滚动到文章部分,使用ref获取组件
         const dreamCard = ref()
         function startRead() {
             dreamCard.value.scrollIntoView({
@@ -82,7 +81,6 @@ export default {
         }
         return {
             blogInfoArr,
-            totalBlogs,
             handleChangePage,
             startRead,
             dreamCard

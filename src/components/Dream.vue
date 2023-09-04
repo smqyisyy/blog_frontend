@@ -1,3 +1,4 @@
+<!-- 我的梦想卡片组件 -->
 <template>
     <div class="dream-card">
         <div class="dream-title-containter">

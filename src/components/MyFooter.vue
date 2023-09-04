@@ -1,3 +1,4 @@
+<!-- 底部组件 -->
 <template>
     <div class="footer">
         <!-- 左边 -->

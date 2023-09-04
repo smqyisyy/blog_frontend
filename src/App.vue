@@ -39,7 +39,7 @@
   display: flex;
   justify-content: center;
 }
-
+/* 返回顶部按钮样式 */
 .back-top-btn-containter {
   width: 48px;
   height: 48px;
@@ -49,7 +49,7 @@
   bottom: 20px;
   right: 20px;
 }
-
+/* 控制返回顶部按钮的消失与出现样式,使用animatecss */
 .animate__slideOutDown,
 .animate__slideInUp {
   animation-duration: 300ms;
@@ -74,7 +74,7 @@ export default {
     let backTopBtnShow = ref(false)
     onMounted(() => {
       window.addEventListener("scroll", function () {
-        // 获取滑动位置，超过64之后上边导航加一个类，变为红色背景,并添加回到顶部按钮
+        // 获取滑动位置，超过64后顶部导航栏加一个类，变为红色背景,并添加回到顶部按钮
         let scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
         if (scrolltop >= 64) {
           isScroll.value = true

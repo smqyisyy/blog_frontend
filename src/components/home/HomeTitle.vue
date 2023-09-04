@@ -1,3 +1,4 @@
+<!-- 首页的标题组件 -->
 <template>
     <div class="home-title">
         <h1>{{ title }}</h1>
