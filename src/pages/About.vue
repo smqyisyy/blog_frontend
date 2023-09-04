@@ -1,14 +1,14 @@
 <!-- 关于页 -->
 <template>
-    <div>
-        this is about page
+    <div class="middle-title-containter">
+        <MiddleTitle />
     </div>
 </template>
 
 <script>
 export default {
-    setup () {
-        
+    setup() {
+
 
         return {}
     }
@@ -16,5 +16,9 @@ export default {
 </script>
 
 <style  scoped>
+.middle-title-containter {
+    margin-top: 250px;
+}
+
 
 </style>

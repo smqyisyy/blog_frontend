@@ -1,7 +1,7 @@
 <!-- 归档页 -->
 <template>
-    <div>
-        this is Archives page
+    <div class="middle-title-containter">
+        <MiddleTitle />
     </div>
 </template>
 
@@ -9,9 +9,16 @@
 export default {
     setup() {
 
+
         return {}
     }
 }
 </script>
 
-<style scoped></style>
+<style  scoped>
+.middle-title-containter {
+    margin-top: 250px;
+}
+
+
+</style>

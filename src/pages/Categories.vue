@@ -1,7 +1,7 @@
 <!-- 分类页 -->
 <template>
-    <div>
-        this is classify page
+    <div class="middle-title-containter">
+        <MiddleTitle />
     </div>
 </template>
 
@@ -15,4 +15,10 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style  scoped>
+.middle-title-containter {
+    margin-top: 250px;
+}
+
+
+</style>

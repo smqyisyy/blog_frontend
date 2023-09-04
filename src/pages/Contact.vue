@@ -1,7 +1,7 @@
 <!-- 留言板页 -->
 <template>
-    <div>
-        this is contact page
+    <div class="middle-title-containter">
+        <MiddleTitle />
     </div>
 </template>
 
@@ -15,4 +15,10 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style  scoped>
+.middle-title-containter {
+    margin-top: 250px;
+}
+
+
+</style>
