@@ -19,13 +19,20 @@
         </div>
         <!-- 博客卡片 -->
         <div class="blog-card-containter">
-            <BlogCard v-for="item in blogInfoArr" :key="item.id" :blogTitle="item.blogTitle"
-                :blogContent="item.blogContent" :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate"
-                :imgUrl="item.imgUrl" />
+
+            <!-- <template v-for="item in blogInfoArr" :key="item.id"> -->
+            <!-- <router-link :to="'/article/' + `${item.id}`"> -->
+            <BlogCard v-for="item in blogInfoArr" :key="item.id" :blogTitle="item.blogTitle" :blogContent="item.blogContent"
+                :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" :imgUrl="item.imgUrl"
+                @click="routeToBlog(item.id)" />
+            <!-- </router-link> -->
+            <!-- </template> -->
+
+
         </div>
         <!-- 分页 -->
         <div class="pagination-containter">
-            <pagination  @ChangePage="handleChangePage" />
+            <pagination @ChangePage="handleChangePage" />
         </div>
 
     </div>
@@ -40,6 +47,7 @@ import BlogCard from '@/components/BlogCard.vue';
 import pagination from '@/components/Pagination.vue';
 import { onMounted, ref } from "vue";
 import { getBlogInfo } from '@/request/api/getBlogInfo';
+import { useRouter } from 'vue-router';
 export default {
     components: {
         HomeButtons,
@@ -67,7 +75,7 @@ export default {
             getBlogInfo(curPage).then(res => {
                 if (res.status === 200) {
                     blogInfoArr.value = res.data.data
-                    console.log(blogInfoArr);
+                    // console.log(blogInfoArr);
                 }
             })
         }
@@ -79,11 +87,21 @@ export default {
                 block: "start"    // 上边框与视窗顶部平齐
             })
         }
+        const router = useRouter()
+        /**
+         * 跳转到对应文章的页面
+         * @param {*} id  文章的id
+         */
+        function routeToBlog(id) {
+            
+            router.push(`/article/${id}`)
+        }
         return {
             blogInfoArr,
             handleChangePage,
             startRead,
-            dreamCard
+            dreamCard,
+            routeToBlog
         }
     }
 }
