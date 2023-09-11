@@ -6,48 +6,43 @@
                 <font-awesome-icon icon="fa-regular fa-rectangle-list" style="color: #000;" />
                 <span class="title">目录</span>
             </div>
-            <el-menu class="el-menu-vertical-demo" @open="handleOpen(item)" @close="handleClose" v-for="item in tocData"
-                :key="item.id">
-                <el-sub-menu :index="1">
-                    <template #title>
-                        <el-icon>
-                            <location />
-                        </el-icon>
-                        <span>{{ item.id }}</span>
-                    </template>
-
-                    <el-menu-item index="1-1">item one</el-menu-item>
-                    <el-menu-item index="1-2">item two</el-menu-item>
-
-                    <el-sub-menu index="1-4">
-                        <template #title>item four</template>
-                        <el-menu-item index="1-4-1">item one</el-menu-item>
-                    </el-sub-menu>
-                </el-sub-menu>
-            </el-menu>
-            <ul>
-                <!-- 这里为了设置各级标题的不同样式，添加了类，h1标签类为item-1，h2标签类为item-2 -->
-                <li v-for="item in tocData" :key="item.id" :class="`item-${item.tagName.charAt(1)}`"
-                    @click="jumpToAnchor(item.id)">
-                    {{ item.id }}{{ item.tagName }}
-                </li>
-            </ul>
-
+            <el-tree :data="headingTree" @node-click="handleNodeClick" icon="none" style="font-size: 20px;"/>
         </el-card>
     </div>
 </template>
 <script>
-import { ref, onMounted, nextTick, computed } from "vue";
+import { ref, nextTick } from "vue";
 export default {
     setup() {
-        // 初始化标题
-        function initToc() {
-            // 获取所有h1 h2 h3 标签
-            let all_headings = document.querySelectorAll('h1, h2, h3')
-            return all_headings
+        // 获取标题信息并组织成树形结构
+        const headingTree = ref([]);
+        function getheadingTree() {
+            const headings = Array.from(document.querySelectorAll('h1, h2, h3'));
+            // 初始化一个根节点对象
+            let tree = { label: 'root', level: 0, text: 'Root', children: [] };
+            // stack数组用来跟踪当前正在判断的节点，默认从最顶层放入根节点开始
+            let stack = [tree];
+            // 遍历获取所有标题元素
+            headings.forEach((heading) => {
+                const level = parseInt(heading.tagName.charAt(1));
+                const label = heading.id;
+                const text = heading.textContent;
+                // 构建当前遍历中的标题对象
+                const item = { label, level, text, children: [] };
+
+                // 如果当前标题的级别小于或等于stack中最后一个节点的级别，就会从stack中pop，循环pop到stack中只有一个节点
+                while (stack.length > 1 && stack[stack.length - 1].level >= level) {
+                    stack.pop();
+                }
+                // 将当前标题添加为stack中最后一个节点的子节点，建立父子关系
+                stack[stack.length - 1].children.push(item);
+                // 将当前标题节点对象push进stack，使其成为下一个节点的父节点
+                stack.push(item);
+            });
+            // 从children中取出所有标题的对象数据
+            headingTree.value = tree.children;
         }
-        // 存放 toc 目录数据
-        const tocData = ref(null)
+        // 跳转到对应标题处
         function jumpToAnchor(id) {
             let anchorElement = document.getElementById(id)
             if (anchorElement) {
@@ -58,59 +53,31 @@ export default {
                 // });
             }
             console.log(anchorElement);
-
-
         }
-        // 获取标题信息并组织成树形结构
-        const headingTree = ref([]);
-        function getheadingTree() {
-            const headings = Array.from(document.querySelectorAll('#markdown-content h1, #markdown-content h2, #markdown-content h3'));
-            let tree = headingTree.value;
-            let stack = [];
-
-            headings.forEach((heading) => {
-                const level = parseInt(heading.tagName.charAt(1));
-
-                const id = heading.id;
-                const text = heading.textContent;
-                const item = { id, text, children: [] };
-
-                while (stack.length >= level) {
-                    stack.pop();
-                    tree = tree.parent;
-                }
-
-                if (stack.length < level) {
-                    stack.push(item);
-                    tree.children.push(item);
-                    item.parent = tree;
-                    tree = item;
-                }
-            })
-        }
-        function handleOpen(item) {
-            console.dir(item);
+        // 点击树形后跳转到对应内容处
+        function handleNodeClick(node){
+            console.log(node.label);
         }
         nextTick(() => {
-            // tocData.value = initToc()
-            // tocData.value = headingTree()
             getheadingTree()
-            console.log(headingTree);
         })
         return {
-            tocData,
             jumpToAnchor,
-            handleOpen,
             headingTree,
-            getheadingTree
+            getheadingTree,
+            handleNodeClick
         }
     }
 }
 </script>
 
-<style scoped>
+<style>
 .toc-content {
     line-height: 1.5;
+}
+
+.toc-content .toc-title {
+    margin-left: 20px;
 }
 
 .toc-content .toc-title .title {
@@ -119,28 +86,15 @@ export default {
     font-size: 25px;
 }
 
-ul li:hover {
-    cursor: pointer;
+.el-tree-node__label:hover {
     color: #42b983;
     text-decoration: underline;
-}
-
-ul li:focus {
     cursor: pointer;
-    color: #42b983;
-    text-decoration: underline;
 }
 
-.item-1 {
-    /* font-weight: 700; */
-    padding-left: 0;
+.el-tree-node__content:hover {
+    background-color: transparent;
+    cursor: default;
 }
 
-.item-2 {
-    padding-left: 20px;
-}
-
-.item-3 {
-    padding-left: 40px;
-}
 </style>

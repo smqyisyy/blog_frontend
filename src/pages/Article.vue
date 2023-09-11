@@ -7,7 +7,6 @@
         <div class="toc-card-containter">
             <MarkdownToc />
         </div>
-
     </div>
 </template>
 

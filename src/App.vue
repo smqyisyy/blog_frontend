@@ -33,7 +33,7 @@
 }
 
 .footer-containter {
-  margin-top: 20px;
+  margin-top: 30px;
   height: 147px;
   background-color: #ee6e73;
   display: flex;
