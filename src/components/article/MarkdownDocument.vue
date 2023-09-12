@@ -141,4 +141,5 @@ export default {
 .content-card .content {
     line-height: 1.5;
 }
+
 </style>

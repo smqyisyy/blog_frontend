@@ -6,7 +6,7 @@
                 <font-awesome-icon icon="fa-regular fa-rectangle-list" style="color: #000;" />
                 <span class="title">目录</span>
             </div>
-            <el-tree :data="headingTree" @node-click="handleNodeClick" icon="none" style="font-size: 20px;"/>
+            <el-tree :data="headingTree" @node-click="handleNodeClick" icon="none" style="font-size: 20px;" />
         </el-card>
     </div>
 </template>
@@ -24,6 +24,8 @@ export default {
             let stack = [tree];
             // 遍历获取所有标题元素
             headings.forEach((heading) => {
+                // 给每个元素添加scroll-margin-top属性解决滚动时被上方fixed布局的导航栏覆盖的问题
+                heading.style.scrollMarginTop="70px"
                 const level = parseInt(heading.tagName.charAt(1));
                 const label = heading.id;
                 const text = heading.textContent;
@@ -55,8 +57,8 @@ export default {
             console.log(anchorElement);
         }
         // 点击树形后跳转到对应内容处
-        function handleNodeClick(node){
-            console.log(node.label);
+        function handleNodeClick(node) {
+            jumpToAnchor(node.label)
         }
         nextTick(() => {
             getheadingTree()
@@ -74,6 +76,7 @@ export default {
 <style>
 .toc-content {
     line-height: 1.5;
+    
 }
 
 .toc-content .toc-title {
@@ -96,5 +99,4 @@ export default {
     background-color: transparent;
     cursor: default;
 }
-
 </style>
