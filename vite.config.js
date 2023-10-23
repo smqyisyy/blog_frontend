@@ -29,7 +29,7 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       }
-    }
+    },
   },
   build: {
     // 小于1024kb的图片被转为base64

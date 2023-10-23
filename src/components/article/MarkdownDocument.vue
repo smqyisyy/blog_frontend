@@ -17,7 +17,7 @@ import { marked } from 'marked'
 import { gfmHeadingId } from "marked-gfm-heading-id";
 export default {
 
-    setup(props) {
+    setup() {
         const render = new marked.Renderer()
         marked.setOptions({
             renderer: render, // 这是必填项
@@ -34,7 +34,7 @@ export default {
         //  文章内容
         const content = ref('')
         const initContent = () => {
-        const markdownText = ref(`# 一级标题 1
+            const markdownText = ref(`# 一级标题 1
 
 ## 二级标题 1.1
 
@@ -122,7 +122,7 @@ export default {
 
 ### 三级标题 3.2.3
 
-这是一段随机测试内容，包含100字。In ultrices venenatis consectetur. Suspendisse potenti. Vivamus gravida quam vitae odio dictum, eu dignissim odio feugiat.`)
+这是一段随机测试内容，**包含100字**。In ultrices venenatis consectetur. Suspendisse potenti. Vivamus gravida quam vitae odio dictum, eu dignissim odio feugiat.`)
             content.value = marked(markdownText.value)
         }
 
@@ -137,9 +137,6 @@ export default {
     }
 }
 </script>
-<style scoped>
-.content-card .content {
-    line-height: 1.5;
-}
-
+<style>
+@import url("../../assets/css/markdown-style.css");
 </style>

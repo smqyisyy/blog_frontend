@@ -1,0 +1,152 @@
+/* Markdown to HTML CSS Styles */
+
+.content-card .content {
+  line-height: 1.5;
+}
+
+/* 标题样式 */
+.content-card .content h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .content-card .content h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .content-card .content h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+  
+  .content-card .content h4 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .content-card .content h5 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  
+  .content-card .content h6 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+  
+  /* 段落样式 */
+  .content-card .content p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  
+  /* 列表样式 */
+  .content-card .content ul,
+  .content-card .content ol {
+    margin-bottom: 10px;
+    padding-left: 20px;
+  }
+  
+  .content-card .content li {
+    margin-bottom: 4px;
+  }
+  
+  /* 链接样式 */
+  .content-card .content a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .content-card .content a:hover {
+    text-decoration: underline;
+  }
+  
+  /* 代码块样式 */
+  .content-card .content pre {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 10px;
+    line-height: 1.5;
+    overflow: auto;
+  }
+  
+  .content-card .content code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+  }
+  
+  /* 引用样式 */
+  .content-card .content blockquote {
+    border-left: 2px solid #ddd;
+    margin-left: 0;
+    padding-left: 10px;
+    color: #777;
+  }
+  
+  /* 图片样式 */
+  .content-card .content img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+  /* 表格样式 */
+  .content-card .content table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .content-card .content th,
+  .content-card .content td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .content-card .content th {
+    background-color: #f2f2f2;
+  }
+  
+  /* 代码行样式 */
+  .content-card .content .highlight {
+    background-color: #f8f8f8;
+    padding: 2px;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+  }
+  
+  /* 其他样式 */
+  .content-card .content hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+  }
+  
+  .content-card .content strong {
+    font-weight: bold;
+  }
+  
+  .content-card .content em {
+    font-style: italic;
+  }
+  
+  .content-card .content del {
+    text-decoration: line-through;
+  }
+  
+  .content-card .content sup {
+    vertical-align: super;
+    font-size: smaller;
+  }
+  
+  .content-card .content sub {
+    vertical-align: sub;
+    font-size: smaller;
+  }

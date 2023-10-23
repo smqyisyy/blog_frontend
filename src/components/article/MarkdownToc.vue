@@ -1,6 +1,6 @@
 <template>
     <!-- 生成标题导航 -->
-    <div class="toc-content">
+    <div class="toc-content" :class="{ 'is-fixed': isScroll }">
         <el-card>
             <div class="toc-title">
                 <font-awesome-icon icon="fa-regular fa-rectangle-list" style="color: #000;" />
@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-import { ref, nextTick } from "vue";
+import { ref, nextTick, onMounted } from "vue";
 export default {
     setup() {
         // 获取标题信息并组织成树形结构
@@ -25,7 +25,7 @@ export default {
             // 遍历获取所有标题元素
             headings.forEach((heading) => {
                 // 给每个元素添加scroll-margin-top属性解决滚动时被上方fixed布局的导航栏覆盖的问题
-                heading.style.scrollMarginTop="70px"
+                heading.style.scrollMarginTop = "70px"
                 const level = parseInt(heading.tagName.charAt(1));
                 const label = heading.id;
                 const text = heading.textContent;
@@ -49,12 +49,7 @@ export default {
             let anchorElement = document.getElementById(id)
             if (anchorElement) {
                 anchorElement.scrollIntoView({ behavior: "smooth", block: "start" })
-                // anchorElement.scrollTo({
-                //     top: 70,
-                //     behavior: 'smooth' // 添加 smooth 以实现平滑滚动效果
-                // });
             }
-            console.log(anchorElement);
         }
         // 点击树形后跳转到对应内容处
         function handleNodeClick(node) {
@@ -63,11 +58,28 @@ export default {
         nextTick(() => {
             getheadingTree()
         })
+        // 当滚动250px后目录变为fixed布局
+        let isScroll = ref(false);
+        onMounted(() => {
+            window.addEventListener("scroll",
+                function () {
+                    // 获取滑动位置，超过200后
+                    let scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
+                    if (scrolltop >= 200) {
+                        isScroll.value = true
+
+                    } else {
+                        isScroll.value = false
+                    }
+                })
+        }
+        )
         return {
             jumpToAnchor,
             headingTree,
             getheadingTree,
-            handleNodeClick
+            handleNodeClick,
+            isScroll
         }
     }
 }
@@ -76,7 +88,12 @@ export default {
 <style>
 .toc-content {
     line-height: 1.5;
-    
+    width: 340px;
+}
+
+.toc-content.is-fixed {
+    position: fixed;
+    top: 70px;
 }
 
 .toc-content .toc-title {
@@ -89,14 +106,25 @@ export default {
     font-size: 25px;
 }
 
+/* 悬浮标题时文字变色 */
 .el-tree-node__label:hover {
     color: #42b983;
     text-decoration: underline;
     cursor: pointer;
+    font-weight: bold;
 }
 
+/* 去除本来悬浮时背景的颜色 */
 .el-tree-node__content:hover {
     background-color: transparent;
     cursor: default;
+}
+
+/* 去除点击标题后被选中标题的背景并添加文字颜色 */
+.el-tree-node:focus>.el-tree-node__content {
+    background-color: transparent;
+    cursor: default;
+    color: #42b983;
+    font-weight: bold
 }
 </style>
