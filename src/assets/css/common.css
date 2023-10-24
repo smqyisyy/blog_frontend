@@ -8,5 +8,7 @@ body {
     visibility: visible;
     color: #fff;
     height: 100%;
-    scroll-margin-top:70px;
+}
+html {
+    scroll-behavior: smooth;
 }

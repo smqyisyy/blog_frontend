@@ -7,7 +7,7 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // https://vitejs.dev/config/
 // const targetUrl="http://web.hugoyyds.cn/"
-const targetUrl="http://localhost:3000"
+const targetUrl = "http://localhost:3000"
 export default defineConfig({
   plugins: [vue(),
   AutoImport({
@@ -32,6 +32,7 @@ export default defineConfig({
     },
   },
   build: {
+    sourcemap: 'inline',
     // 小于1024kb的图片被转为base64
     assetsInlineLimit: 1024,
     rollupOptions: {

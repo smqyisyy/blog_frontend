@@ -51,14 +51,14 @@ export default {
                 anchorElement.scrollIntoView({ behavior: "smooth", block: "start" })
             }
         }
-        // 点击树形后跳转到对应内容处
-        function handleNodeClick(node) {
+        // 点击树形后跳转到对应内容处,,并给对应标题添加一个动态类
+        function handleNodeClick(node, b, c, d) {
             jumpToAnchor(node.label)
         }
         nextTick(() => {
             getheadingTree()
         })
-        // 当滚动250px后目录变为fixed布局
+        // 当滚动200px后目录变为fixed布局
         let isScroll = ref(false);
         onMounted(() => {
             window.addEventListener("scroll",
@@ -120,10 +120,9 @@ export default {
     cursor: default;
 }
 
-/* 去除点击标题后被选中标题的背景并添加文字颜色 */
+/* 去除点击标题后被选中标题的背景 */
 .el-tree-node:focus>.el-tree-node__content {
     background-color: transparent;
-    cursor: default;
     color: #42b983;
     font-weight: bold
 }

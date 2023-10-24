@@ -5,19 +5,19 @@
             <MarkdownDocument :blogID="blogID" />
         </div>
         <div class="toc-card-containter">
-            <MarkdownToc />
+            <MarkdownTocTest />
         </div>
     </div>
 </template>
 
 <script>
 import MarkdownDocument from '@/components/article/MarkdownDocument.vue';
-import MarkdownToc from '@/components/article/MarkdownToc.vue';
+import MarkdownTocTest from '@/components/article/MarkdownTocTest.vue';
 import { useRoute } from "vue-router";
 export default {
     components: {
         MarkdownDocument,
-        MarkdownToc
+        MarkdownTocTest
     },
     setup() {
         const route = useRoute()
