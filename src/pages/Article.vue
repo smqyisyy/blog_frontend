@@ -5,19 +5,19 @@
             <MarkdownDocument :blogID="blogID" />
         </div>
         <div class="toc-card-containter">
-            <MarkdownTocTest />
+            <MarkdownToc />
         </div>
     </div>
 </template>
 
 <script>
 import MarkdownDocument from '@/components/article/MarkdownDocument.vue';
-import MarkdownTocTest from '@/components/article/MarkdownTocTest.vue';
+import MarkdownToc from '@/components/article/MarkdownToc.vue';
 import { useRoute } from "vue-router";
 export default {
     components: {
         MarkdownDocument,
-        MarkdownTocTest
+        MarkdownToc
     },
     setup() {
         const route = useRoute()
@@ -39,10 +39,12 @@ export default {
     /* height: calc(100% - 64px - 150px); */
     overflow: auto;
 }
+
 .md-blog-containter .content-card-contianter {
     width: 60%;
     font-size: 22px;
 }
+
 .md-blog-containter .toc-card-containter {
     width: 25%;
     font-size: 22px;
