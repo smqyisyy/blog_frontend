@@ -75,11 +75,21 @@ export default {
             });
             const currentA = document.querySelector(`a[href="#${heading.id}"]`)
             // 如果这个a元素下一个ol元素，则将下一个ol元素的is-collapsed类样式去除从而将其展开
-            if (currentA.nextElementSibling && currentA.nextElementSibling.tagName === 'OL') {
-                currentA.nextElementSibling.classList.remove('is-collapsed');
-            }
+            // if (currentA.nextElementSibling && currentA.nextElementSibling.tagName === 'OL') {
+            //     currentA.nextElementSibling.classList.remove('is-collapsed');
+            // }
             currentA.classList.add('is-active');
         }
+        // 处理展开与关闭目录节点,每次将所有其他节点都收起，对本次经过的路径节点展开
+        function toggleToc(path) {
+            document.querySelectorAll("ol.toc-list.is-collapsble").forEach((ol) => {
+                ol.classList.add('is-collapsed');
+            });
+            path.forEach((ol) => {
+                ol.classList.remove('is-collapsed');
+            });
+        }
+        // 查找当前目录走过了路径，借助dfs工具函数
         function findPath(root, target) {
             const path = [];
             if (dfs(root, target, path)) {
@@ -88,21 +98,27 @@ export default {
                 return null;
             }
         }
-
+        // 深度优先遍历
         function dfs(node, target, path) {
             if (node.id === target) {
-                path.push(node.id);
+                if (node.el) {
+                    path.push(node.el());
+                }
+                // path.push(node.id);
                 return true;
             }
-
             for (const child of node.children) {
                 if (dfs(child, target, path)) {
-                    path.push(node.id);
+                    if (node.el) {
+                        path.push(node.el());
+                    }
+                    // path.push(node.id);
                     return true;
                 }
             }
             return false;
         }
+        // 防抖函数
         function debunce(fn, delay) {
             let timer;
             return (...args) => {
@@ -112,7 +128,7 @@ export default {
                 }, delay);
             }
         }
-        const scrollHandler = function () {
+        const scrollHandler = debunce(function () {
             // 获取所有标题元素
             const headings = Array.from(document.querySelectorAll('h1, h2, h3'));
             // 获取所有标题的矩形，用于获取当前标题在整个页面的位置
@@ -122,22 +138,22 @@ export default {
                 const heading = headings[i];
                 const rect = rects[i];
                 // 如果矩形范围在200px之后，就认为当前标题在顶部
-                if (rect.top <= topRange && rect.top >= 80) {
+                if (rect.top <= topRange && rect.top >= 0) {
                     highLight(heading);
-                    // console.log(headingTree.value);
-                    // const path = findPath({ children: headingTree.value }, heading.id);
-                    const path = debunce(findPath, 100)({ children: headingTree.value }, heading.id);
-                    console.log(path);
+                    const path = findPath({ children: headingTree.value }, heading.id);
+                    // console.log(path);
+                    toggleToc(path)
                     break;
                 }
                 // 第二种情况，如果当前页面没有标题，就应当显示当前区域对应标题的内容
                 else if (rect.top < 0 && rect[i + 1] && rect[i + 1].top > document.documentElement.clientHeight) {
                     highLight(heading);
+                    toggleToc(path)
                     break;
                 }
 
             }
-        }
+        }, 10)
         // 当滚动200px后目录变为fixed布局
         let isScroll = ref(false);
         nextTick(() => {

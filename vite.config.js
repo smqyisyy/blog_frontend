@@ -32,7 +32,7 @@ export default defineConfig({
     },
   },
   build: {
-    sourcemap: 'inline',
+    // sourcemap: 'inline',
     // 小于1024kb的图片被转为base64
     assetsInlineLimit: 1024,
     rollupOptions: {
