@@ -40,11 +40,11 @@ export default {
         }
     },
     setup(props) {
-        const blogTitle = props.blogTitle || "第一个blog"
+        const blogTitle = props.blogTitle
         const releaseDate = props.releaseDate
         const blogContent = props.blogContent
         const blogAuthor = props.blogAuthor
-        const imgUrl = props.imgUrl || "https://www.gtrinee.top/medias/featureimages/5.jpg"
+        const imgUrl = props.imgUrl
         return {
             releaseDate,
             blogContent,

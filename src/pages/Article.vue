@@ -2,7 +2,7 @@
 <template>
     <div class="md-blog-containter">
         <div class="content-card-contianter">
-            <MarkdownDocument :blogID="blogID" />
+            <MarkdownDocument :blogId="+blogId" />
         </div>
         <div class="toc-card-containter">
             <MarkdownToc />
@@ -21,9 +21,9 @@ export default {
     },
     setup() {
         const route = useRoute()
-        const blogID = route.params.id
+        const blogId = route.params.id
         return {
-            blogID
+            blogId
         }
     }
 }

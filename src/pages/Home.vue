@@ -19,16 +19,9 @@
         </div>
         <!-- 博客卡片 -->
         <div class="blog-card-containter">
-
-            <!-- <template v-for="item in blogInfoArr" :key="item.id"> -->
-            <!-- <router-link :to="'/article/' + `${item.id}`"> -->
             <BlogCard v-for="item in blogInfoArr" :key="item.id" :blogTitle="item.blogTitle" :blogContent="item.blogContent"
                 :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" :imgUrl="item.imgUrl"
                 @click="routeToBlog(item.id)" />
-            <!-- </router-link> -->
-            <!-- </template> -->
-
-
         </div>
         <!-- 分页 -->
         <div class="pagination-containter">
@@ -60,6 +53,7 @@ export default {
     setup() {
         let blogInfoArr = ref([])
         onMounted(() => {
+            // 获取博客数据
             getBlogInfo()
                 .then(res => {
                     if (res.status === 200) {
@@ -75,7 +69,6 @@ export default {
             getBlogInfo(curPage).then(res => {
                 if (res.status === 200) {
                     blogInfoArr.value = res.data.data
-                    // console.log(blogInfoArr);
                 }
             })
         }
@@ -93,7 +86,6 @@ export default {
          * @param {*} id  文章的id
          */
         function routeToBlog(id) {
-            
             router.push(`/article/${id}`)
         }
         return {

@@ -81,7 +81,7 @@ export default {
                 a.classList.remove('is-active');
             });
             const currentA = document.querySelector(`a[href="#${heading.id}"]`)
-            currentA.classList.add('is-active');
+            currentA?.classList.add('is-active');
         }
         // 处理展开与关闭目录节点,每次将所有其他节点都收起，对本次经过的路径节点展开
         function toggleToc(path) {
