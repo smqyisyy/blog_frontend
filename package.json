@@ -21,6 +21,7 @@
     "marked": "^8.0.0",
     "marked-gfm-heading-id": "^3.0.7",
     "npm": "^10.0.0",
+    "pinia": "2.0.35",
     "vue": "^3.2.47",
     "vue-router": "^4.2.2"
   },

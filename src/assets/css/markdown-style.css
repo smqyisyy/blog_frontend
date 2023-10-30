@@ -2,7 +2,7 @@
 
 .content-card .content {
   line-height: 1.5;
-
+  font-size: 20px;
 }
 
 /* 标题样式 */
@@ -13,38 +13,38 @@
   }
   
   .content-card .content h2 {
-    font-size: 28px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 16px;
   }
   
   .content-card .content h3 {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     margin-bottom: 12px;
   }
   
   .content-card .content h4 {
-    font-size: 20px;
+    font-size: 26px;
     font-weight: bold;
     margin-bottom: 8px;
   }
   
   .content-card .content h5 {
-    font-size: 16px;
+    font-size: 24px;
     font-weight: bold;
     margin-bottom: 4px;
   }
   
   .content-card .content h6 {
-    font-size: 14px;
+    font-size: 22px;
     font-weight: bold;
     margin-bottom: 2px;
   }
   
   /* 段落样式 */
   .content-card .content p {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     line-height: 1.5;
   }
   
@@ -61,7 +61,7 @@
   
   /* 链接样式 */
   .content-card .content a {
-    color: #007bff;
+    color: #42b983;
     text-decoration: none;
   }
   
@@ -70,18 +70,18 @@
   }
   
   /* 代码块样式 */
-  .content-card .content pre {
+  /* .content-card .content pre {
     background-color: #f8f8f8;
     border: 1px solid #ddd;
     padding: 10px;
     line-height: 1.5;
     overflow: auto;
   }
-  
   .content-card .content code {
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    font-size: 14px;
-  }
+    font-size: 18px;
+    background-color: #f8f8f8;
+  } */
   
   /* 引用样式 */
   .content-card .content blockquote {

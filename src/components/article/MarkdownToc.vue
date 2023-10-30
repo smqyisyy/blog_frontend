@@ -33,7 +33,8 @@
     </div>
 </template>
 <script>
-import { ref, nextTick, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
+import { useBlogStore } from "@/store/useBlogStore";
 export default {
     setup() {
         // 获取标题信息并组织成树形结构
@@ -75,6 +76,17 @@ export default {
 
         }
         // 对选中的目录标题添加is-active类样式并移除其is-collapsed类样式
+        const store = useBlogStore()
+        // 当博客数据成功获取后，进行目录数据渲染
+        watch(store,
+            (state) => {
+                if (state.isBlogDataLoaded) {
+                    getheadingTree()
+                    store.$reset()
+                }
+
+            }
+        )
         function highLight(heading) {
             // 清楚之前的全部高亮样式
             document.querySelectorAll('a.is-active').forEach(a => {
@@ -88,7 +100,7 @@ export default {
             document.querySelectorAll("ol.toc-list.is-collapsble").forEach((ol) => {
                 ol.classList.add('is-collapsed');
             });
-            path.forEach((ol) => {
+            path?.forEach((ol) => {
                 ol?.classList?.remove('is-collapsed');
             });
         }
@@ -145,7 +157,7 @@ export default {
                 const heading = headings[i];
                 const rect = rects[i];
                 // 如果矩形范围在200px之后，就认为当前标题在顶部
-                if (rect.top <= topRange && rect.top >= 80) {
+                if (rect.top <= topRange && rect.top >= 0) {
                     highLight(heading);
                     const path = findPath({ children: headingTree.value }, heading.id);
                     toggleToc(path)
@@ -160,12 +172,9 @@ export default {
                 }
             }
         }
-            , 300)
+            , 100)
         // 当滚动200px后目录变为fixed布局
         let isScroll = ref(false);
-        nextTick(() => {
-            getheadingTree()
-        })
         onMounted(() => {
             window.addEventListener("scroll",
                 function () {
