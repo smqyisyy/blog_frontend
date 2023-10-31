@@ -3,7 +3,7 @@
     <el-card class="content-card">
         <template #header>
             <div class="card-header">
-                <span>{{ categorie }}</span>
+                <span>{{ category }}</span>
                 <div>{{ releaseDate }}</div>
             </div>
         </template>
@@ -36,7 +36,7 @@ export default {
         // 新版本的marked要用marked-gfm-heading-id插件配置给标题加入id属性
         marked.use(gfmHeadingId({}));
         // 文章分类
-        const categorie = ref('')
+        const category = ref('')
         //  发布时间
         const releaseDate = ref('')
         //  文章内容
@@ -48,7 +48,7 @@ export default {
             const res = await getBlogById(blogId)
             content.value = marked(res.data.data.blogContent)
             releaseDate.value = res.data.data.releaseDate
-            categorie.value = res.data.data.categorie
+            category.value = res.data.data.category
             const store = useBlogStore();
             // 获取博客数据完成后，标识一下
             store.$patch({ isBlogDataLoaded: true })
@@ -61,7 +61,7 @@ export default {
             initContent,
             content,
             releaseDate,
-            categorie
+            category
         }
     }
 }

@@ -1,4 +1,4 @@
-<!-- 标签组件 -->
+<!-- 标签卡片组件 -->
 <template>
     <div class="tag-card">
         <div class="article-tag-containter">

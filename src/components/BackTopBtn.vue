@@ -1,7 +1,7 @@
 <!-- 返回顶部的按钮组件 -->
 <template>
     <div class="back-top-btn">
-        <font-awesome-icon icon="fa-solid fa-arrow-up" style="width: color:#fff;" />
+        <font-awesome-icon icon="fa-solid fa-arrow-up" style="color:#fff;" />
     </div>
 </template>
 

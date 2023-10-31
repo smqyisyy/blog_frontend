@@ -14,6 +14,11 @@ const routes = [
             import("@/pages/Tag.vue")
     },
     {
+        path: "/categories/:category",
+        name: "categoriesDetails",
+        component: () => import("@/pages/Categories.vue")
+    },
+    {
         path: "/categories",
         name: "categories",
         component: () =>
@@ -42,7 +47,9 @@ const routes = [
         name: "article",
         component: () =>
             import("@/pages/Article.vue")
-    }
+    },
+
+
 ]
 const router = createRouter({
     history: createWebHistory(),

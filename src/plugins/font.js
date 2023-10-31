@@ -1,4 +1,5 @@
 /* import the fontawesome core */
+// 插件用于自动引入字体
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
 import { faTags } from '@fortawesome/free-solid-svg-icons'

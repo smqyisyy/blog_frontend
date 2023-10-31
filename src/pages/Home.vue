@@ -131,6 +131,7 @@ export default {
     box-sizing: border-box;
 }
 
+/* 博客缩略图 */
 .home .blog-card-containter {
     width: 1125px;
     margin: 0 auto;
