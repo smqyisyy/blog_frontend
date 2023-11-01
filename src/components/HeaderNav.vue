@@ -16,7 +16,7 @@
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-house" style="color: #fff;" /><span>首页</span>
                 </div>
             </router-link>
-            <router-link to="/tag">
+            <router-link to="/tags">
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-tags" style="color: #fff;" /><span>标签</span>
                 </div>
             </router-link>

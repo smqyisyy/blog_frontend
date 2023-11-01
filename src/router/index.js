@@ -8,8 +8,13 @@ const routes = [
             import("@/pages/Home.vue")
     },
     {
-        path: "/tag",
-        name: "tag",
+        path: "/tags/:tag",
+        name: "tagsDetails",
+        component: () => import("@/pages/Tag.vue")
+    },
+    {
+        path: "/tags",
+        name: "tags",
         component: () =>
             import("@/pages/Tag.vue")
     },

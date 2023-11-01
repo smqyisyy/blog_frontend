@@ -24,10 +24,9 @@
                 @click="routeToBlog(item.id)" />
         </div>
         <!-- 分页 -->
-        <div class="pagination-containter" v-if="totalBlog">
+        <div class="pagination-containter" v-if="totalBlog && totalBlog > pageSize">
             <pagination @ChangePage="handleChangePage" :totalBlog="totalBlog" :pageSize="pageSize" />
         </div>
-
     </div>
 </template>
 
