@@ -13,6 +13,10 @@
             :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" :imgUrl="item.imgUrl"
             @click="routeToBlog(item.id)" />
     </div>
+    <!-- 分页 -->
+    <div class="pagination-containter" v-if="totalBlog">
+        <pagination @ChangePage="handleChangePage" :totalBlog="totalBlog" :page-size="pageSize" />
+    </div>
 </template>
 
 <script>
@@ -21,16 +25,20 @@ import { useRoute, useRouter } from 'vue-router';
 import BlogCard from '../components/BlogCard.vue';
 import { ref, onMounted, watch } from 'vue';
 import { getBlogByCategory } from '@/request/api/getCategoryInfo';
+import pagination from '@/components/Pagination.vue';
 export default {
     components: {
         CategoryCard,
-        BlogCard
+        BlogCard,
+        pagination
     },
     setup() {
         const route = useRoute()
         const router = useRouter()
         const category = ref("")
         let blogInfoArr = ref([])
+        let totalBlog = ref(0)
+        let pageSize = ref(6)
         /**
       * 跳转到对应文章的页面
       * @param {*} id 
@@ -43,21 +51,38 @@ export default {
             category.value = newCategory;
             getBlogByCategory(category.value).then(res => {
                 blogInfoArr.value = res.data.data
+                totalBlog.value = res.data.totalBlog
+                pageSize.value = res.data.pageSize
             })
         })
-
+        /**
+         * 换页之后按照页码重新请求数据
+         * @param {} curPage 
+         */
+        function handleChangePage(curPage) {
+            getBlogByCategory(category.value, curPage).then(res => {
+                if (res.status === 200) {
+                    blogInfoArr.value = res.data.data
+                }
+            })
+        }
         onMounted(() => {
             category.value = route.params.category
             if (category) {
                 getBlogByCategory(category.value).then(res => {
                     blogInfoArr.value = res.data.data
+                    totalBlog.value = res.data.totalBlog
+                    pageSize.value = res.data.pageSize
                 })
             }
         })
         return {
             category,
             blogInfoArr,
-            routeToBlog
+            routeToBlog,
+            totalBlog,
+            pageSize,
+            handleChangePage
         }
     }
 }
@@ -82,5 +107,11 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+.pagination-containter {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
 </style>

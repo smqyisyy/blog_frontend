@@ -24,8 +24,8 @@
                 @click="routeToBlog(item.id)" />
         </div>
         <!-- 分页 -->
-        <div class="pagination-containter">
-            <pagination @ChangePage="handleChangePage" />
+        <div class="pagination-containter" v-if="totalBlog">
+            <pagination @ChangePage="handleChangePage" :totalBlog="totalBlog" :pageSize="pageSize" />
         </div>
 
     </div>
@@ -52,14 +52,14 @@ export default {
     },
     setup() {
         let blogInfoArr = ref([])
-        onMounted(() => {
+        let totalBlog = ref()
+        let pageSize = ref()
+        onMounted(async () => {
             // 获取博客数据
-            getBlogInfo()
-                .then(res => {
-                    if (res.status === 200) {
-                        blogInfoArr.value = res.data.data
-                    }
-                })
+            const res = await getBlogInfo()
+            blogInfoArr.value = res.data.data
+            totalBlog.value = res.data.totalBlog;
+            pageSize.value = res.data.pageSize;
         })
         /**
          * 换页之后按照页码重新请求数据
@@ -93,7 +93,9 @@ export default {
             handleChangePage,
             startRead,
             dreamCard,
-            routeToBlog
+            routeToBlog,
+            totalBlog,
+            pageSize
         }
     }
 }
