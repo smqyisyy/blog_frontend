@@ -6,7 +6,7 @@
     <div class="tag-card-containter">
         <TagCard />
     </div>
-    <div class="tag-blog-card-containter" v-if="tag">
+    <div class="tag-blog-card-containter" v-if="tag" v-loading="loading">
         <BlogCard v-for="item in blogInfoArr" :key="item.id" :blogTitle="item.blogTitle" :blogContent="item.blogContent"
             :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" :imgUrl="item.imgUrl"
             @click="routeToBlog(item.id)" />
@@ -36,7 +36,7 @@ export default {
         const router = useRouter()
         const tag = ref("")
         let blogInfoArr = ref([])
-
+        let loading = ref(true)
         let totalBlog = ref(0)
         let pageSize = ref(6)
         /**
@@ -49,10 +49,12 @@ export default {
         // 监视route.params.tag的变化
         watch(() => route.params.tag, (newTag) => {
             tag.value = newTag;
+            loading.value = true;
             getBlogByTag(tag.value).then(res => {
                 blogInfoArr.value = res.data.data;
                 totalBlog.value = res.data.totalBlog
                 pageSize.value = res.data.pageSize
+                loading.value = false
             })
         })
         /**
@@ -60,9 +62,11 @@ export default {
          * @param {} curPage 
          */
         function handleChangePage(curPage) {
+            loading.value = true;
             getBlogByTag(tag.value, curPage).then(res => {
                 if (res.status === 200) {
                     blogInfoArr.value = res.data.data
+                    loading.value = false
                 }
             })
         }
@@ -82,7 +86,8 @@ export default {
             routeToBlog,
             totalBlog,
             pageSize,
-            handleChangePage
+            handleChangePage,
+            loading
         }
     }
 }

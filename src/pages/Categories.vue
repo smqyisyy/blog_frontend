@@ -8,7 +8,7 @@
         <CategoryCard />
     </div>
 
-    <div class="category-blog-card-containter" v-if="category">
+    <div class="category-blog-card-containter" v-if="category" v-loading="loading">
         <BlogCard v-for="item in blogInfoArr" :key="item.id" :blogTitle="item.blogTitle" :blogContent="item.blogContent"
             :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" :imgUrl="item.imgUrl"
             @click="routeToBlog(item.id)" />
@@ -39,6 +39,7 @@ export default {
         let blogInfoArr = ref([])
         let totalBlog = ref(0)
         let pageSize = ref(6)
+        let loading = ref(true)
         /**
       * 跳转到对应文章的页面
       * @param {*} id 
@@ -49,10 +50,12 @@ export default {
         // 监视route.params.category的变化
         watch(() => route.params.category, (newCategory) => {
             category.value = newCategory;
+            loading.value = true;
             getBlogByCategory(category.value).then(res => {
                 blogInfoArr.value = res.data.data
                 totalBlog.value = res.data.totalBlog
                 pageSize.value = res.data.pageSize
+                loading.value = false
             })
         })
         /**
@@ -60,9 +63,11 @@ export default {
          * @param {} curPage 
          */
         function handleChangePage(curPage) {
+            loading.value = true;
             getBlogByCategory(category.value, curPage).then(res => {
                 if (res.status === 200) {
                     blogInfoArr.value = res.data.data
+                    loading.value = false
                 }
             })
         }
@@ -73,6 +78,7 @@ export default {
                     blogInfoArr.value = res.data.data
                     totalBlog.value = res.data.totalBlog
                     pageSize.value = res.data.pageSize
+                    loading.value = false
                 })
             }
         })
@@ -82,7 +88,8 @@ export default {
             routeToBlog,
             totalBlog,
             pageSize,
-            handleChangePage
+            handleChangePage,
+            loading
         }
     }
 }

@@ -1,6 +1,6 @@
 
 <template>
-    <el-card class="content-card">
+    <el-card class="content-card" v-loading="loading">
         <template #header>
             <div class="card-header">
                 <span>{{ category }}</span>
@@ -26,6 +26,7 @@ export default {
         }
     },
     setup(props) {
+        let loading = ref(true);
         const render = new marked.Renderer()
         marked.setOptions({
             renderer: render, // 这是必填项
@@ -56,12 +57,14 @@ export default {
         onMounted(async () => {
             await initContent()
             Prism.highlightAll()
+            loading.value = false
         })
         return {
             initContent,
             content,
             releaseDate,
-            category
+            category,
+            loading
         }
     }
 }

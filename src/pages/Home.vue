@@ -18,7 +18,7 @@
             <Dream></Dream>
         </div>
         <!-- 博客卡片 -->
-        <div class="blog-card-containter">
+        <div class="blog-card-containter" v-loading="loading">
             <BlogCard v-for="item in blogInfoArr" :key="item.id" :blogTitle="item.blogTitle" :blogContent="item.blogContent"
                 :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" :imgUrl="item.imgUrl"
                 @click="routeToBlog(item.id)" />
@@ -53,21 +53,26 @@ export default {
         let blogInfoArr = ref([])
         let totalBlog = ref()
         let pageSize = ref()
+        // 分页时，对每一页的内容做加载中显示
+        let loading = ref(true)
         onMounted(async () => {
             // 获取博客数据
             const res = await getBlogInfo()
             blogInfoArr.value = res.data.data
             totalBlog.value = res.data.totalBlog;
             pageSize.value = res.data.pageSize;
+            loading.value = false
         })
         /**
          * 换页之后按照页码重新请求数据
          * @param {} curPage 
          */
         function handleChangePage(curPage) {
+            loading.value = true
             getBlogInfo(curPage).then(res => {
                 if (res.status === 200) {
                     blogInfoArr.value = res.data.data
+                    loading.value = false
                 }
             })
         }
@@ -87,6 +92,7 @@ export default {
         function routeToBlog(id) {
             router.push(`/article/${id}`)
         }
+
         return {
             blogInfoArr,
             handleChangePage,
@@ -94,7 +100,8 @@ export default {
             dreamCard,
             routeToBlog,
             totalBlog,
-            pageSize
+            pageSize,
+            loading
         }
     }
 }
