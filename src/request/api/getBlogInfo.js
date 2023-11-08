@@ -7,7 +7,7 @@ import axios from "axios";
 export function getBlogInfo(pageNum = 1) {
     return axios({
         method: 'get',
-        url: `/api/api/blog/info/?pageNum=${pageNum}`,
+        url: `/api/blog/info/?pageNum=${pageNum}`,
     })
 }
 /**
@@ -18,6 +18,6 @@ export function getBlogInfo(pageNum = 1) {
 export function getBlogById(id) {
     return axios({
         method: 'get',
-        url: `/api/api/blog/infoById/?id=${id}`,
+        url: `/api/blog/infoById/?id=${id}`,
     })
 }

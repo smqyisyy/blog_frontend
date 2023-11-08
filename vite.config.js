@@ -7,6 +7,7 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // https://vitejs.dev/config/
 const targetUrl = "http://localhost:3000"
+// const targetUrl = "http://localhost:3000/api"
 export default defineConfig({
   plugins: [vue(),
   AutoImport({
@@ -26,7 +27,7 @@ export default defineConfig({
       '/api': {
         target: targetUrl,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, '/api/'),
       }
     },
     // 监听地址

@@ -8,7 +8,7 @@ import axios from "axios";
 export function getBlogByTag(tag, pageNum = 1,) {
     return axios({
         method: 'get',
-        url: `/api/api/tags/infoBytag/?pageNum=${pageNum}&tag=${tag}`,
+        url: `/api/tags/infoBytag/?pageNum=${pageNum}&tag=${tag}`,
     })
 }
 /**
@@ -19,6 +19,6 @@ export function getBlogByTag(tag, pageNum = 1,) {
 export function getTags() {
     return axios({
         method: 'get',
-        url: `/api/api/tags/info`,
+        url: `/api/tags/info`,
     })
 }

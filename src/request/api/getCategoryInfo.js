@@ -8,7 +8,7 @@ import axios from "axios";
 export function getBlogByCategory(category, pageNum = 1,) {
     return axios({
         method: 'get',
-        url: `/api/api/categories/infoByCategory/?pageNum=${pageNum}&category=${category}`,
+        url: `/api/categories/infoByCategory/?pageNum=${pageNum}&category=${category}`,
     })
 }
 /**
@@ -19,6 +19,6 @@ export function getBlogByCategory(category, pageNum = 1,) {
 export function getCategories() {
     return axios({
         method: 'get',
-        url: `/api/api/categories/info`,
+        url: `/api/categories/info`,
     })
 }
