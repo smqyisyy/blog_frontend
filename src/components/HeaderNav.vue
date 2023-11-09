@@ -39,7 +39,7 @@
                         style="color: #fff;" /><span>留言板</span>
                 </div>
             </router-link>
-            <a href="">
+            <a href="/games">
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-gamepad" style="color: #fff;" /><span>小游戏</span>
                 </div>
             </a>
