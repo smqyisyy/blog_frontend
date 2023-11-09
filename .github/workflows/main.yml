@@ -28,7 +28,7 @@ jobs:
           DEPLOY_KEY: ${{ secrets.ACCESS_TOKEN }}   
           ARGS: -avz --delete                       
           SERVER_PORT: '22'                         
-          FOLDER: ./dist                               
+          FOLDER: ./dist/*                               
           SERVER_IP: ${{ secrets.REMOTE_HOST }}     
           USERNAME: ${{ secrets.SSH_USERNAME }}     
-          SERVER_DESTINATION: /root/test/
+          SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}
