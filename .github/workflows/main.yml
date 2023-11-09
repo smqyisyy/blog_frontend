@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest   
     steps:
       - name: Deploy to Server  
-        uses: AEnterprise/rsync-deploy@v1.0  
+        uses: AEnterprise/rsync-deploy@v1.0.2 
         env:
           DEPLOY_KEY: ${{ secrets.ACCESS_TOKEN }}   
           ARGS: -avz --delete                       
