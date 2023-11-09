@@ -31,8 +31,8 @@ jobs:
           DEPLOY_KEY: ${{ secrets.ACCESS_TOKEN }}   
           ARGS: -avz --delete                       
           SERVER_PORT: '22'                         
-          FOLDER: /                                
+          FOLDER: /*                                
           SERVER_IP: ${{ secrets.REMOTE_HOST }}     
           USERNAME: ${{ secrets.SSH_USERNAME }}     
-          SERVER_DESTINATION: /root/volumes/nginx/  
+          SERVER_DESTINATION: /root/test/
     needs: build 
