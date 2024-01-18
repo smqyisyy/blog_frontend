@@ -2,20 +2,19 @@
 <template>
     <a class="my-button" :href="hrefLink" target="_blank">
         <slot name="icon"></slot>
-        <button ref="abc">{{ buttonContent }}</button>
+        <button>{{ buttonContent }}</button>
     </a>
 </template>
 
 <script>
-import { ref } from "vue"
 export default {
     props: ["buttonContent", "hrefLink"],
     setup(props) {
         let buttonContent = props.buttonContent
         let hrefLink = props.hrefLink
         // 是否需要点击后变色
-        let needChange = props.needChange
-       
+        // let needChange = props.needChange
+
         return {
             buttonContent,
             hrefLink,
@@ -25,11 +24,27 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 992px) {
+    .my-button {
+        padding: 0 1.25rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        display: flex;
+        border-radius: 30px;
+        text-align: center;
+        border: 1px solid #fff;
+        display: inline-block;
+        cursor: pointer;
+        transition: .5s;
+        display: block;
+    }
+}
+
 .my-button {
     display: flex;
-    padding: 0 40px;
-    height: 45px;
-    line-height: 45px;
+    padding: 0 2.5rem;
+    height: 3rem;
+    line-height: 3rem;
     border-radius: 30px;
     text-align: center;
     border: 1px solid #fff;
@@ -54,8 +69,8 @@ export default {
     background: none;
     color: #fff;
     text-align: center;
-    font-size: 16px;
-    margin-left: 5px;
+    font-size: 1rem;
+    margin-left: .3rem;
     cursor: pointer;
 }
 </style>

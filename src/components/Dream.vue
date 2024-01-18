@@ -49,8 +49,9 @@ export default {
     margin: 0 10px;
 
 }
+
 .dream-card .dream-content {
-    color:rgb(150,150,150) ;
+    color: rgb(150, 150, 150);
     width: 60%;
     display: block;
     text-align: center;
@@ -59,4 +60,35 @@ export default {
     line-height: 1.5;
 }
 
+/* 移动端适配 */
+@media (max-width: 992px) {
+    .dream-card {
+        border-radius: .5rem;
+        color: black;
+        background-color: #fff;
+        padding: 1.5rem .5rem;
+    }
+
+    .dream-card .dream-title-containter {
+        text-align: center;
+        font-size: 2rem;
+        margin: 2rem 0;
+        font-weight: 700;
+    }
+
+    .dream-card .dream-title-containter .dream-title {
+        margin: 0 .6rem;
+
+    }
+
+    .dream-card .dream-content {
+        color: rgb(150, 150, 150);
+        width: 70vw;
+        display: block;
+        text-align: center;
+        margin: 2rem auto;
+        font-size: 1.1rem;
+        line-height: 1.5;
+    }
+}
 </style>

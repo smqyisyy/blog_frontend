@@ -62,7 +62,7 @@ export default {
 <style scoped>
 /* 上方导航栏 */
 .nav {
-    width: 1125px;
+    width: 70vw;
     display: flex;
     justify-content: space-between;
 }

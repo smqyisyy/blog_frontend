@@ -11,7 +11,7 @@
     <div class="category-blog-card-containter" v-if="category" v-loading="loading">
         <BlogCard v-for="item in blogInfoArr" :key="item.id" :blogTitle="item.blogTitle" :blogContent="item.blogContent"
             :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" :imgUrl="item.imgUrl"
-            @click="routeToBlog(item.id)" />
+            @click="routeToBlog(item.id)" class="blog-card" />
     </div>
     <!-- 分页 -->
     <div class="pagination-containter" v-if="totalBlog && totalBlog > pageSize">
@@ -39,7 +39,7 @@ export default {
         let blogInfoArr = ref([])
         let totalBlog = ref(0)
         let pageSize = ref(6)
-        let loading = ref(true)
+        let loading = ref(false)
         /**
       * 跳转到对应文章的页面
       * @param {*} id 
@@ -103,22 +103,47 @@ export default {
 .category-card-containter {
     margin: 0 auto;
     margin-top: 150px;
-    width: 1125px;
+    width: 60vw;
 
 }
 
 .category-blog-card-containter {
-    width: 1125px;
+    width: 60vw;
     margin: 0 auto;
     margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: flex-start;
+}
+.category-blog-card-containter .blog-card {
+    width: 32%;
+    margin-right: 2%;
 }
 
+.category-blog-card-containter .blog-card:nth-child(3n) {
+    margin-right: 0;
+}
 .pagination-containter {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+}
+
+/* 移动端适配 */
+@media (max-width: 992px) {
+    .category-card-containter {
+        width: 95vw;
+    }
+
+    .category-blog-card-containter {
+        width: 92vw;
+    }
+
+    .category-blog-card-containter .blog-card {
+        width: 100%;
+        margin-right: 0;
+    }
+
 }
 </style>

@@ -110,9 +110,9 @@ export default {
 <style scoped>
 /* 中间标题 */
 .home .home-title-containter {
-    margin: 0 auto;
-    margin-top: 380px;
-    width: 650px;
+    /* margin: 0 auto; */
+    margin-top: 40vh;
+    /* width: 650px; */
 }
 
 /* 两个按钮 */
@@ -120,6 +120,14 @@ export default {
     margin: 0 auto;
     margin-top: 100px;
     width: 400px;
+}
+
+/* 两个按钮移动端适配 */
+@media (max-width: 992px) {
+    .home .home-buttons-containter {
+        margin-top: 15vh;
+        width: 85vw;
+    }
 }
 
 /* 联系方式链接 */
@@ -139,6 +147,13 @@ export default {
     box-sizing: border-box;
 }
 
+/* 梦想card移动端适配 */
+@media (max-width: 992px) {
+    .home .dream-card-containter {
+        width: 95vw;
+    }
+}
+
 /* 博客缩略图 */
 .home .blog-card-containter {
     width: 1125px;
@@ -147,13 +162,18 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-
-
 }
 
 .home .pagination-containter {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+}
+
+/* 博客卡片移动端适配 */
+@media (max-width: 992px) {
+    .home .blog-card-containter {
+        width: 95vw;
+    }
 }
 </style>

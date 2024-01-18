@@ -75,7 +75,7 @@ export default {
 }
 
 .tag-card .article-tag-containter .article-tag {
-    margin: 0 10px;
+    margin: 0 .7rem;
 }
 
 .tag-card .tag-list {
@@ -88,6 +88,19 @@ export default {
 }
 
 .tag-card .tag-list .tag-item {
-    margin: 10px 15px;
+    margin: .7rem 1rem;
+}
+
+@media (max-width: 992px) {
+    .tag-card .article-tag-containter {
+        text-align: center;
+        font-size: 2rem;
+        margin: 2rem 0;
+        font-weight: 400;
+    }
+
+    .tag-card .tag-list {
+        width: fit-content;
+    }
 }
 </style>

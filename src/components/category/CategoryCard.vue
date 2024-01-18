@@ -90,4 +90,16 @@ export default {
 .category-card .category-list .category-item {
     margin: 10px 15px;
 }
+@media (max-width: 992px) {
+    .category-card .article-category-containter {
+        text-align: center;
+        font-size: 2rem;
+        margin: 2rem 0;
+        font-weight: 400;
+    }
+
+    .category-card .category-list {
+        width: fit-content;
+    }
+}
 </style>

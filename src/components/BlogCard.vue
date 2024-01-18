@@ -117,14 +117,17 @@ export default {
     margin-left: 5px;
 }
 
-
-
-
-
 .blog-card .bottom .author-info {
     display: flex;
     justify-content: space-around;
     align-items: center;
     width: 100px;
+}
+
+/* 移动端适配 */
+@media (max-width: 992px) {
+    .blog-card {
+        width: 95vw;
+    }
 }
 </style>

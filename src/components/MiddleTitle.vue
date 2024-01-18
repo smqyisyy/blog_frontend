@@ -35,4 +35,17 @@ export default {
 .middle-title h1 {
     color: #000;
 }
+
+/* 移动端尺寸 */
+@media (max-width: 992px) {
+    .middle-title {
+        font-size: 2rem;
+        line-height: 2rem;
+        text-align: center;
+    }
+
+    .middle-title h1 {
+        color: #000;
+    }
+}
 </style>

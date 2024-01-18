@@ -31,4 +31,12 @@ export default {
     line-height: 60px;
     text-align: center;
 }
+
+/* 移动端大小适配 */
+@media screen and (max-width: 992px) {
+    .home-title {
+        font-size: 2.5rem;
+        line-height: 2.5rem;
+    }
+}
 </style>

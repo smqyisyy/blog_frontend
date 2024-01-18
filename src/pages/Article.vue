@@ -49,4 +49,20 @@ export default {
     width: 25%;
     font-size: 22px;
 }
+
+/* 移动端适配隐藏目录 */
+@media (max-width: 992px) {
+    .md-blog-containter {
+        width: 92vw;
+        margin-top: 15rem;
+    }
+
+    .md-blog-containter .content-card-contianter {
+        width: 100%;
+    }
+
+    .md-blog-containter .toc-card-containter {
+        display: none;
+    }
+}
 </style>

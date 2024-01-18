@@ -32,8 +32,11 @@ export default {
 </script>
 
 <style  scoped>
+
 .home-buttons {
     display: flex;
     justify-content: space-between;
 }
+
+
 </style>

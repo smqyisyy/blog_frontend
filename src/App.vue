@@ -21,7 +21,7 @@
 .nav-containter {
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 100vw;
   height: 64px;
   position: fixed;
   top: 0;
@@ -32,13 +32,23 @@
   background-color: #ee6e73;
 }
 
+/* 顶部导航栏移动端适配 */
+@media (max-width: 992px) {
+  .nav-containter {
+    display: none;
+  }
+}
+
+/* 底部使用flex居中 */
 .footer-containter {
   margin-top: 30px;
   height: 147px;
+  width: 100%;
   background-color: #ee6e73;
   display: flex;
   justify-content: center;
 }
+
 /* 返回顶部按钮样式 */
 .back-top-btn-containter {
   width: 48px;
@@ -49,6 +59,7 @@
   bottom: 20px;
   right: 20px;
 }
+
 /* 控制返回顶部按钮的消失与出现样式,使用animatecss */
 .animate__slideOutDown,
 .animate__slideInUp {

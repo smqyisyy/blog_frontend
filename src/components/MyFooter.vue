@@ -24,7 +24,7 @@ export default {
     },
     setup() {
         let runTime = ref()
-        let startTime="2023-01-01 00:00:00"
+        let startTime = "2023-01-01 00:00:00"
         const buildTime = new Date(startTime)
         onMounted(() => {
             // 计算运行时间
@@ -59,7 +59,7 @@ export default {
 }
 
 .footer .footer-left {
-    width: 500px;
+    width: 30vw;
     text-align: center;
 }
 
@@ -72,4 +72,23 @@ export default {
     padding-top: 10px;
     font-size: 18px;
 }
-</style>
+
+/* 移动端适配，移动端时变为上下布局而不是左右布局 */
+@media (max-width: 992px) {
+    .footer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer .footer-left {
+        width: 100vw;
+        text-align: center;
+    }
+
+    .footer .footer-right {
+        width: 50vw;
+        text-align: center;
+        padding-top: .7rem;
+        font-size: 1rem;
+    }
+}</style>
