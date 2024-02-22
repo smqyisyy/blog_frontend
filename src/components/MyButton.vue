@@ -24,31 +24,13 @@ export default {
 </script>
 
 <style scoped>
-@media (max-width: 992px) {
-    .my-button {
-        padding: 0 1.25rem;
-        height: 2.5rem;
-        line-height: 2.5rem;
-        display: flex;
-        border-radius: 30px;
-        text-align: center;
-        border: 1px solid #fff;
-        display: inline-block;
-        cursor: pointer;
-        transition: .5s;
-        display: block;
-    }
-}
-
 .my-button {
-    display: flex;
     padding: 0 2.5rem;
     height: 3rem;
     line-height: 3rem;
     border-radius: 30px;
     text-align: center;
     border: 1px solid #fff;
-    display: inline-block;
     cursor: pointer;
     transition: .5s;
     display: block;
@@ -72,5 +54,21 @@ export default {
     font-size: 1rem;
     margin-left: .3rem;
     cursor: pointer;
+}
+
+@media (max-width: 992px) {
+    .my-button {
+        padding: 0 2rem;
+        height: 3rem;
+        line-height: 3rem;
+        border-radius: 30px;
+        text-align: center;
+        border: 1px solid #fff;
+        cursor: pointer;
+        transition: .5s;
+        display: block;
+    }
+
+
 }
 </style>

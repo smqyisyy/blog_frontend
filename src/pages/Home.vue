@@ -130,6 +130,7 @@ export default {
     }
 }
 
+
 /* 联系方式链接 */
 .home .social-link-containter {
     width: 200px;
