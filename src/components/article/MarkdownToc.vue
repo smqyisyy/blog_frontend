@@ -147,7 +147,33 @@ export default {
                 }, delay);
             }
         }
-        const scrollHandler = debunce(function () {
+        // const scrollHandler = debunce(function () {
+        //     // 获取所有标题元素
+        //     const headings = Array.from(document.querySelectorAll('h1, h2, h3'));
+        //     // 获取所有标题的矩形，用于获取当前标题在整个页面的位置
+        //     const rects = headings.map((heading) => heading.getBoundingClientRect())
+        //     const topRange = 200
+        //     for (let i = 0; i < headings.length; i++) {
+        //         const heading = headings[i];
+        //         const rect = rects[i];
+        //         // 如果矩形范围在200px之后，就认为当前标题在顶部
+        //         if (rect.top <= topRange && rect.top >= 0) {
+        //             highLight(heading);
+        //             const path = findPath({ children: headingTree.value }, heading.id);
+        //             toggleToc(path)
+        //             break;
+        //         }
+        //         // 第二种情况，如果当前标题不在页面，下一个标题也没有进入页面，就应当显示当前区域对应标题的内容
+        //         else if (rect.top < 0 && rect[i + 1] && rect[i + 1].top > document.documentElement.clientHeight) {
+        //             highLight(heading);
+        //             const path = findPath({ children: headingTree.value }, heading.id);
+        //             toggleToc(path)
+        //             break;
+        //         }
+        //     }
+        // }
+        //     , 100)
+        const scrollHandler = function () {
             // 获取所有标题元素
             const headings = Array.from(document.querySelectorAll('h1, h2, h3'));
             // 获取所有标题的矩形，用于获取当前标题在整个页面的位置
@@ -172,7 +198,6 @@ export default {
                 }
             }
         }
-            , 100)
         // 当滚动200px后目录变为fixed布局
         let isScroll = ref(false);
         onMounted(() => {
