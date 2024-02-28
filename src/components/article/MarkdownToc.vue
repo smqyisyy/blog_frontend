@@ -33,7 +33,7 @@
     </div>
 </template>
 <script>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, onUnmounted } from "vue";
 import { useBlogStore } from "@/store/useBlogStore";
 export default {
     setup() {
@@ -214,6 +214,9 @@ export default {
                 })
             // 监听滚动事件,当标题元素到达位置时自动进行高亮与目录展开
             window.addEventListener("scroll", scrollHandler)
+        })
+        onUnmounted(() => {
+            window.removeEventListener("scroll", scrollHandler)
         })
         return {
             headingTree,

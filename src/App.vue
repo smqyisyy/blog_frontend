@@ -72,7 +72,7 @@ import Home from '@/pages/Home.vue';
 import HeaderNav from '@/components/HeaderNav.vue';
 import MyFooter from '@/components/MyFooter.vue';
 import BackTopBtn from '@/components/BackTopBtn.vue';
-import { ref, onMounted } from "vue"
+import { ref, onMounted, onUnmounted } from "vue"
 export default {
   components: {
     Home,
@@ -83,24 +83,28 @@ export default {
   setup() {
     let isScroll = ref(false)
     let backTopBtnShow = ref(false)
-    onMounted(() => {
-      window.addEventListener("scroll", function () {
-        // 获取滑动位置，超过64后顶部导航栏加一个类，变为红色背景,并添加回到顶部按钮
-        let scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
-        if (scrolltop >= 64) {
-          isScroll.value = true
-          backTopBtnShow.value = true
-        } else {
-          isScroll.value = false
-          backTopBtnShow.value = false
-        }
+    const addBgc = function () {
+      // 获取滑动位置，超过64后顶部导航栏加一个类，变为红色背景,并添加回到顶部按钮
+      let scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrolltop >= 64) {
+        isScroll.value = true
+        backTopBtnShow.value = true
+      } else {
+        isScroll.value = false
+        backTopBtnShow.value = false
+      }
 
-      })
-    })
-    // 回到顶部
-    function handleBackTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
+    onMounted(() => {
+      window.addEventListener("scroll", addBgc)
+    })
+    onUnmounted(() => {
+      window.removeEventListener("scroll", addBgc)
+    }),
+      // 回到顶部
+      function handleBackTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
     return {
       isScroll,
       backTopBtnShow,
