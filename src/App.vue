@@ -83,6 +83,10 @@ export default {
   setup() {
     let isScroll = ref(false)
     let backTopBtnShow = ref(false)
+    // 回到顶部
+    function handleBackTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
     const addBgc = function () {
       // 获取滑动位置，超过64后顶部导航栏加一个类，变为红色背景,并添加回到顶部按钮
       let scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -93,18 +97,13 @@ export default {
         isScroll.value = false
         backTopBtnShow.value = false
       }
-
     }
     onMounted(() => {
       window.addEventListener("scroll", addBgc)
     })
     onUnmounted(() => {
       window.removeEventListener("scroll", addBgc)
-    }),
-      // 回到顶部
-      function handleBackTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }
+    })
     return {
       isScroll,
       backTopBtnShow,
