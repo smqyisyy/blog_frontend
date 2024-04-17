@@ -28,15 +28,11 @@ export default {
 <style>
 /* markdown样式 */
 @import url("../../assets/css/markdown-style.css");
-
-
+</style>
+<style scoped>
 .content-card .content {
     padding: 2em 2em;
     line-height: 1.5;
-    
-}
-.content-card .content h1 {
-    text-align: center;
-    margin-bottom: 40px;
+
 }
 </style>
