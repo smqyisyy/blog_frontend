@@ -12,8 +12,6 @@ export default {
     setup(props) {
         let subtitle = ref('')
         let isShow = ref(false)
-        let index = 0
-        let arrIndex = 0
         function sleep(time) {
             return new Promise((resolve) => {
                 return setTimeout(resolve, time)
@@ -21,6 +19,8 @@ export default {
             })
 
         }
+        let index = 0
+        let arrIndex = 0
         async function autoTyping() {
             index++
             subtitle.value = props.subtitle[arrIndex].slice(0, index)

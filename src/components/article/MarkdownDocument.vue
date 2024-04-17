@@ -57,6 +57,7 @@ export default {
         onMounted(async () => {
             await initContent()
             Prism.highlightAll()
+            // 标识加载完成
             loading.value = false
         })
         return {

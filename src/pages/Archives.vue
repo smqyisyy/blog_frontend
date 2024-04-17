@@ -6,7 +6,11 @@
 </template>
 
 <script>
+import MiddleTitle from "@/components/MiddleTitle.vue";
 export default {
+    components: {
+        MiddleTitle
+    },
     setup() {
 
 
