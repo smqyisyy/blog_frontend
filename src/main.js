@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import '@/assets/css/reset.css'
-import '@/assets/css/common.css'
 import 'animate.css';
+import '@/assets/css/common.css'
 import App from './App.vue'
 import router from './router';
 import { createPinia } from 'pinia'

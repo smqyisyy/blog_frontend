@@ -41,7 +41,8 @@
 
 /* 底部使用flex居中 */
 .footer-containter {
-  margin-top: 30px;
+  margin-top: 80px;
+  margin-bottom: 0;
   height: 147px;
   width: 100%;
   background-color: #ee6e73;
