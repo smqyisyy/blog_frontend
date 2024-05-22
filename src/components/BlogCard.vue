@@ -20,7 +20,7 @@
     </el-card>
 </template>
 
-<script >
+<script>
 export default {
     props: {
         blogTitle: {
@@ -65,6 +65,7 @@ export default {
     border-radius: 15px;
     margin-bottom: 20px;
     transition: .5s;
+    cursor: pointer;
 }
 
 .blog-card:hover {
@@ -74,7 +75,6 @@ export default {
 .blog-card .image {
     width: 100%;
     height: 220px;
-    cursor: pointer;
 }
 
 .blog-card .blog-title {

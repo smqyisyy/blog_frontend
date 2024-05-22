@@ -1,12 +1,13 @@
 <!-- 标签组件 -->
 <template>
-    <div class="my-tag" :style="{ 'background-color': color }" >
+    <div class="my-tag" :class="{ 'is-selected': isSelected }" :style="{ 'background-color': color }">
         <span class="tag-name">{{ tagName }}</span>
         <span class="tag-count">{{ tagCount }}</span>
     </div>
 </template>
 
 <script>
+import { ref } from 'vue';
 export default {
     props: {
         tagName: {
@@ -20,16 +21,22 @@ export default {
         color: {
             type: String,
             default: ''
+        },
+        isSelected: {
+            type: Boolean,
+            default: false
         }
     },
     setup(props) {
         const color = props.color;
         const tagName = props.tagName;
         const tagCount = props.tagCount;
+        const isSelected = ref(props.isSelected);
         return {
             color,
             tagName,
             tagCount,
+            isSelected
         }
     }
 }
@@ -47,7 +54,8 @@ export default {
     transition: .3s ease-out;
 }
 
-.my-tag:hover {
+.my-tag:hover,
+.my-tag.is-selected {
     background: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%) !important;
     color: #fff;
 }

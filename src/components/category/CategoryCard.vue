@@ -6,8 +6,10 @@
             <span class="article-category">文章分类</span>
         </div>
         <div class="category-list">
-            <div class="category-item" v-for="category in categoriesArr" @click="routeToCategory(category.category)">
-                <my-tag :tagName="category.category" :tag-count="category.count" :color="getRandomColor()" />
+            <div class="category-item" v-for="(category, index) in categoriesArr"
+                @click="routeToCategory(category.category, index)">
+                <my-tag :tagName="category.category" :tag-count="category.count" :color="getRandomColor()"
+                    :isSelected="isSelected(index)" />
             </div>
 
         </div>
@@ -18,17 +20,21 @@ import { getCategories } from "@/request/api/getCategoryInfo"
 import { ref, onMounted } from "vue"
 import MyTag from '@/components/MyTag.vue';
 import { useRouter } from "vue-router";
+import { useBlogStore } from "@/store/useBlogStore";
+import { onBeforeRouteUpdate } from "vue-router";
 export default {
     components: {
         MyTag
     },
     setup() {
-        const categoriesArr = ref([])
         onMounted(() => {
             getCategories().then((result) => {
                 categoriesArr.value = result.data.data
             })
         })
+
+        const router = useRouter()
+        const categoriesArr = ref([])
         function getRandom(min, max) {
             return Math.floor(Math.random() * (max - min) + min)
         }
@@ -39,20 +45,26 @@ export default {
         function getRandomColor() {
             return colors[getRandom(0, colors.length)]
         }
-        const router = useRouter()
+        // 当前选中的元素,默认为第一个
+        // const selectedItem = ref(0)
         /**
          * 跳转到对应分类的页面
          * @param {*} category 
          */
-        function routeToCategory(category) {
+        function routeToCategory(category, index) {
+            // selectedItem.value = index
             router.push({
                 path: `/categories/${category}`
             })
         }
+        const isSelected = (index) => {
+            // return selectedItem.value === index;
+        };
         return {
             categoriesArr,
             getRandomColor,
             routeToCategory,
+            isSelected
         }
     }
 }
@@ -90,6 +102,8 @@ export default {
 .category-card .category-list .category-item {
     margin: 10px 15px;
 }
+
+
 @media (max-width: 992px) {
     .category-card .article-category-containter {
         text-align: center;
