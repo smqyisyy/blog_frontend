@@ -65,15 +65,16 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     let t = to.path.split("/").slice(1)
     let f = from.path.split("/").slice(1)
+    // 如果像标签页，分类页页内的切换就不需要重新回到上面
     if (t[0] === f[0]) {
         next()
     }
     else {
+        next()
         window.scrollTo({
             top: 0,
             behavior: 'instant'
         })    //滚动条至于浏览器顶部
-        next()
     }
 })
 // 初始化 Pinia

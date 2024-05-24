@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { ref } from 'vue';
 export default {
     props: {
         tagName: {
@@ -24,19 +23,13 @@ export default {
         },
         isSelected: {
             type: Boolean,
-            default: false
+            // default: () => false, // 默认返回 false
+
         }
     },
     setup(props) {
-        const color = props.color;
-        const tagName = props.tagName;
-        const tagCount = props.tagCount;
-        const isSelected = ref(props.isSelected);
         return {
-            color,
-            tagName,
-            tagCount,
-            isSelected
+            ...props
         }
     }
 }
@@ -54,9 +47,17 @@ export default {
     transition: .3s ease-out;
 }
 
-.my-tag:hover,
 .my-tag.is-selected {
-    background: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%) !important;
+    background: linear-gradient(to bottom right, #FF5E3A 0%, #FF2A68 100%);
+    color: #fff;
+}
+
+.my-tag.is-selected .tag-count {
+    color: #fff;
+}
+
+.my-tag:hover {
+    background: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%);
     color: #fff;
 }
 

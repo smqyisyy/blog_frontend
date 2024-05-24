@@ -11,17 +11,14 @@
                 <my-tag :tagName="category.category" :tag-count="category.count" :color="getRandomColor()"
                     :isSelected="isSelected(index)" />
             </div>
-
         </div>
     </div>
 </template>
 <script>
 import { getCategories } from "@/request/api/getCategoryInfo"
-import { ref, onMounted } from "vue"
+import { ref, onMounted, watch } from "vue"
 import MyTag from '@/components/MyTag.vue';
-import { useRouter } from "vue-router";
-import { useBlogStore } from "@/store/useBlogStore";
-import { onBeforeRouteUpdate } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 export default {
     components: {
         MyTag
@@ -32,8 +29,13 @@ export default {
                 categoriesArr.value = result.data.data
             })
         })
-
         const router = useRouter()
+        const route = useRoute()
+        // 每次变化的时候都将当前选中更新为准确的状态
+        watch(() => route.params.category, () => {
+            const index = categoriesArr.value.findIndex(category => category.category === route.params.category);
+            selectedIndex.value = index !== -1 ? index : 0; // 如果找到索引，就使用该索引；否则使用默认值 0
+        })
         const categoriesArr = ref([])
         function getRandom(min, max) {
             return Math.floor(Math.random() * (max - min) + min)
@@ -45,21 +47,22 @@ export default {
         function getRandomColor() {
             return colors[getRandom(0, colors.length)]
         }
-        // 当前选中的元素,默认为第一个
-        // const selectedItem = ref(0)
+        // 默认第一个
+        const selectedIndex = ref(0);
         /**
          * 跳转到对应分类的页面
          * @param {*} category 
          */
         function routeToCategory(category, index) {
-            // selectedItem.value = index
+            // 更改被选中的按钮索引
+            selectedIndex.value = index
             router.push({
                 path: `/categories/${category}`
             })
         }
         const isSelected = (index) => {
-            // return selectedItem.value === index;
-        };
+            return index === selectedIndex.value
+        }
         return {
             categoriesArr,
             getRandomColor,

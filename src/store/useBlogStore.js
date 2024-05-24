@@ -10,6 +10,10 @@ export const useBlogStore = defineStore("blog", {
             firstTag: "",
             // 分类页的首个数据
             firstCategory: "",
+            // 当前选中的标签
+            selectedTag: 0,
+            // 当前选中的分类
+            selectedCategory: 0,
         }
     },
     actions: {

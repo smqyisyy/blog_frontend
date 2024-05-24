@@ -6,8 +6,9 @@
             <span class="article-tag">文章标签</span>
         </div>
         <div class="tag-list">
-            <div class="tag-item" v-for="tag in tagsArr" @click="routeToTag(tag.tag)">
-                <my-tag :tagName="tag.tag" :tag-count="tag.count" :color="getRandomColor()" />
+            <div class="tag-item" v-for="(tag, index) in tagsArr" @click="routeToTag(tag.tag, index)">
+                <my-tag :tagName="tag.tag" :tag-count="tag.count" :color="getRandomColor()"
+                    :isSelected="isSelected(index)" />
             </div>
         </div>
     </div>
@@ -16,8 +17,8 @@
 <script>
 import { getTags } from "@/request/api/getTagInfo"
 import MyTag from '@/components/MyTag.vue';
-import { ref, onMounted } from "vue"
-import { useRouter } from "vue-router";
+import { ref, onMounted, watch } from "vue"
+import { useRouter, useRoute } from "vue-router";
 export default {
     components: {
         MyTag
@@ -28,6 +29,14 @@ export default {
             getTags().then((result) => {
                 tagsArr.value = result.data.data
             })
+        })
+        const route = useRoute()
+        // 默认第一个
+        const selectedIndex = ref(0);
+        // 每次变化的时候都将当前选中那个更新为准确的索引
+        watch(() => route.params.tag, () => {
+            const index = tagsArr.value.findIndex(tag => tag.tag === route.params.tag)
+            selectedIndex.value = index !== -1 ? index : 0; // 如果找到索引，就使用该索引；否则使用默认值 0
         })
         function getRandom(min, max) {
             return Math.floor(Math.random() * (max - min) + min)
@@ -44,15 +53,21 @@ export default {
          * 跳转到对应标签的页面
          * @param {*} tag 
          */
-        function routeToTag(tag) {
+        function routeToTag(tag, index) {
+            // 更改被选中的按钮索引
+            selectedIndex.value = index
             router.push({
                 path: `/tags/${tag}`
             })
+        }
+        const isSelected = (index) => {
+            return index === selectedIndex.value
         }
         return {
             tagsArr,
             getRandomColor,
             routeToTag,
+            isSelected
         }
     }
 }
