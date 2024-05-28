@@ -34,11 +34,11 @@
                         style="color: #fff;" /><span>关于</span>
                 </div>
             </router-link>
-            <router-link to="/contact">
+            <!-- <router-link to="/contact">
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-comments"
                         style="color: #fff;" /><span>留言板</span>
                 </div>
-            </router-link>
+            </router-link> -->
             <a href="/games">
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-gamepad" style="color: #fff;" /><span>小游戏</span>
                 </div>
