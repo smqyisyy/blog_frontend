@@ -5,3 +5,5 @@
 UI组件库为ELEMENTUI PLUS
 
 网站地址：www.smqy.site
+
+后端项目请参考另一个仓库
