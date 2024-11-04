@@ -7,6 +7,7 @@
                 <a href="https://cn.vuejs.org/guide/introduction.html" target="_blank">vue3</a>
             </div>
             <div>本站已运行 {{ runTime }}</div>
+            <div><a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备2024125314号</a></div>
         </div>
         <!-- 右边 -->
         <div class="footer-right">
