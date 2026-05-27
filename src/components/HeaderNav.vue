@@ -12,7 +12,7 @@
         </router-link>
         <!-- 导航栏右侧的列表选项 -->
         <div class="nav_list">
-            <div class="list_item" @click="toggleSearch"><font-awesome-icon icon="fa-solid fa-magnifying-glass" style="color: #fff;" /><span>搜索</span></div>
+            <div class="list_item search-icon" @click="toggleSearch"><font-awesome-icon icon="fa-solid fa-magnifying-glass" style="color: #fff;" /></div>
             <router-link to="/">
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-house" style="color: #fff;" /><span>首页</span>
                 </div>
@@ -40,18 +40,14 @@
                 </div>
             </a>
         </div>
-        <div class="search-expand" v-if="showSearch" @click.stop>
-            <div class="search-expand-inner">
-                <el-input v-model="searchKeyword" placeholder="输入关键词搜索博客..." size="large" @keyup.enter="doSearch" clearable autofocus>
-                    <template #prefix>
-                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" style="color: #999;" />
-                    </template>
-                    <template #append>
-                        <el-button @click="doSearch" type="primary" size="large">
-                            搜索
-                        </el-button>
-                    </template>
-                </el-input>
+        <!-- 搜索弹框遮罩层 -->
+        <div class="search-overlay" v-if="showSearch" @click="showSearch = false">
+            <div class="search-modal" @click.stop>
+                <div class="search-modal-inner">
+                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="search-modal-icon" />
+                    <el-input v-model="searchKeyword" placeholder="搜索博客..." size="large" @keyup.enter="doSearch" clearable autofocus ref="searchInput" />
+                    <el-button type="primary" @click="doSearch" size="large" class="search-btn">搜索</el-button>
+                </div>
             </div>
         </div>
     </div>
@@ -137,27 +133,68 @@ export default {
     margin-left: 3px;
 }
 
-.nav .search-expand {
+/* 搜索图标 */
+.nav .nav_list .search-icon {
+    font-size: 16px;
+}
+
+/* 搜索遮罩层 */
+.nav .search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 200;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 搜索弹框 */
+.search-modal {
     position: absolute;
-    top: 64px;
+    top: 30%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     width: 50vw;
-    padding: 20px 0;
+    max-width: 600px;
     background: #fff;
-    border-bottom: 3px solid #ee6e73;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.12);
-    z-index: 100;
-    animation: slideDown 0.3s ease;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    animation: modalSlide 0.3s ease;
 }
 
-@keyframes slideDown {
-    from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+@keyframes modalSlide {
+    from { opacity: 0; transform: translate(-50%, -50%) translateY(-20px); }
+    to { opacity: 1; transform: translate(-50%, -50%) translateY(0); }
 }
 
-.nav .search-expand-inner {
-    width: 80%;
-    margin: 0 auto;
+.search-modal-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-modal-icon {
+    font-size: 20px;
+    color: #ee6e73;
+}
+
+.search-modal .search-btn {
+    background: #ee6e73;
+    border-color: #ee6e73;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.search-modal .search-btn:hover {
+    background: #d4555a;
+    border-color: #d4555a;
 }
 </style>
