@@ -5,7 +5,7 @@
         <span class="blog-title">{{ blogTitle }}</span>
         <div style="padding: 14px">
             <div class="blog-content">
-                {{ blogContent }}
+                {{ displayContent }}
             </div>
             <div class="bottom">
                 <time class="time"><font-awesome-icon icon="fa-regular fa-clock" />
@@ -16,6 +16,7 @@
                     <span class="author">{{ blogAuthor }}</span>
                 </div>
             </div>
+            <div class="divider"></div>
         </div>
     </el-card>
 </template>
@@ -30,7 +31,10 @@ export default {
             default: "2023-06-09"
         },
         blogContent: {
-            default: "2023年6月6日，星期二，我在镇江的极客营进行Java认知实习的第二天。今天的主要内容是使用Java编写一个”万年历”程序，并了解了Java的程序"
+            default: “”
+        },
+        description: {
+            default: “”
         },
         blogAuthor: {
             default: "DishDish"
@@ -43,14 +47,18 @@ export default {
         const blogTitle = props.blogTitle
         const releaseDate = props.releaseDate
         const blogContent = props.blogContent
+        const description = props.description
         const blogAuthor = props.blogAuthor
         const imgUrl = props.imgUrl
+        // 优先显示 description，没有则从 blogContent 提取纯文本
+        const displayContent = description || blogContent.replace(/[#*\[\]!>`\-_~]/g, '').replace(/\n+/g, ' ').trim().slice(0, 100)
         return {
             releaseDate,
             blogContent,
             blogTitle,
             blogAuthor,
-            imgUrl
+            imgUrl,
+            displayContent
         }
     }
 
@@ -100,27 +108,37 @@ export default {
 
 .blog-card .bottom {
     margin-top: 13px;
-    line-height: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 8px 0;
+}
+
+.blog-card .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
+    margin: 8px 0;
 }
 
 .blog-card .bottom .time {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.5;
-    color: #000;
+    color: #999;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .blog-card .bottom .time span {
-    margin-left: 5px;
+    margin-left: 2px;
 }
 
 .blog-card .bottom .author-info {
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    width: 100px;
+    gap: 5px;
+    font-size: 14px;
+    color: #999;
 }
 
 /* 移动端适配 */

@@ -8,7 +8,7 @@
     </div>
     <div class="tag-blog-card-containter" v-if="tag" v-loading="loading">
         <BlogCard v-for="item in blogInfoArr" :key="item.id" :blogTitle="item.blogTitle" :blogContent="item.blogContent"
-            :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" :imgUrl="item.imgUrl"
+            :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" :imgUrl="item.imgUrl" :description="item.description"
             @click="routeToBlog(item.id)" class="blog-card" />
     </div>
     <!-- 分页 -->
@@ -105,19 +105,18 @@ export default {
 }
 
 .tag-blog-card-containter {
-    /* width: 1125px; */
     width: 60vw;
     margin: 0 auto;
     margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    /* justify-content: space-between; */
+    gap: 20px;
 }
 
 .tag-blog-card-containter .blog-card {
-    width: 32%;
-    margin-right: 2%;
+    width: calc((100% - 40px) / 3);
+    margin-right: 0;
 }
 
 .tag-blog-card-containter .blog-card:nth-child(3n) {
@@ -143,6 +142,10 @@ export default {
     .tag-blog-card-containter .blog-card {
         width: 100%;
         margin-right: 0;
+    }
+
+    .tag-blog-card-containter {
+        gap: 20px;
     }
 
 }

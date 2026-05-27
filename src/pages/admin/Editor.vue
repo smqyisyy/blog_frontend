@@ -36,6 +36,13 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="16">
+                        <el-form-item label="描述">
+                            <el-input v-model="formData.description" placeholder="博客预览描述（选填，不填则自动截取正文）" />
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="24">
                         <el-form-item label="标签">
                             <el-select v-model="formData.tags" multiple filterable allow-create default-first-option placeholder="输入标签" style="width: 100%;">
                                 <el-option v-for="tag in existingTags" :key="tag" :label="tag" :value="tag" />
@@ -76,6 +83,7 @@ export default {
             imgUrl: '/images/default-cover.jpg',
             tags: [],
             blogContent: '',
+            description: '',
             originalTitle: ''
         })
 
@@ -93,6 +101,7 @@ export default {
                         blogAuthor: blog.blogAuthor,
                         releaseDate: blog.releaseDate,
                         imgUrl: blog.imgUrl,
+                        description: blog.description || '',
                         tags: [],
                         blogContent: blog.blogContent || '',
                         originalTitle: blog.blogTitle

@@ -10,7 +10,7 @@
           <!-- 博客卡片 -->
         <div class="blog-card-containter" v-loading="loading">
             <BlogCard  :key="item.id" :blogTitle="item.blogTitle" :blogContent="item.blogContent"
-                :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" :imgUrl="item.imgUrl"
+                :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" :imgUrl="item.imgUrl" :description="item.description"
                 @click="routeToBlog(item.id)" />
         </div>
       </el-timeline-item>

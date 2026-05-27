@@ -10,7 +10,7 @@
 
     <div class="category-blog-card-containter" v-if="category" v-loading="loading">
         <BlogCard v-for="item in blogInfoArr" :key="item.id" :blogTitle="item.blogTitle" :blogContent="item.blogContent"
-            :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" :imgUrl="item.imgUrl"
+            :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" :imgUrl="item.imgUrl" :description="item.description"
             @click="routeToBlog(item.id)" class="blog-card" />
     </div>
     <!-- 分页 -->
@@ -113,12 +113,12 @@ export default {
     margin-top: 50px;
     display: flex;
     flex-wrap: wrap;
-    /* justify-content: space-between; */
     justify-content: flex-start;
+    gap: 20px;
 }
 .category-blog-card-containter .blog-card {
-    width: 32%;
-    margin-right: 2%;
+    width: calc((100% - 40px) / 3);
+    margin-right: 0;
 }
 
 .category-blog-card-containter .blog-card:nth-child(3n) {
@@ -143,6 +143,10 @@ export default {
     .category-blog-card-containter .blog-card {
         width: 100%;
         margin-right: 0;
+    }
+
+    .category-blog-card-containter {
+        gap: 20px;
     }
 
 }
