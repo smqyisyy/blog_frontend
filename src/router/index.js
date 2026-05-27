@@ -54,6 +54,35 @@ const routes = [
         component: () =>
             import("@/pages/Article.vue")
     },
+    {
+        path: "/admin/login",
+        name: "adminLogin",
+        component: () => import("@/pages/admin/Login.vue")
+    },
+    {
+        path: "/admin",
+        name: "admin",
+        component: () => import("@/pages/admin/Admin.vue"),
+        beforeEnter(to, from, next) {
+            if (localStorage.getItem('admin_token')) {
+                next()
+            } else {
+                next('/admin/login')
+            }
+        }
+    },
+    {
+        path: "/admin/edit/:blogTitle",
+        name: "adminEdit",
+        component: () => import("@/pages/admin/Editor.vue"),
+        beforeEnter(to, from, next) {
+            if (localStorage.getItem('admin_token')) {
+                next()
+            } else {
+                next('/admin/login')
+            }
+        }
+    },
 
 
 ]

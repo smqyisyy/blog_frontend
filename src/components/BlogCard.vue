@@ -36,7 +36,7 @@ export default {
             default: "DishDish"
         },
         imgUrl: {
-            default: "https://www.gtrinee.top/medias/featureimages/5.jpg"
+            default: "/images/default-cover.jpg"
         }
     },
     setup(props) {

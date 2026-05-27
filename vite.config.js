@@ -28,6 +28,10 @@ export default defineConfig({
         target: targetUrl,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/api/'),
+      },
+      '/images': {
+        target: targetUrl,
+        changeOrigin: true,
       }
     },
     // 监听地址

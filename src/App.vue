@@ -1,16 +1,16 @@
 <template>
   <!-- 导航栏 -->
-  <nav class="nav-containter" :class="{ 'red-bgc': isScroll }">
+  <nav v-if="!isAdminRoute" class="nav-containter" :class="{ 'red-bgc': isScroll }">
     <HeaderNav />
   </nav>
   <!-- 路由切换的内容展示位置 -->
   <router-view />
   <!-- footer -->
-  <footer class="footer-containter">
+  <footer v-if="!isAdminRoute" class="footer-containter">
     <MyFooter />
   </footer>
   <!-- 返回顶部按钮 -->
-  <div class="back-top-btn-containter animate__animated"
+  <div v-if="!isAdminRoute" class="back-top-btn-containter animate__animated"
     :class="{ animate__slideOutDown: !backTopBtnShow, animate__slideInUp: backTopBtnShow }" @click="handleBackTop">
     <BackTopBtn />
   </div>
@@ -73,7 +73,8 @@ import Home from '@/pages/Home.vue';
 import HeaderNav from '@/components/HeaderNav.vue';
 import MyFooter from '@/components/MyFooter.vue';
 import BackTopBtn from '@/components/BackTopBtn.vue';
-import { ref, onMounted, onUnmounted } from "vue"
+import { ref, computed, onMounted, onUnmounted } from "vue"
+import { useRoute } from "vue-router"
 export default {
   components: {
     Home,
@@ -82,6 +83,8 @@ export default {
     BackTopBtn
   },
   setup() {
+    const route = useRoute()
+    const isAdminRoute = computed(() => route.path.startsWith('/admin'))
     let isScroll = ref(false)
     let backTopBtnShow = ref(false)
     // 回到顶部
@@ -106,6 +109,7 @@ export default {
       window.removeEventListener("scroll", addBgc)
     })
     return {
+      isAdminRoute,
       isScroll,
       backTopBtnShow,
       handleBackTop
