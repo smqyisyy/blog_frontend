@@ -51,7 +51,7 @@ export default {
         const blogAuthor = props.blogAuthor
         const imgUrl = props.imgUrl
         // 优先显示 description，没有则从 blogContent 提取纯文本
-        const displayContent = description || blogContent.replace(/[#*\[\]!>`\-_~]/g, '').replace(/\n+/g, ' ').trim().slice(0, 100)
+        const displayContent = description || blogContent.replace(/[#*\[\]!>`\-_~]/g, '').replace(/\n+/g, ' ').trim()
         return {
             releaseDate,
             blogContent,
