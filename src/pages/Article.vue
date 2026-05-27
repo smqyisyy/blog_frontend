@@ -3,6 +3,7 @@
     <div class="md-blog-containter">
         <div class="content-card-contianter">
             <MarkdownDocument :blogId="+blogId" />
+            <CommentSection :blogId="+blogId" />
         </div>
         <div class="toc-card-containter">
             <MarkdownToc />
@@ -13,11 +14,13 @@
 <script>
 import MarkdownDocument from '@/components/article/MarkdownDocument.vue';
 import MarkdownToc from '@/components/article/MarkdownToc.vue';
+import CommentSection from '@/components/article/CommentSection.vue';
 import { useRoute } from "vue-router";
 export default {
     components: {
         MarkdownDocument,
-        MarkdownToc
+        MarkdownToc,
+        CommentSection
     },
     setup() {
         const route = useRoute()
