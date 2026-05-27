@@ -59,11 +59,10 @@ export default {
 
 <style>
 .blog-card {
-    width: 32%;
+    width: calc((1125px - 40px) / 3);
     box-sizing: border-box;
     position: relative;
     border-radius: 15px;
-    margin-bottom: 20px;
     transition: .5s;
     cursor: pointer;
 }

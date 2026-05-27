@@ -162,7 +162,8 @@ export default {
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 20px;
 }
 
 .home .pagination-containter {
