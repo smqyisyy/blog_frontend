@@ -31,10 +31,10 @@ export default {
             default: "2023-06-09"
         },
         blogContent: {
-            default: “”
+            default: ''
         },
         description: {
-            default: “”
+            default: ''
         },
         blogAuthor: {
             default: "DishDish"
