@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { ref } from "vue"
+import { ref, onMounted, onBeforeUnmount } from "vue"
 import { useRouter } from 'vue-router'
 export default {
     setup() {
@@ -79,6 +79,16 @@ export default {
                 searchKeyword.value = ''
             }
         }
+
+        function handleClickOutside(e) {
+            const nav = document.querySelector('.nav')
+            if (showSearch.value && nav && !nav.contains(e.target)) {
+                showSearch.value = false
+            }
+        }
+
+        onMounted(() => document.addEventListener('click', handleClickOutside))
+        onBeforeUnmount(() => document.removeEventListener('click', handleClickOutside))
 
         return { blogTitle, showSearch, searchKeyword, toggleSearch, doSearch }
     }
