@@ -43,13 +43,19 @@
             </a>
         </div>
         <div class="search-expand" v-if="showSearch">
-            <el-input v-model="searchKeyword" placeholder="搜索博客..." size="small" @keyup.enter="doSearch" clearable autofocus>
-                <template #append>
-                    <el-button @click="doSearch" size="small">
-                        <font-awesome-icon icon="fa-solid fa-search" />
-                    </el-button>
-                </template>
-            </el-input>
+            <div class="search-expand-inner">
+                <el-input v-model="searchKeyword" placeholder="输入关键词搜索博客..." size="large" @keyup.enter="doSearch" clearable autofocus
+                    class="search-input">
+                    <template #prefix>
+                        <font-awesome-icon icon="fa-solid fa-search" style="color: #999;" />
+                    </template>
+                    <template #append>
+                        <el-button @click="doSearch" size="large">
+                            <font-awesome-icon icon="fa-solid fa-search" style="color: #fff;" />
+                        </el-button>
+                    </template>
+                </el-input>
+            </div>
         </div>
     </div>
 </template>
@@ -127,11 +133,26 @@ export default {
 .nav .search-expand {
     position: absolute;
     top: 64px;
-    left: 0;
-    width: 70vw;
-    padding: 10px 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50vw;
+    padding: 24px 0;
     background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     z-index: 100;
+}
+
+.nav .search-expand-inner {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.nav .search-expand .search-input .el-input-group__append {
+    background: #222;
+    border-color: #222;
+}
+
+.nav .search-expand .search-input .el-input-group__append .el-button {
+    color: #fff;
 }
 </style>
