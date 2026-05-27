@@ -43,10 +43,9 @@
         <!-- 搜索弹框遮罩层 -->
         <div class="search-overlay" v-if="showSearch" @click="showSearch = false">
             <div class="search-modal" @click.stop>
-                <div class="search-modal-inner">
-                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="search-modal-icon" />
-                    <el-input v-model="searchKeyword" placeholder="搜索博客..." size="large" @keyup.enter="doSearch" clearable autofocus ref="searchInput" />
-                    <el-button type="primary" @click="doSearch" size="large" class="search-btn">搜索</el-button>
+                <div class="search-header">
+                    <span class="search-header-title"><font-awesome-icon icon="fa-solid fa-magnifying-glass" /> 搜索</span>
+                    <el-input v-model="searchKeyword" placeholder="搜索博客..." size="large" @keyup.enter="doSearch" clearable ref="searchInput" class="search-input" />
                 </div>
             </div>
         </div>
@@ -155,46 +154,59 @@ export default {
     to { opacity: 1; }
 }
 
-/* 搜索弹框 */
+/* 搜索弹框 - 参考 matery 主题风格 */
 .search-modal {
     position: absolute;
-    top: 30%;
+    top: 15%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50vw;
-    max-width: 600px;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 800px;
+    min-height: 200px;
     background: #fff;
     border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    padding: 24px 32px;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.2);
     animation: modalSlide 0.3s ease;
 }
 
 @keyframes modalSlide {
-    from { opacity: 0; transform: translate(-50%, -50%) translateY(-20px); }
-    to { opacity: 1; transform: translate(-50%, -50%) translateY(0); }
+    from { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
-.search-modal-inner {
+.search-header {
     display: flex;
-    align-items: center;
-    gap: 12px;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.search-modal-icon {
-    font-size: 20px;
+.search-header-title {
+    font-size: 1.6rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.search-header-title svg {
     color: #ee6e73;
+    margin-right: 8px;
 }
 
-.search-modal .search-btn {
-    background: #ee6e73;
-    border-color: #ee6e73;
-    color: #fff;
+.search-input {
+    width: 100%;
+}
+
+.search-input :deep(.el-input__wrapper) {
     border-radius: 8px;
+    box-shadow: 0 0 0 1px #ddd inset;
+    padding: 4px 12px;
 }
 
-.search-modal .search-btn:hover {
-    background: #d4555a;
-    border-color: #d4555a;
+.search-input :deep(.el-input__wrapper:hover) {
+    box-shadow: 0 0 0 1px #ee6e73 inset;
+}
+
+.search-input :deep(.el-input__wrapper.is-focus) {
+    box-shadow: 0 0 0 1px #ee6e73 inset;
 }
 </style>
