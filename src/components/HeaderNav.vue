@@ -12,7 +12,7 @@
         </router-link>
         <!-- 导航栏右侧的列表选项 -->
         <div class="nav_list">
-            <div class="list_item search-icon" @click="toggleSearch"><font-awesome-icon icon="fa-solid fa-magnifying-glass" style="color: #fff;" /></div>
+            <div class="list_item" @click="toggleSearch"><font-awesome-icon icon="fa-solid fa-magnifying-glass" style="color: #fff;" /><span>搜索</span></div>
             <router-link to="/">
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-house" style="color: #fff;" /><span>首页</span>
                 </div>
@@ -130,11 +130,6 @@ export default {
 
 .nav .nav_list .list_item span {
     margin-left: 3px;
-}
-
-/* 搜索图标 */
-.nav .nav_list .search-icon {
-    font-size: 16px;
 }
 
 /* 搜索遮罩层 */
