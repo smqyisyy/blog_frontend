@@ -35,7 +35,7 @@
 /* 顶部导航栏移动端适配 */
 @media (max-width: 992px) {
   .nav-containter {
-    display: none;
+    width: 100vw;
   }
 }
 

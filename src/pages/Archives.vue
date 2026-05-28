@@ -15,10 +15,10 @@
                 </div>
                 <div class="year-items">
                     <div class="timeline-item" v-for="item in group" :key="item.id" @click="routeToBlog(item.id)">
-                        <div class="item-dot"></div>
+                        <div class="item-dot" :style="{ borderColor: getCategoryColor(item.category) }"></div>
                         <div class="item-date">{{ item.monthDay }}</div>
                         <div class="item-title">{{ item.blogTitle }}</div>
-                        <div class="item-category">{{ item.category }}</div>
+                        <div class="item-category" :style="getCategoryStyle(item.category)">{{ item.category }}</div>
                     </div>
                 </div>
             </div>
@@ -89,11 +89,43 @@ export default {
             router.push(`/article/${id}`)
         }
 
+        const categoryColors = [
+            { bg: '#fef0f0', color: '#ee6e73', border: '#ee6e73' },
+            { bg: '#e8f5e9', color: '#4caf50', border: '#4caf50' },
+            { bg: '#e3f2fd', color: '#2196f3', border: '#2196f3' },
+            { bg: '#fff3e0', color: '#ff9800', border: '#ff9800' },
+            { bg: '#f3e5f5', color: '#9c27b0', border: '#9c27b0' },
+            { bg: '#e0f7fa', color: '#00bcd4', border: '#00bcd4' },
+            { bg: '#fce4ec', color: '#e91e63', border: '#e91e63' },
+            { bg: '#f1f8e9', color: '#8bc34a', border: '#8bc34a' },
+        ]
+
+        function getCategoryColor(name) {
+            if (!name) return categoryColors[0].border
+            let hash = 0
+            for (let i = 0; i < name.length; i++) {
+                hash = name.charCodeAt(i) + ((hash << 5) - hash)
+            }
+            return categoryColors[Math.abs(hash) % categoryColors.length].border
+        }
+
+        function getCategoryStyle(name) {
+            if (!name) return {}
+            let hash = 0
+            for (let i = 0; i < name.length; i++) {
+                hash = name.charCodeAt(i) + ((hash << 5) - hash)
+            }
+            const c = categoryColors[Math.abs(hash) % categoryColors.length]
+            return { background: c.bg, color: c.color, border: `1px solid ${c.border}` }
+        }
+
         return {
             blogInfoArr,
             groupedBlogs,
             handleChangePage,
             routeToBlog,
+            getCategoryColor,
+            getCategoryStyle,
             totalBlog,
             pageSize,
             loading
@@ -188,10 +220,12 @@ export default {
 }
 
 .item-date {
-    font-size: 14px;
-    color: var(--color-text-muted);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
     flex-shrink: 0;
-    width: 50px;
+    width: 56px;
+    letter-spacing: 0.5px;
 }
 
 .item-title {
@@ -206,11 +240,11 @@ export default {
 
 .item-category {
     font-size: 12px;
-    color: var(--color-primary);
-    background: var(--color-primary-light);
-    padding: 2px 8px;
-    border-radius: 10px;
+    padding: 3px 10px;
+    border-radius: 12px;
     flex-shrink: 0;
+    font-weight: 500;
+    letter-spacing: 0.3px;
 }
 
 /* 分页 */

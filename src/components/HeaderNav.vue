@@ -10,7 +10,7 @@
                 </a>
             </div>
         </router-link>
-        <!-- 导航栏右侧的列表选项 -->
+        <!-- 导航栏右侧的列表选项（桌面端） -->
         <div class="nav_list">
             <div class="list_item" @click="toggleSearch"><font-awesome-icon icon="fa-solid fa-magnifying-glass" style="color: #fff;" /><span>搜索</span></div>
             <router-link to="/">
@@ -39,6 +39,40 @@
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-gamepad" style="color: #fff;" /><span>小游戏</span>
                 </div>
             </a>
+        </div>
+        <!-- 移动端汉堡菜单按钮 -->
+        <div class="hamburger" @click="toggleDrawer">
+            <font-awesome-icon :icon="showDrawer ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'" style="color: #fff;" />
+        </div>
+        <!-- 移动端侧边抽屉 -->
+        <div class="drawer-overlay" v-if="showDrawer" @click="showDrawer = false"></div>
+        <div class="mobile-drawer" :class="{ open: showDrawer }">
+            <div class="drawer-header">
+                <span>{{ blogTitle }}</span>
+            </div>
+            <div class="drawer-menu">
+                <router-link to="/" class="drawer-item" @click="showDrawer = false">
+                    <font-awesome-icon icon="fa-solid fa-house" /><span>首页</span>
+                </router-link>
+                <router-link to="/tags" class="drawer-item" @click="showDrawer = false">
+                    <font-awesome-icon icon="fa-solid fa-tags" /><span>标签</span>
+                </router-link>
+                <router-link to="/categories" class="drawer-item" @click="showDrawer = false">
+                    <font-awesome-icon icon="fa-solid fa-bookmark" /><span>分类</span>
+                </router-link>
+                <router-link to="/archives" class="drawer-item" @click="showDrawer = false">
+                    <font-awesome-icon icon="fa-solid fa-box-archive" /><span>归档</span>
+                </router-link>
+                <router-link to="/about" class="drawer-item" @click="showDrawer = false">
+                    <font-awesome-icon icon="fa-solid fa-circle-user" /><span>关于</span>
+                </router-link>
+                <a href="/games" class="drawer-item" @click="showDrawer = false">
+                    <font-awesome-icon icon="fa-solid fa-gamepad" /><span>小游戏</span>
+                </a>
+                <div class="drawer-item" @click="showDrawer = false; toggleSearch()">
+                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" /><span>搜索</span>
+                </div>
+            </div>
         </div>
         <!-- 搜索弹框遮罩层 -->
         <div class="search-overlay" v-if="showSearch" @click="showSearch = false">
@@ -81,6 +115,7 @@ import { searchBlog } from "@/request/api/search"
 export default {
     setup() {
         let blogTitle = ref("dishdish")
+        const showDrawer = ref(false)
         const showSearch = ref(false)
         const searchKeyword = ref('')
         const router = useRouter()
@@ -91,6 +126,10 @@ export default {
 
         function toggleSearch() {
             showSearch.value = !showSearch.value
+        }
+
+        function toggleDrawer() {
+            showDrawer.value = !showDrawer.value
         }
 
         function onInput(val) {
@@ -146,7 +185,7 @@ export default {
         onMounted(() => document.addEventListener('click', handleClickOutside))
         onBeforeUnmount(() => document.removeEventListener('click', handleClickOutside))
 
-        return { blogTitle, showSearch, searchKeyword, previewResults, previewLoading, searched, toggleSearch, onInput, highlight, goToArticle, doSearch }
+        return { blogTitle, showDrawer, showSearch, searchKeyword, previewResults, previewLoading, searched, toggleDrawer, toggleSearch, onInput, highlight, goToArticle, doSearch }
     }
 }
 </script>
@@ -362,5 +401,100 @@ export default {
     background: #fff3e0;
     padding: 0 2px;
     border-radius: 2px;
+}
+
+/* 汉堡菜单按钮（桌面端隐藏） */
+.hamburger {
+    display: none;
+    font-size: 22px;
+    line-height: 64px;
+    cursor: pointer;
+    padding: 0 8px;
+}
+
+/* 移动端侧边抽屉遮罩 */
+.drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 300;
+    animation: fadeIn 0.2s ease;
+}
+
+/* 移动端侧边抽屉 */
+.mobile-drawer {
+    position: fixed;
+    top: 0;
+    right: -280px;
+    width: 280px;
+    height: 100vh;
+    background: #fff;
+    z-index: 301;
+    transition: right 0.3s ease;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    overflow-y: auto;
+}
+
+.mobile-drawer.open {
+    right: 0;
+}
+
+.drawer-header {
+    padding: 20px 24px;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--color-primary);
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.drawer-menu {
+    padding: 8px 0;
+}
+
+.drawer-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    font-size: 16px;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+}
+
+.drawer-item:hover {
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+.drawer-item svg {
+    width: 18px;
+    text-align: center;
+    color: var(--color-text-muted);
+}
+
+.drawer-item:hover svg {
+    color: var(--color-primary);
+}
+
+/* 移动端适配 */
+@media (max-width: 992px) {
+    .nav {
+        width: var(--mobile-width);
+        padding: 0 12px;
+        box-sizing: border-box;
+    }
+
+    .nav_list {
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+    }
 }
 </style>
