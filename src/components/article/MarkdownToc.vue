@@ -197,8 +197,9 @@ export default {
 }
 
 .toc.is-fixed {
-    position: sticky;
+    position: fixed;
     top: 70px;
+    right: calc((100% - var(--content-width)) / 2 + 2%);
 }
 
 .toc .toc-title {

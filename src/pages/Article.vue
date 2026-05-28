@@ -54,7 +54,6 @@ export default {
 .md-blog-containter .toc-card-containter {
     width: 25%;
     font-size: 22px;
-    align-self: flex-start;
 }
 
 /* 移动端适配隐藏目录 */
