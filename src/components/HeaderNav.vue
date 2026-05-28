@@ -49,10 +49,19 @@
                 </div>
                 <div class="search-preview" v-if="previewResults.length > 0">
                     <div class="preview-item" v-for="item in previewResults" :key="item.id" @click="goToArticle(item.id)">
-                        <div class="preview-title">{{ item.blogTitle }}</div>
-                        <div class="preview-desc">{{ item.description }}</div>
+                        <img class="preview-cover" :src="item.imgUrl" :alt="item.blogTitle" />
+                        <div class="preview-info">
+                            <div class="preview-title" v-html="highlight(item.blogTitle)"></div>
+                            <div class="preview-desc" v-html="highlight(item.description)"></div>
+                            <div class="preview-meta">
+                                <span class="preview-category"><font-awesome-icon icon="fa-solid fa-bookmark" /> {{ item.category }}</span>
+                                <span class="preview-date"><font-awesome-icon icon="fa-regular fa-clock" /> {{ item.releaseDate }}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="preview-more" @click="doSearch">查看全部搜索结果</div>
+                    <div class="preview-more" @click="doSearch">
+                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" /> 查看全部搜索结果
+                    </div>
                 </div>
                 <div class="search-preview" v-else-if="previewLoading">
                     <div class="preview-loading">搜索中...</div>
@@ -104,6 +113,13 @@ export default {
             }, 300)
         }
 
+        function highlight(text) {
+            if (!text || !searchKeyword.value.trim()) return text
+            const kw = searchKeyword.value.trim()
+            const regex = new RegExp(`(${kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi')
+            return text.replace(regex, '<em class="highlight-keyword">$1</em>')
+        }
+
         function goToArticle(id) {
             showSearch.value = false
             searchKeyword.value = ''
@@ -130,7 +146,7 @@ export default {
         onMounted(() => document.addEventListener('click', handleClickOutside))
         onBeforeUnmount(() => document.removeEventListener('click', handleClickOutside))
 
-        return { blogTitle, showSearch, searchKeyword, previewResults, previewLoading, searched, toggleSearch, onInput, goToArticle, doSearch }
+        return { blogTitle, showSearch, searchKeyword, previewResults, previewLoading, searched, toggleSearch, onInput, highlight, goToArticle, doSearch }
     }
 }
 </script>
@@ -256,18 +272,35 @@ export default {
     margin-top: 16px;
     border-top: 1px solid #eee;
     padding-top: 8px;
+    max-height: 50vh;
+    overflow-y: auto;
 }
 
 .preview-item {
+    display: flex;
+    gap: 14px;
     padding: 12px 8px;
     border-bottom: 1px solid #f0f0f0;
     cursor: pointer;
-    border-radius: 6px;
+    border-radius: 8px;
     transition: background 0.2s;
 }
 
 .preview-item:hover {
     background: #f9f9f9;
+}
+
+.preview-cover {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.preview-info {
+    flex: 1;
+    min-width: 0;
 }
 
 .preview-title {
@@ -282,15 +315,27 @@ export default {
 
 .preview-desc {
     font-size: 13px;
-    color: #999;
+    color: #888;
+    margin-bottom: 6px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
+.preview-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: #aaa;
+}
+
+.preview-meta .preview-category {
+    color: #ee6e73;
+}
+
 .preview-more {
     text-align: center;
-    padding: 12px;
+    padding: 14px;
     color: #ee6e73;
     font-size: 14px;
     cursor: pointer;
@@ -308,5 +353,14 @@ export default {
     padding: 20px;
     color: #999;
     font-size: 14px;
+}
+
+/* 关键词高亮 */
+:deep(.highlight-keyword) {
+    color: #e96900;
+    font-style: normal;
+    background: #fff3e0;
+    padding: 0 2px;
+    border-radius: 2px;
 }
 </style>
