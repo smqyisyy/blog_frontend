@@ -11,6 +11,12 @@
             </div>
         </template>
         <div v-html="content" class="content"></div>
+        <div class="like-section">
+            <div class="like-btn" :class="{ liked }" @click="handleLike">
+                <font-awesome-icon :icon="liked ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" />
+                <span>{{ likeCount }}</span>
+            </div>
+        </div>
     </el-card>
 </template>
  
@@ -19,6 +25,7 @@ import { ref, onMounted } from 'vue'
 import { marked } from 'marked'
 import { gfmHeadingId } from "marked-gfm-heading-id";
 import { getBlogById } from "@/request/api/getBlogInfo";
+import { getLike, toggleLike } from "@/request/api/like";
 import { useBlogStore } from "@/store/useBlogStore";
 import '../../assets/js/prism'; // prismjs库使markdown代码高亮
 export default {
@@ -51,6 +58,25 @@ export default {
         const blogTitle = ref('')
         //  文章内容
         const content = ref('')
+        const likeCount = ref(0)
+        const liked = ref(false)
+
+        async function loadLike() {
+            try {
+                const res = await getLike(props.blogId)
+                likeCount.value = res.data.likes
+                liked.value = res.data.liked
+            } catch (e) { /* ignore */ }
+        }
+
+        async function handleLike() {
+            try {
+                const res = await toggleLike(props.blogId)
+                liked.value = res.data.liked
+                likeCount.value = res.data.likes
+            } catch (e) { /* ignore */ }
+        }
+
         const initContent = async () => {
             // 获取当前博客的id
             const blogId = props.blogId;
@@ -67,6 +93,7 @@ export default {
         onMounted(async () => {
             await initContent()
             Prism.highlightAll()
+            loadLike()
             // 标识加载完成
             loading.value = false
         })
@@ -76,7 +103,10 @@ export default {
             releaseDate,
             category,
             blogTitle,
-            loading
+            loading,
+            likeCount,
+            liked,
+            handleLike
         }
     }
 }
@@ -106,6 +136,34 @@ export default {
     color: #333;
     margin: 0;
     line-height: 1.4;
+}
+.like-section {
+    text-align: center;
+    padding: 20px 0 10px;
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+}
+.like-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 24px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #999;
+    transition: all 0.3s;
+    user-select: none;
+}
+.like-btn:hover {
+    border-color: #F56C6C;
+    color: #F56C6C;
+}
+.like-btn.liked {
+    border-color: #F56C6C;
+    color: #F56C6C;
+    background: #fef0f0;
 }
 </style>
 <style>
