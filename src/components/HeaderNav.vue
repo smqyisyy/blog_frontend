@@ -489,11 +489,11 @@ export default {
         box-sizing: border-box;
     }
 
-    .nav_list {
-        display: none;
+    .nav .nav_list {
+        display: none !important;
     }
 
-    .hamburger {
+    .nav .hamburger {
         display: block;
     }
 }
