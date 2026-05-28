@@ -29,6 +29,7 @@
                 <el-form :model="formData" @submit.prevent="handleSubmit">
                     <el-form-item>
                         <el-input v-model="formData.nickname" placeholder="你的昵称" maxlength="50" style="width: 200px;" />
+                        <el-input v-model="formData.email" placeholder="邮箱（选填，方便交流）" maxlength="100" style="width: 260px; margin-left: 10px;" />
                     </el-form-item>
                     <el-form-item>
                         <el-input v-model="formData.content" type="textarea" :rows="3" placeholder="写下你的评论..." maxlength="1000" show-word-limit />
@@ -56,7 +57,7 @@ export default {
     setup(props) {
         const comments = ref([])
         const submitting = ref(false)
-        const formData = ref({ nickname: '', content: '' })
+        const formData = ref({ nickname: '', email: '', content: '' })
 
         async function loadComments() {
             try {
@@ -79,6 +80,7 @@ export default {
                 await addComment({
                     blogId: props.blogId,
                     nickname: formData.value.nickname.trim(),
+                    email: formData.value.email.trim() || null,
                     content: formData.value.content.trim()
                 })
                 ElMessage.success('评论成功')
