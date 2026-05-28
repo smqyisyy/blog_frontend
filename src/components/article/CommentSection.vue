@@ -4,28 +4,54 @@
             <template #header>
                 <div class="comment-header">
                     <font-awesome-icon icon="fa-regular fa-comment" />
-                    <span>评论 ({{ comments.length }})</span>
+                    <span>评论 ({{ flatComments.length }})</span>
                 </div>
             </template>
-            <div class="comment-list" v-if="comments.length">
-                <div class="comment-item" v-for="item in comments" :key="item.id">
-                    <div class="comment-avatar">
-                        <el-avatar :size="36" :style="{ background: getColor(item.nickname) }">
-                            {{ item.nickname.charAt(0) }}
-                        </el-avatar>
-                    </div>
-                    <div class="comment-body">
-                        <div class="comment-meta">
-                            <span class="comment-nickname">{{ item.nickname }}</span>
-                            <span class="comment-time">{{ item.createdAt }}</span>
+            <div class="comment-list" v-if="commentTree.length">
+                <template v-for="item in commentTree" :key="item.id">
+                    <div class="comment-item">
+                        <div class="comment-avatar">
+                            <el-avatar :size="36" :style="{ background: getColor(item.nickname) }">
+                                {{ item.nickname.charAt(0) }}
+                            </el-avatar>
                         </div>
-                        <div class="comment-content">{{ item.content }}</div>
+                        <div class="comment-body">
+                            <div class="comment-meta">
+                                <span class="comment-nickname">{{ item.nickname }}</span>
+                                <span class="comment-time">{{ item.createdAt }}</span>
+                            </div>
+                            <div class="comment-content">{{ item.content }}</div>
+                            <div class="comment-reply-btn" @click="startReply(item)">回复</div>
+                            <!-- 嵌套回复 -->
+                            <div class="comment-replies" v-if="item.children && item.children.length">
+                                <div class="comment-item reply-item" v-for="child in item.children" :key="child.id">
+                                    <div class="comment-avatar">
+                                        <el-avatar :size="28" :style="{ background: getColor(child.nickname) }">
+                                            {{ child.nickname.charAt(0) }}
+                                        </el-avatar>
+                                    </div>
+                                    <div class="comment-body">
+                                        <div class="comment-meta">
+                                            <span class="comment-nickname">{{ child.nickname }}</span>
+                                            <span class="reply-to" v-if="child.replyTo">@{{ child.replyTo }}</span>
+                                            <span class="comment-time">{{ child.createdAt }}</span>
+                                        </div>
+                                        <div class="comment-content">{{ child.content }}</div>
+                                        <div class="comment-reply-btn" @click="startReply(child)">回复</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </template>
             </div>
             <div class="no-comment" v-else>暂无评论，来抢沙发吧~</div>
             <el-divider />
             <div class="comment-form">
+                <div class="reply-hint" v-if="replyTo">
+                    回复 <strong>{{ replyTo.nickname }}</strong>
+                    <span class="reply-cancel" @click="cancelReply">&times;</span>
+                </div>
                 <el-form :model="formData" @submit.prevent="handleSubmit">
                     <el-form-item>
                         <el-input v-model="formData.nickname" placeholder="你的昵称" maxlength="50" style="width: 200px;" />
@@ -44,7 +70,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { getComments, addComment } from '../../request/api/comment'
 import { ElMessage } from 'element-plus'
 
@@ -55,15 +81,47 @@ export default {
         blogId: { type: Number, required: true }
     },
     setup(props) {
-        const comments = ref([])
+        const flatComments = ref([])
         const submitting = ref(false)
+        const replyTo = ref(null)
         const formData = ref({ nickname: '', email: '', content: '' })
+
+        const commentTree = computed(() => {
+            const map = {}
+            const roots = []
+            flatComments.value.forEach(c => {
+                map[c.id] = { ...c, children: [] }
+            })
+            flatComments.value.forEach(c => {
+                if (c.parentId && map[c.parentId]) {
+                    map[c.parentId].children.push(map[c.id])
+                } else {
+                    roots.push(map[c.id])
+                }
+            })
+            // 给子评论标记回复对象昵称
+            flatComments.value.forEach(c => {
+                if (c.parentId && map[c.parentId]) {
+                    map[c.id].replyTo = map[c.parentId].nickname
+                }
+            })
+            return roots
+        })
 
         async function loadComments() {
             try {
                 const res = await getComments(props.blogId)
-                comments.value = res.data.data
+                flatComments.value = res.data.data
             } catch (e) { /* ignore */ }
+        }
+
+        function startReply(comment) {
+            replyTo.value = comment
+            formData.value.content = ''
+        }
+
+        function cancelReply() {
+            replyTo.value = null
         }
 
         async function handleSubmit() {
@@ -81,10 +139,12 @@ export default {
                     blogId: props.blogId,
                     nickname: formData.value.nickname.trim(),
                     email: formData.value.email.trim() || null,
-                    content: formData.value.content.trim()
+                    content: formData.value.content.trim(),
+                    parentId: replyTo.value ? replyTo.value.id : null
                 })
                 ElMessage.success('评论成功')
                 formData.value.content = ''
+                replyTo.value = null
                 loadComments()
             } catch (e) {
                 ElMessage.error('评论失败')
@@ -100,7 +160,7 @@ export default {
 
         onMounted(() => loadComments())
 
-        return { comments, submitting, formData, handleSubmit, getColor }
+        return { flatComments, commentTree, submitting, formData, replyTo, handleSubmit, startReply, cancelReply, getColor }
     }
 }
 </script>
@@ -117,7 +177,7 @@ export default {
     font-weight: bold;
 }
 .comment-list {
-    max-height: 400px;
+    max-height: 500px;
     overflow-y: auto;
 }
 .comment-item {
@@ -146,11 +206,51 @@ export default {
     font-size: 12px;
     color: #999;
 }
+.reply-to {
+    font-size: 12px;
+    color: #409EFF;
+}
 .comment-content {
     font-size: 14px;
     line-height: 1.6;
     color: #555;
     word-break: break-word;
+}
+.comment-reply-btn {
+    font-size: 12px;
+    color: #999;
+    cursor: pointer;
+    margin-top: 4px;
+}
+.comment-reply-btn:hover {
+    color: #409EFF;
+}
+.comment-replies {
+    margin-top: 8px;
+    padding-left: 12px;
+    border-left: 2px solid #f0f0f0;
+}
+.reply-item {
+    padding: 8px 0;
+}
+.reply-hint {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+    padding: 6px 12px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.reply-cancel {
+    cursor: pointer;
+    font-size: 18px;
+    color: #999;
+}
+.reply-cancel:hover {
+    color: #F56C6C;
 }
 .no-comment {
     text-align: center;
