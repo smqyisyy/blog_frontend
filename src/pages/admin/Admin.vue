@@ -4,6 +4,8 @@
             <h2>博客管理后台</h2>
             <div class="header-actions">
                 <el-button type="primary" @click="goCreate">新建博客</el-button>
+                <el-button @click="$router.push('/admin/comments')">评论管理</el-button>
+                <el-button @click="$router.push('/admin/tags')">标签管理</el-button>
                 <el-button @click="handleLogout">退出登录</el-button>
             </div>
         </div>

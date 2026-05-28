@@ -39,3 +39,23 @@ export function uploadMd(file) {
         headers: { 'Content-Type': 'multipart/form-data' }
     })
 }
+
+export function getAllComments() {
+    return axiosInstance.get('/api/admin/comments')
+}
+
+export function deleteComment(id) {
+    return axiosInstance.delete(`/api/admin/comment/${id}`)
+}
+
+export function getAdminTags() {
+    return axiosInstance.get('/api/admin/tags')
+}
+
+export function renameTag(oldTag, newTag) {
+    return axiosInstance.put('/api/admin/tag', { oldTag, newTag })
+}
+
+export function deleteTag(tag) {
+    return axiosInstance.delete(`/api/admin/tag/${encodeURIComponent(tag)}`)
+}

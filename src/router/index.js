@@ -88,6 +88,30 @@ const routes = [
             }
         }
     },
+    {
+        path: "/admin/comments",
+        name: "adminComments",
+        component: () => import("@/pages/admin/Comments.vue"),
+        beforeEnter(to, from, next) {
+            if (localStorage.getItem('admin_token')) {
+                next()
+            } else {
+                next('/admin/login')
+            }
+        }
+    },
+    {
+        path: "/admin/tags",
+        name: "adminTags",
+        component: () => import("@/pages/admin/Tags.vue"),
+        beforeEnter(to, from, next) {
+            if (localStorage.getItem('admin_token')) {
+                next()
+            } else {
+                next('/admin/login')
+            }
+        }
+    },
 
 
 ]
