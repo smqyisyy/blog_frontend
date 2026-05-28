@@ -56,8 +56,8 @@ export default {
     font-size: 22px;
 }
 
-/* 移动端适配隐藏目录 */
-@media (max-width: 992px) {
+/* 中等屏幕及移动端隐藏桌面目录 */
+@media (max-width: 1199px) {
     .md-blog-containter {
         width: var(--mobile-width-narrow);
         margin-top: 15rem;

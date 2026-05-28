@@ -76,7 +76,7 @@ export default {
     transform: scale(0.9);
 }
 
-@media (min-width: 993px) {
+@media (min-width: 1200px) {
     .mobile-toc-btn {
         display: none;
     }
