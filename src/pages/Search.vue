@@ -13,11 +13,15 @@
             </el-input>
         </div>
         <div class="search-result-containter" v-loading="loading">
+            <div v-if="!loading && searched" class="result-count">
+                共找到 <span class="count-num">{{ totalBlog }}</span> 篇相关博客
+            </div>
             <div v-if="!loading && searched && blogInfoArr.length === 0" class="no-result">
                 未找到与 "{{ currentKeyword }}" 相关的博客
             </div>
             <BlogCard v-for="item in blogInfoArr" :key="item.id" :blogTitle="item.blogTitle" :blogContent="item.blogContent"
                 :blogAuthor="item.blogAuthor" :releaseDate="item.releaseDate" :imgUrl="item.imgUrl" :description="item.description"
+                :highlightKeyword="currentKeyword"
                 @click="routeToBlog(item.id)" />
         </div>
         <div class="pagination-containter" v-if="totalBlog && totalBlog > pageSize">
@@ -118,6 +122,19 @@ export default {
 .search-page .search-result-containter .blog-card {
     width: calc((100% - 40px) / 3);
 }
+.search-page .result-count {
+    width: 100%;
+    font-size: 15px;
+    color: #666;
+    padding: 0 0 10px 0;
+}
+
+.search-page .result-count .count-num {
+    color: #ee6e73;
+    font-weight: bold;
+    font-size: 18px;
+}
+
 .search-page .no-result {
     width: 100%;
     text-align: center;

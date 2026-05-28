@@ -2,9 +2,11 @@
 <template>
     <el-card :body-style="{ padding: '0' }" class="blog-card">
         <img :src="imgUrl" class="image" />
-        <span class="blog-title">{{ blogTitle }}</span>
+        <span class="blog-title" v-if="highlightKeyword" v-html="highlightedTitle"></span>
+        <span class="blog-title" v-else>{{ blogTitle }}</span>
         <div style="padding: 14px">
-            <div class="blog-content">
+            <div class="blog-content" v-if="highlightKeyword" v-html="highlightedContent"></div>
+            <div class="blog-content" v-else>
                 {{ displayContent }}
             </div>
             <div class="bottom">
@@ -41,6 +43,9 @@ export default {
         },
         imgUrl: {
             default: "/images/default-cover.jpg"
+        },
+        highlightKeyword: {
+            default: ''
         }
     },
     setup(props) {
@@ -50,15 +55,27 @@ export default {
         const description = props.description
         const blogAuthor = props.blogAuthor
         const imgUrl = props.imgUrl
-        // 优先显示 description，没有则从 blogContent 提取纯文本
         const displayContent = description || blogContent.replace(/[#*\[\]!>`\-_~]/g, '').replace(/\n+/g, ' ').trim()
+
+        function highlightText(text, keyword) {
+            if (!text || !keyword) return text
+            const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+            const regex = new RegExp(`(${escaped})`, 'gi')
+            return text.replace(regex, '<em class="hl-keyword">$1</em>')
+        }
+
+        const highlightedTitle = highlightText(blogTitle, props.highlightKeyword)
+        const highlightedContent = highlightText(displayContent, props.highlightKeyword)
+
         return {
             releaseDate,
             blogContent,
             blogTitle,
             blogAuthor,
             imgUrl,
-            displayContent
+            displayContent,
+            highlightedTitle,
+            highlightedContent
         }
     }
 
@@ -137,6 +154,15 @@ export default {
     gap: 5px;
     font-size: 14px;
     color: #999;
+}
+
+/* 关键词高亮 */
+.hl-keyword {
+    color: #e96900;
+    font-style: normal;
+    background: #fff3e0;
+    padding: 0 2px;
+    border-radius: 2px;
 }
 
 /* 移动端适配 */
