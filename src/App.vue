@@ -4,7 +4,9 @@
     <HeaderNav />
   </nav>
   <!-- 路由切换的内容展示位置 -->
-  <router-view />
+  <div class="main-content">
+    <router-view />
+  </div>
   <!-- footer -->
   <footer v-if="!isAdminRoute" class="footer-containter">
     <MyFooter />

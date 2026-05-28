@@ -46,6 +46,16 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
 @media (max-width: 992px) {
   body {
     /* 背景图片渐变 */
