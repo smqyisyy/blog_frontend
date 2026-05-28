@@ -103,8 +103,17 @@ export default {
             return categoryColors[Math.abs(hash) % categoryColors.length]
         }
 
+        function getTextColor(bg) {
+            const r = parseInt(bg.slice(1, 3), 16)
+            const g = parseInt(bg.slice(3, 5), 16)
+            const b = parseInt(bg.slice(5, 7), 16)
+            const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+            return lum < 0.65 ? '#fff' : '#333'
+        }
+
         function getCategoryStyle(name) {
-            return { 'background-color': getCategoryColor(name) }
+            const bg = getCategoryColor(name)
+            return { 'background-color': bg, color: getTextColor(bg) }
         }
 
         return {
