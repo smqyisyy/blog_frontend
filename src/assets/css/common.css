@@ -19,6 +19,30 @@ body {
   width: 100%; */
   /* overflow: hidden; */
 }
+/* 全局 CSS 变量 */
+:root {
+  /* 主题色 */
+  --color-primary: #ee6e73;
+  --color-primary-hover: #d4555a;
+  --color-primary-light: #fef0f0;
+  /* 文字色 */
+  --color-text: #333;
+  --color-text-secondary: #666;
+  --color-text-muted: #999;
+  /* 容器宽度 */
+  --container-width: 70vw;
+  --container-narrow: 60vw;
+  --content-width: 80%;
+  /* 移动端 */
+  --mobile-width: 95vw;
+  --mobile-width-narrow: 92vw;
+  --breakpoint-mobile: 992px;
+  /* 圆角 */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 15px;
+}
+
 html {
   scroll-behavior: smooth;
 }

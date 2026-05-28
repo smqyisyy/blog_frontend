@@ -106,12 +106,12 @@ export default {
     margin-top: 250px;
 }
 .search-page .search-box-containter {
-    width: 60vw;
+    width: var(--container-narrow);
     margin: 0 auto;
     margin-top: 50px;
 }
 .search-page .search-result-containter {
-    width: 60vw;
+    width: var(--container-narrow);
     margin: 0 auto;
     margin-top: 30px;
     display: flex;
@@ -125,12 +125,12 @@ export default {
 .search-page .result-count {
     width: 100%;
     font-size: 15px;
-    color: #666;
+    color: var(--color-text-secondary);
     padding: 0 0 10px 0;
 }
 
 .search-page .result-count .count-num {
-    color: #ee6e73;
+    color: var(--color-primary);
     font-weight: bold;
     font-size: 18px;
 }
@@ -138,7 +138,7 @@ export default {
 .search-page .no-result {
     width: 100%;
     text-align: center;
-    color: #999;
+    color: var(--color-text-muted);
     font-size: 18px;
     padding: 40px 0;
 }
@@ -149,10 +149,10 @@ export default {
 }
 @media (max-width: 992px) {
     .search-page .search-box-containter {
-        width: 95vw;
+        width: var(--mobile-width);
     }
     .search-page .search-result-containter {
-        width: 95vw;
+        width: var(--mobile-width);
     }
     .search-page .search-result-containter .blog-card {
         width: 100%;

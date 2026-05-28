@@ -154,7 +154,7 @@ export default {
 <style scoped>
 /* 上方导航栏 */
 .nav {
-    width: 70vw;
+    width: var(--container-width);
     display: flex;
     justify-content: space-between;
 }
@@ -221,7 +221,7 @@ export default {
     max-width: 800px;
     min-height: 200px;
     background: #fff;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     padding: 24px 32px;
     box-shadow: 0 24px 48px rgba(0,0,0,0.2);
     animation: modalSlide 0.3s ease;

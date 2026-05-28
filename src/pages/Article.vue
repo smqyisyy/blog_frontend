@@ -36,7 +36,7 @@ export default {
 .md-blog-containter {
     margin: 250px auto 0 auto;
     color: #000;
-    width: 80%;
+    width: var(--content-width);
     display: flex;
     justify-content: space-around;
     /* height: calc(100% - 64px - 150px); */
@@ -56,7 +56,7 @@ export default {
 /* 移动端适配隐藏目录 */
 @media (max-width: 992px) {
     .md-blog-containter {
-        width: 92vw;
+        width: var(--mobile-width-narrow);
         margin-top: 15rem;
     }
 

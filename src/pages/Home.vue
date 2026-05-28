@@ -151,7 +151,7 @@ export default {
 /* 梦想card移动端适配 */
 @media (max-width: 992px) {
     .home .dream-card-containter {
-        width: 95vw;
+        width: var(--mobile-width);
     }
 }
 
@@ -175,7 +175,7 @@ export default {
 /* 博客卡片移动端适配 */
 @media (max-width: 992px) {
     .home .blog-card-containter {
-        width: 95vw;
+        width: var(--mobile-width);
     }
 }
 </style>

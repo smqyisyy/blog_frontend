@@ -103,12 +103,12 @@ export default {
 .category-card-containter {
     margin: 0 auto;
     margin-top: 150px;
-    width: 60vw;
+    width: var(--container-narrow);
 
 }
 
 .category-blog-card-containter {
-    width: 60vw;
+    width: var(--container-narrow);
     margin: 0 auto;
     margin-top: 50px;
     display: flex;
@@ -133,11 +133,11 @@ export default {
 /* 移动端适配 */
 @media (max-width: 992px) {
     .category-card-containter {
-        width: 95vw;
+        width: var(--mobile-width);
     }
 
     .category-blog-card-containter {
-        width: 92vw;
+        width: var(--mobile-width-narrow);
     }
 
     .category-blog-card-containter .blog-card {

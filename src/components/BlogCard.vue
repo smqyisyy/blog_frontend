@@ -87,7 +87,7 @@ export default {
     width: calc((1125px - 40px) / 3);
     box-sizing: border-box;
     position: relative;
-    border-radius: 15px;
+    border-radius: var(--radius-lg);
     transition: .5s;
     cursor: pointer;
 }
@@ -138,7 +138,7 @@ export default {
 .blog-card .bottom .time {
     font-size: 14px;
     line-height: 1.5;
-    color: #999;
+    color: var(--color-text-muted);
     display: flex;
     align-items: center;
     gap: 5px;
@@ -153,7 +153,7 @@ export default {
     align-items: center;
     gap: 5px;
     font-size: 14px;
-    color: #999;
+    color: var(--color-text-muted);
 }
 
 /* 关键词高亮 */
@@ -168,7 +168,7 @@ export default {
 /* 移动端适配 */
 @media (max-width: 992px) {
     .blog-card {
-        width: 95vw;
+        width: var(--mobile-width);
     }
 }
 </style>
