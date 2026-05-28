@@ -6,9 +6,25 @@
                 <el-button type="primary" @click="goCreate">新建博客</el-button>
                 <el-button @click="$router.push('/admin/comments')">评论管理</el-button>
                 <el-button @click="$router.push('/admin/tags')">标签管理</el-button>
+                <el-button @click="pwdDialogVisible = true">修改密码</el-button>
                 <el-button @click="handleLogout">退出登录</el-button>
             </div>
         </div>
+
+        <el-dialog v-model="pwdDialogVisible" title="修改密码" width="400px">
+            <el-form label-width="80px">
+                <el-form-item label="旧密码">
+                    <el-input v-model="pwdForm.oldPassword" type="password" show-password />
+                </el-form-item>
+                <el-form-item label="新密码">
+                    <el-input v-model="pwdForm.newPassword" type="password" show-password />
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button @click="pwdDialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="handleChangePassword" :loading="pwdLoading">确定</el-button>
+            </template>
+        </el-dialog>
         <div class="dashboard-cards">
             <el-card class="stat-card" shadow="hover">
                 <div class="stat-value">{{ stats.blogs }}</div>
@@ -61,13 +77,16 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAdminStore } from '../../store/useAdminStore'
-import { getBlogList, deleteBlog, uploadMd, getDashboardStats } from '../../request/api/adminBlog'
+import { getBlogList, deleteBlog, uploadMd, getDashboardStats, changePassword } from '../../request/api/adminBlog'
 import { ElMessage } from 'element-plus'
 
 export default {
     setup() {
         const blogList = ref([])
         const stats = ref({ blogs: 0, comments: 0, categories: 0, tags: 0 })
+        const pwdDialogVisible = ref(false)
+        const pwdLoading = ref(false)
+        const pwdForm = ref({ oldPassword: '', newPassword: '' })
         const router = useRouter()
         const adminStore = useAdminStore()
 
@@ -128,12 +147,31 @@ export default {
             }
         }
 
+        async function handleChangePassword() {
+            if (!pwdForm.value.oldPassword || !pwdForm.value.newPassword) {
+                ElMessage.warning('请填写完整')
+                return
+            }
+            pwdLoading.value = true
+            try {
+                await changePassword(pwdForm.value.oldPassword, pwdForm.value.newPassword)
+                ElMessage.success('密码修改成功，请重新登录')
+                pwdDialogVisible.value = false
+                pwdForm.value = { oldPassword: '', newPassword: '' }
+                adminStore.logout()
+                router.push('/admin/login')
+            } catch (e) {
+                ElMessage.error(e.response?.data?.message || '修改失败')
+            }
+            pwdLoading.value = false
+        }
+
         onMounted(() => {
             loadStats()
             loadBlogs()
         })
 
-        return { blogList, stats, goCreate, goEdit, handleDelete, handleLogout, beforeMdUpload, handleMdUpload }
+        return { blogList, stats, pwdDialogVisible, pwdLoading, pwdForm, goCreate, goEdit, handleDelete, handleLogout, beforeMdUpload, handleMdUpload, handleChangePassword }
     }
 }
 </script>

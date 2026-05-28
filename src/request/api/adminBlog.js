@@ -63,3 +63,7 @@ export function deleteTag(tag) {
 export function getDashboardStats() {
     return axiosInstance.get('/api/admin/dashboard')
 }
+
+export function changePassword(oldPassword, newPassword) {
+    return axiosInstance.put('/api/admin/password', { oldPassword, newPassword })
+}
