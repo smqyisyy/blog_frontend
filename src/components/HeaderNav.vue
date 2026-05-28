@@ -13,6 +13,7 @@
         <!-- 导航栏右侧的列表选项（桌面端） -->
         <div class="nav_list">
             <div class="list_item" @click="toggleSearch"><font-awesome-icon icon="fa-solid fa-magnifying-glass" style="color: #fff;" /><span>搜索</span></div>
+            <div class="list_item" @click="toggleTheme"><font-awesome-icon :icon="isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon'" style="color: #fff;" /></div>
             <router-link to="/">
                 <div class="list_item"><font-awesome-icon icon="fa-solid fa-house" style="color: #fff;" /><span>首页</span>
                 </div>
@@ -72,6 +73,9 @@
                 <div class="drawer-item" @click="showDrawer = false; toggleSearch()">
                     <font-awesome-icon icon="fa-solid fa-magnifying-glass" /><span>搜索</span>
                 </div>
+                <div class="drawer-item" @click="showDrawer = false; toggleTheme()">
+                    <font-awesome-icon :icon="isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon'" /><span>{{ isDark ? '浅色模式' : '深色模式' }}</span>
+                </div>
             </div>
         </div>
         <!-- 搜索弹框遮罩层 -->
@@ -115,6 +119,7 @@ import { searchBlog } from "@/request/api/search"
 export default {
     setup() {
         let blogTitle = ref("dishdish")
+        const isDark = ref(false)
         const showDrawer = ref(false)
         const showSearch = ref(false)
         const searchKeyword = ref('')
@@ -130,6 +135,12 @@ export default {
 
         function toggleDrawer() {
             showDrawer.value = !showDrawer.value
+        }
+
+        function toggleTheme() {
+            isDark.value = !isDark.value
+            document.documentElement.classList.toggle('dark', isDark.value)
+            localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
         }
 
         function onInput(val) {
@@ -182,10 +193,17 @@ export default {
             }
         }
 
-        onMounted(() => document.addEventListener('click', handleClickOutside))
+        onMounted(() => {
+            document.addEventListener('click', handleClickOutside)
+            const saved = localStorage.getItem('theme')
+            if (saved === 'dark') {
+                isDark.value = true
+                document.documentElement.classList.add('dark')
+            }
+        })
         onBeforeUnmount(() => document.removeEventListener('click', handleClickOutside))
 
-        return { blogTitle, showDrawer, showSearch, searchKeyword, previewResults, previewLoading, searched, toggleDrawer, toggleSearch, onInput, highlight, goToArticle, doSearch }
+        return { blogTitle, isDark, showDrawer, showSearch, searchKeyword, previewResults, previewLoading, searched, toggleDrawer, toggleSearch, toggleTheme, onInput, highlight, goToArticle, doSearch }
     }
 }
 </script>
