@@ -174,6 +174,9 @@ export default {
 
 /* 博客卡片移动端适配 */
 @media (max-width: 992px) {
+    .home .social-link-containter {
+        margin-top: 60px;
+    }
     .home .blog-card-containter {
         width: var(--mobile-width);
     }

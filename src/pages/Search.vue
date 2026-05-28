@@ -148,6 +148,9 @@ export default {
     margin-top: 20px;
 }
 @media (max-width: 992px) {
+    .search-page .search-title-containter {
+        margin-top: 100px;
+    }
     .search-page .search-box-containter {
         width: var(--mobile-width);
     }
