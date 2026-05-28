@@ -59,3 +59,7 @@ export function renameTag(oldTag, newTag) {
 export function deleteTag(tag) {
     return axiosInstance.delete(`/api/admin/tag/${encodeURIComponent(tag)}`)
 }
+
+export function getDashboardStats() {
+    return axiosInstance.get('/api/admin/dashboard')
+}

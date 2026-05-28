@@ -9,6 +9,24 @@
                 <el-button @click="handleLogout">退出登录</el-button>
             </div>
         </div>
+        <div class="dashboard-cards">
+            <el-card class="stat-card" shadow="hover">
+                <div class="stat-value">{{ stats.blogs }}</div>
+                <div class="stat-label">博客</div>
+            </el-card>
+            <el-card class="stat-card" shadow="hover">
+                <div class="stat-value">{{ stats.comments }}</div>
+                <div class="stat-label">评论</div>
+            </el-card>
+            <el-card class="stat-card" shadow="hover">
+                <div class="stat-value">{{ stats.categories }}</div>
+                <div class="stat-label">分类</div>
+            </el-card>
+            <el-card class="stat-card" shadow="hover">
+                <div class="stat-value">{{ stats.tags }}</div>
+                <div class="stat-label">标签</div>
+            </el-card>
+        </div>
         <div class="admin-upload">
             <el-upload
                 :auto-upload="true"
@@ -43,14 +61,22 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAdminStore } from '../../store/useAdminStore'
-import { getBlogList, deleteBlog, uploadMd } from '../../request/api/adminBlog'
+import { getBlogList, deleteBlog, uploadMd, getDashboardStats } from '../../request/api/adminBlog'
 import { ElMessage } from 'element-plus'
 
 export default {
     setup() {
         const blogList = ref([])
+        const stats = ref({ blogs: 0, comments: 0, categories: 0, tags: 0 })
         const router = useRouter()
         const adminStore = useAdminStore()
+
+        async function loadStats() {
+            try {
+                const res = await getDashboardStats()
+                stats.value = res.data
+            } catch (e) { /* ignore */ }
+        }
 
         async function loadBlogs() {
             try {
@@ -103,10 +129,11 @@ export default {
         }
 
         onMounted(() => {
+            loadStats()
             loadBlogs()
         })
 
-        return { blogList, goCreate, goEdit, handleDelete, handleLogout, beforeMdUpload, handleMdUpload }
+        return { blogList, stats, goCreate, goEdit, handleDelete, handleLogout, beforeMdUpload, handleMdUpload }
     }
 }
 </script>
@@ -133,5 +160,24 @@ export default {
 }
 .admin-upload {
     margin-bottom: 20px;
+}
+.dashboard-cards {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+.stat-card {
+    flex: 1;
+    text-align: center;
+}
+.stat-value {
+    font-size: 28px;
+    font-weight: bold;
+    color: #409EFF;
+}
+.stat-label {
+    font-size: 14px;
+    color: #999;
+    margin-top: 4px;
 }
 </style>

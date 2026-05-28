@@ -31,11 +31,15 @@ export default {
     setup(props) {
         let loading = ref(true);
         const render = new marked.Renderer()
+        render.image = function({ href, title, text }) {
+            const titleAttr = title ? ` title="${title}"` : ''
+            return `<img src="${href}" alt="${text}"${titleAttr} loading="lazy">`
+        }
         marked.setOptions({
-            renderer: render, // 这是必填项
-            gfm: true, // 启动类似于Github样式的Markdown语法
-            pedantic: false, // 只解析符合Markdwon定义的，不修正Markdown的错误
-            sanitize: true // 原始输出，忽略HTML标签（关闭后，可直接渲染HTML标签）
+            renderer: render,
+            gfm: true,
+            pedantic: false,
+            sanitize: true
         })
         // 新版本的marked要用marked-gfm-heading-id插件配置给标题加入id属性
         marked.use(gfmHeadingId({}));
