@@ -8,18 +8,21 @@
         <div class="toc-card-containter">
             <MarkdownToc />
         </div>
+        <MobileToc />
     </div>
 </template>
 
 <script>
 import MarkdownDocument from '@/components/article/MarkdownDocument.vue';
 import MarkdownToc from '@/components/article/MarkdownToc.vue';
+import MobileToc from '@/components/article/MobileToc.vue';
 import CommentSection from '@/components/article/CommentSection.vue';
 import { useRoute } from "vue-router";
 export default {
     components: {
         MarkdownDocument,
         MarkdownToc,
+        MobileToc,
         CommentSection
     },
     setup() {
@@ -51,6 +54,7 @@ export default {
 .md-blog-containter .toc-card-containter {
     width: 25%;
     font-size: 22px;
+    align-self: flex-start;
 }
 
 /* 移动端适配隐藏目录 */
