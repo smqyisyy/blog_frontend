@@ -15,7 +15,7 @@
                 </div>
                 <div class="year-items">
                     <div class="timeline-item" v-for="item in group" :key="item.id" @click="routeToBlog(item.id)">
-                        <div class="item-dot" :style="{ borderColor: getCategoryColor(item.category) }"></div>
+                        <div class="item-dot" :style="{ backgroundColor: getCategoryColor(item.category) }"></div>
                         <div class="item-date">{{ item.monthDay }}</div>
                         <div class="item-title">{{ item.blogTitle }}</div>
                         <div class="item-category" :style="getCategoryStyle(item.category)">{{ item.category }}</div>
@@ -90,33 +90,21 @@ export default {
         }
 
         const categoryColors = [
-            { bg: '#fef0f0', color: '#ee6e73', border: '#ee6e73' },
-            { bg: '#e8f5e9', color: '#4caf50', border: '#4caf50' },
-            { bg: '#e3f2fd', color: '#2196f3', border: '#2196f3' },
-            { bg: '#fff3e0', color: '#ff9800', border: '#ff9800' },
-            { bg: '#f3e5f5', color: '#9c27b0', border: '#9c27b0' },
-            { bg: '#e0f7fa', color: '#00bcd4', border: '#00bcd4' },
-            { bg: '#fce4ec', color: '#e91e63', border: '#e91e63' },
-            { bg: '#f1f8e9', color: '#8bc34a', border: '#8bc34a' },
+            '#F9EBEA', '#F5EEF8', '#D5F5E3', '#E8F8F5', '#FEF9E7', '#F8F9F9',
+            '#82E0AA', '#D7BDE2', '#A3E4D7', '#85C1E9', '#F8C471', '#F9E79F'
         ]
 
         function getCategoryColor(name) {
-            if (!name) return categoryColors[0].border
+            if (!name) return categoryColors[0]
             let hash = 0
             for (let i = 0; i < name.length; i++) {
                 hash = name.charCodeAt(i) + ((hash << 5) - hash)
             }
-            return categoryColors[Math.abs(hash) % categoryColors.length].border
+            return categoryColors[Math.abs(hash) % categoryColors.length]
         }
 
         function getCategoryStyle(name) {
-            if (!name) return {}
-            let hash = 0
-            for (let i = 0; i < name.length; i++) {
-                hash = name.charCodeAt(i) + ((hash << 5) - hash)
-            }
-            const c = categoryColors[Math.abs(hash) % categoryColors.length]
-            return { background: c.bg, color: c.color, border: `1px solid ${c.border}` }
+            return { 'background-color': getCategoryColor(name) }
         }
 
         return {
@@ -220,8 +208,7 @@ export default {
     left: -35px;
     width: 12px;
     height: 12px;
-    background: #fff;
-    border: 2px solid var(--color-primary);
+    background-color: var(--color-primary);
     border-radius: 50%;
 }
 
@@ -245,12 +232,14 @@ export default {
 }
 
 .item-category {
-    font-size: 12px;
-    padding: 3px 10px;
-    border-radius: 12px;
+    font-size: 14px;
+    padding: 6px 14px;
+    border-radius: 5px;
     flex-shrink: 0;
     font-weight: 500;
-    letter-spacing: 0.3px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .12);
+    cursor: pointer;
+    transition: .3s ease-out;
 }
 
 /* 分页 */
