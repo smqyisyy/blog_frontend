@@ -45,7 +45,20 @@
             <div class="search-modal" @click.stop>
                 <div class="search-header">
                     <span class="search-header-title"><font-awesome-icon icon="fa-solid fa-magnifying-glass" /> 搜索</span>
-                    <el-input v-model="searchKeyword" placeholder="搜索博客..." size="large" @keyup.enter="doSearch" clearable ref="searchInput" class="search-input" />
+                    <el-input v-model="searchKeyword" placeholder="搜索博客..." size="large" @keyup.enter="doSearch" clearable ref="searchInput" class="search-input" @input="onInput" />
+                </div>
+                <div class="search-preview" v-if="previewResults.length > 0">
+                    <div class="preview-item" v-for="item in previewResults" :key="item.id" @click="goToArticle(item.id)">
+                        <div class="preview-title">{{ item.blogTitle }}</div>
+                        <div class="preview-desc">{{ item.description }}</div>
+                    </div>
+                    <div class="preview-more" @click="doSearch">查看全部搜索结果</div>
+                </div>
+                <div class="search-preview" v-else-if="previewLoading">
+                    <div class="preview-loading">搜索中...</div>
+                </div>
+                <div class="search-preview" v-else-if="searchKeyword.trim() && !previewLoading && searched">
+                    <div class="preview-empty">未找到相关结果</div>
                 </div>
             </div>
         </div>
@@ -55,15 +68,47 @@
 <script>
 import { ref, onMounted, onBeforeUnmount } from "vue"
 import { useRouter } from 'vue-router'
+import { searchBlog } from "@/request/api/search"
 export default {
     setup() {
         let blogTitle = ref("dishdish")
         const showSearch = ref(false)
         const searchKeyword = ref('')
         const router = useRouter()
+        const previewResults = ref([])
+        const previewLoading = ref(false)
+        const searched = ref(false)
+        let debounceTimer = null
 
         function toggleSearch() {
             showSearch.value = !showSearch.value
+        }
+
+        function onInput(val) {
+            clearTimeout(debounceTimer)
+            if (!val || !val.trim()) {
+                previewResults.value = []
+                searched.value = false
+                return
+            }
+            debounceTimer = setTimeout(async () => {
+                previewLoading.value = true
+                searched.value = true
+                try {
+                    const res = await searchBlog(val.trim(), 1)
+                    previewResults.value = (res.data.data || []).slice(0, 5)
+                } catch {
+                    previewResults.value = []
+                }
+                previewLoading.value = false
+            }, 300)
+        }
+
+        function goToArticle(id) {
+            showSearch.value = false
+            searchKeyword.value = ''
+            previewResults.value = []
+            router.push(`/article/${id}`)
         }
 
         function doSearch() {
@@ -71,6 +116,7 @@ export default {
                 router.push({ path: '/search', query: { keyword: searchKeyword.value.trim() } })
                 showSearch.value = false
                 searchKeyword.value = ''
+                previewResults.value = []
             }
         }
 
@@ -84,7 +130,7 @@ export default {
         onMounted(() => document.addEventListener('click', handleClickOutside))
         onBeforeUnmount(() => document.removeEventListener('click', handleClickOutside))
 
-        return { blogTitle, showSearch, searchKeyword, toggleSearch, doSearch }
+        return { blogTitle, showSearch, searchKeyword, previewResults, previewLoading, searched, toggleSearch, onInput, goToArticle, doSearch }
     }
 }
 </script>
@@ -203,5 +249,64 @@ export default {
 
 .search-input :deep(.el-input__wrapper.is-focus) {
     box-shadow: 0 0 0 1px #ee6e73 inset;
+}
+
+/* 搜索预览结果 */
+.search-preview {
+    margin-top: 16px;
+    border-top: 1px solid #eee;
+    padding-top: 8px;
+}
+
+.preview-item {
+    padding: 12px 8px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.preview-item:hover {
+    background: #f9f9f9;
+}
+
+.preview-title {
+    font-size: 15px;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.preview-desc {
+    font-size: 13px;
+    color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.preview-more {
+    text-align: center;
+    padding: 12px;
+    color: #ee6e73;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.preview-more:hover {
+    background: #fef0f0;
+}
+
+.preview-loading,
+.preview-empty {
+    text-align: center;
+    padding: 20px;
+    color: #999;
+    font-size: 14px;
 }
 </style>
