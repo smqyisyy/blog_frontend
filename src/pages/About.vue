@@ -20,13 +20,6 @@ export default {
         AboutCard
     },
     setup() {
-        const render = new marked.Renderer()
-        marked.setOptions({
-            renderer: render, // 这是必填项
-            gfm: true, // 启动类似于Github样式的Markdown语法
-            pedantic: false, // 只解析符合Markdwon定义的，不修正Markdown的错误
-            sanitize: true // 原始输出，忽略HTML标签（关闭后，可直接渲染HTML标签）
-        })
         let content = ref(`# 关于本站与作者
 
 ## 前端
