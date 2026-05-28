@@ -132,6 +132,7 @@ export default {
     .middle-title-containter {
         margin-top: 100px;
     }
+}
 
 .archives-container {
     width: var(--container-narrow);
