@@ -39,9 +39,10 @@ export default {
 /* 移动端尺寸 */
 @media (max-width: 992px) {
     .middle-title {
-        font-size: 2rem;
-        line-height: 2rem;
+        font-size: 1.6rem;
+        line-height: 1.6rem;
         text-align: center;
+        padding: 0 12px;
     }
 
     .middle-title h1 {

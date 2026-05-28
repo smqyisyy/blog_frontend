@@ -139,6 +139,12 @@ export default {
     margin-top: 250px;
 }
 
+/* 移动端适配 */
+@media (max-width: 992px) {
+    .middle-title-containter {
+        margin-top: 100px;
+    }
+
 .archives-container {
     width: var(--container-narrow);
     margin: 0 auto;

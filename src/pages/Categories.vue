@@ -132,8 +132,13 @@ export default {
 
 /* 移动端适配 */
 @media (max-width: 992px) {
+    .middle-title-containter {
+        margin-top: 100px;
+    }
+
     .category-card-containter {
         width: var(--mobile-width);
+        margin-top: 60px;
     }
 
     .category-blog-card-containter {
