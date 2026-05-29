@@ -87,6 +87,39 @@
                 </el-table>
             </div>
         </el-card>
+        <!-- 地区分布 -->
+        <div class="region-cards">
+            <el-card class="region-card" shadow="hover">
+                <template #header>
+                    <div class="card-header"><span>省份分布 TOP15</span></div>
+                </template>
+                <div class="region-bars" v-if="visitStats.regions.length">
+                    <div class="region-bar-item" v-for="item in visitStats.regions" :key="item.province">
+                        <span class="region-name">{{ item.province }}</span>
+                        <div class="region-bar-bg">
+                            <div class="region-bar" :style="{ width: (item.count / maxRegion * 100) + '%' }"></div>
+                        </div>
+                        <span class="region-count">{{ item.count }}</span>
+                    </div>
+                </div>
+                <div class="no-data" v-else>暂无数据</div>
+            </el-card>
+            <el-card class="region-card" shadow="hover">
+                <template #header>
+                    <div class="card-header"><span>城市分布 TOP15</span></div>
+                </template>
+                <div class="region-bars" v-if="visitStats.cities.length">
+                    <div class="region-bar-item" v-for="item in visitStats.cities" :key="item.city">
+                        <span class="region-name">{{ item.city }}</span>
+                        <div class="region-bar-bg">
+                            <div class="region-bar city-bar" :style="{ width: (item.count / maxCity * 100) + '%' }"></div>
+                        </div>
+                        <span class="region-count">{{ item.count }}</span>
+                    </div>
+                </div>
+                <div class="no-data" v-else>暂无数据</div>
+            </el-card>
+        </div>
         <div class="admin-upload">
             <el-upload
                 :auto-upload="true"
@@ -129,7 +162,7 @@ export default {
     setup() {
         const blogList = ref([])
         const stats = ref({ blogs: 0, comments: 0, categories: 0, tags: 0 })
-        const visitStats = ref({ totalVisits: 0, uniqueVisitors: 0, todayVisits: 0, dailyVisits: [], topArticles: [] })
+        const visitStats = ref({ totalVisits: 0, uniqueVisitors: 0, todayVisits: 0, dailyVisits: [], topArticles: [], regions: [], cities: [] })
         const pwdDialogVisible = ref(false)
         const pwdLoading = ref(false)
         const pwdForm = ref({ oldPassword: '', newPassword: '' })
@@ -230,8 +263,18 @@ export default {
             return Math.max(...visitStats.value.dailyVisits.map(d => d.count), 1)
         })
 
+        const maxRegion = computed(() => {
+            if (!visitStats.value.regions.length) return 1
+            return Math.max(...visitStats.value.regions.map(r => r.count), 1)
+        })
+
+        const maxCity = computed(() => {
+            if (!visitStats.value.cities.length) return 1
+            return Math.max(...visitStats.value.cities.map(c => c.count), 1)
+        })
+
         return {
-            blogList, stats, visitStats, maxDailyVisits,
+            blogList, stats, visitStats, maxDailyVisits, maxRegion, maxCity,
             pwdDialogVisible, pwdLoading, pwdForm,
             goCreate, goEdit, handleDelete, handleLogout,
             beforeMdUpload, handleMdUpload, handleChangePassword
@@ -367,5 +410,66 @@ export default {
 }
 .top-articles .chart-title {
     margin-bottom: 10px;
+}
+.region-cards {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+.region-card {
+    flex: 1;
+}
+.region-card .card-header {
+    font-weight: bold;
+    font-size: 16px;
+}
+.region-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.region-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.region-name {
+    width: 70px;
+    font-size: 13px;
+    color: #606266;
+    text-align: right;
+    flex-shrink: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.region-bar-bg {
+    flex: 1;
+    height: 18px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.region-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #67C23A, #95d475);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    min-width: 4px;
+}
+.city-bar {
+    background: linear-gradient(90deg, #E6A23C, #f0c78a);
+}
+.region-count {
+    width: 40px;
+    font-size: 13px;
+    color: #999;
+    text-align: right;
+    flex-shrink: 0;
+}
+.no-data {
+    text-align: center;
+    color: #999;
+    padding: 20px 0;
 }
 </style>
