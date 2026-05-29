@@ -25,11 +25,12 @@ import { faRectangleList } from '@fortawesome/free-regular-svg-icons'
 import { faComment } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
+import { faEye } from '@fortawesome/free-regular-svg-icons'
 /* add icons to the library */
 const libArray = [faHouse, faTags, faBookmark, faBoxArchive, faCircleUser, faComments,
     faGamepad, faAnglesDown, faGithubAlt, faGithub, faEnvelopeOpen, faQq, faLightbulb,
     faUser, faClock, faArrowUp, faRectangleList, faMagnifyingGlass, faSearch, faComment, faBars, faXmark,
-    faHeartRegular, faHeartSolid]
+    faHeartRegular, faHeartSolid, faEye]
 libArray.forEach((val) => {
     library.add(val)
 })

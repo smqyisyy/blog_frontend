@@ -11,6 +11,9 @@
             </div>
         </template>
         <div v-html="content" class="content"></div>
+        <div class="article-stats">
+            <span class="view-count"><font-awesome-icon icon="fa-regular fa-eye" /> {{ viewCount }} 阅读</span>
+        </div>
         <div class="like-section">
             <div class="like-btn" :class="{ liked, animate: animating }" @click="handleLike">
                 <div class="like-icon-wrap">
@@ -31,6 +34,7 @@ import { marked } from 'marked'
 import { gfmHeadingId } from "marked-gfm-heading-id";
 import { getBlogById } from "@/request/api/getBlogInfo";
 import { getLike, toggleLike } from "@/request/api/like";
+import { getViews, trackVisit } from "@/request/api/visit";
 import { useBlogStore } from "@/store/useBlogStore";
 import '../../assets/js/prism'; // prismjs库使markdown代码高亮
 export default {
@@ -66,12 +70,20 @@ export default {
         const likeCount = ref(0)
         const liked = ref(false)
         const animating = ref(false)
+        const viewCount = ref(0)
 
         async function loadLike() {
             try {
                 const res = await getLike(props.blogId)
                 likeCount.value = res.data.likes
                 liked.value = res.data.liked
+            } catch (e) { /* ignore */ }
+        }
+
+        async function loadViews() {
+            try {
+                const res = await getViews(props.blogId)
+                viewCount.value = res.data.views
             } catch (e) { /* ignore */ }
         }
 
@@ -103,6 +115,9 @@ export default {
             await initContent()
             Prism.highlightAll()
             loadLike()
+            loadViews()
+            // 记录访问
+            trackVisit(props.blogId, `/article/${props.blogId}`)
             // 标识加载完成
             loading.value = false
         })
@@ -116,6 +131,7 @@ export default {
             likeCount,
             liked,
             animating,
+            viewCount,
             handleLike
         }
     }
@@ -147,11 +163,22 @@ export default {
     margin: 0;
     line-height: 1.4;
 }
+.article-stats {
+    text-align: center;
+    padding: 15px 0;
+    color: #999;
+    font-size: 14px;
+}
+.view-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
 .like-section {
     text-align: center;
-    padding: 30px 0 10px;
+    padding: 20px 0 10px;
     border-top: 1px solid #eee;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .like-btn {
     display: inline-flex;

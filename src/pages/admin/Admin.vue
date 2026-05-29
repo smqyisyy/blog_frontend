@@ -43,6 +43,50 @@
                 <div class="stat-label">标签</div>
             </el-card>
         </div>
+        <!-- 访问统计 -->
+        <el-card class="visit-stats-card" shadow="hover">
+            <template #header>
+                <div class="card-header">
+                    <span>访问统计</span>
+                </div>
+            </template>
+            <div class="visit-summary">
+                <div class="visit-item">
+                    <div class="visit-value">{{ visitStats.totalVisits }}</div>
+                    <div class="visit-label">总访问量</div>
+                </div>
+                <div class="visit-item">
+                    <div class="visit-value">{{ visitStats.uniqueVisitors }}</div>
+                    <div class="visit-label">独立访客</div>
+                </div>
+                <div class="visit-item">
+                    <div class="visit-value">{{ visitStats.todayVisits }}</div>
+                    <div class="visit-label">今日访问</div>
+                </div>
+            </div>
+            <!-- 每日趋势图 -->
+            <div class="daily-chart" v-if="visitStats.dailyVisits.length">
+                <div class="chart-title">近7天访问趋势</div>
+                <div class="chart-bars">
+                    <div class="bar-item" v-for="day in visitStats.dailyVisits" :key="day.date">
+                        <div class="bar-wrapper">
+                            <div class="bar" :style="{ height: (day.count / maxDailyVisits * 100) + '%' }">
+                                <span class="bar-value">{{ day.count }}</span>
+                            </div>
+                        </div>
+                        <div class="bar-label">{{ day.date.slice(5) }}</div>
+                    </div>
+                </div>
+            </div>
+            <!-- 热门文章 -->
+            <div class="top-articles" v-if="visitStats.topArticles.length">
+                <div class="chart-title">热门文章 TOP10</div>
+                <el-table :data="visitStats.topArticles" stripe size="small">
+                    <el-table-column prop="blogTitle" label="文章标题" />
+                    <el-table-column prop="views" label="阅读量" width="100" align="center" />
+                </el-table>
+            </div>
+        </el-card>
         <div class="admin-upload">
             <el-upload
                 :auto-upload="true"
@@ -74,16 +118,18 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAdminStore } from '../../store/useAdminStore'
 import { getBlogList, deleteBlog, uploadMd, getDashboardStats, changePassword } from '../../request/api/adminBlog'
+import { getVisitStats } from '../../request/api/visit'
 import { ElMessage } from 'element-plus'
 
 export default {
     setup() {
         const blogList = ref([])
         const stats = ref({ blogs: 0, comments: 0, categories: 0, tags: 0 })
+        const visitStats = ref({ totalVisits: 0, uniqueVisitors: 0, todayVisits: 0, dailyVisits: [], topArticles: [] })
         const pwdDialogVisible = ref(false)
         const pwdLoading = ref(false)
         const pwdForm = ref({ oldPassword: '', newPassword: '' })
@@ -94,6 +140,13 @@ export default {
             try {
                 const res = await getDashboardStats()
                 stats.value = res.data
+            } catch (e) { /* ignore */ }
+        }
+
+        async function loadVisitStats() {
+            try {
+                const res = await getVisitStats(7)
+                visitStats.value = res.data
             } catch (e) { /* ignore */ }
         }
 
@@ -169,9 +222,20 @@ export default {
         onMounted(() => {
             loadStats()
             loadBlogs()
+            loadVisitStats()
         })
 
-        return { blogList, stats, pwdDialogVisible, pwdLoading, pwdForm, goCreate, goEdit, handleDelete, handleLogout, beforeMdUpload, handleMdUpload, handleChangePassword }
+        const maxDailyVisits = computed(() => {
+            if (!visitStats.value.dailyVisits.length) return 1
+            return Math.max(...visitStats.value.dailyVisits.map(d => d.count), 1)
+        })
+
+        return {
+            blogList, stats, visitStats, maxDailyVisits,
+            pwdDialogVisible, pwdLoading, pwdForm,
+            goCreate, goEdit, handleDelete, handleLogout,
+            beforeMdUpload, handleMdUpload, handleChangePassword
+        }
     }
 }
 </script>
@@ -217,5 +281,91 @@ export default {
     font-size: 14px;
     color: #999;
     margin-top: 4px;
+}
+.visit-stats-card {
+    margin-bottom: 20px;
+}
+.visit-stats-card .card-header {
+    font-weight: bold;
+    font-size: 16px;
+}
+.visit-summary {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0 25px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+}
+.visit-item {
+    text-align: center;
+}
+.visit-value {
+    font-size: 32px;
+    font-weight: bold;
+    color: #67C23A;
+}
+.visit-label {
+    font-size: 14px;
+    color: #999;
+    margin-top: 4px;
+}
+.daily-chart {
+    margin-bottom: 20px;
+}
+.chart-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+.chart-bars {
+    display: flex;
+    align-items: flex-end;
+    height: 150px;
+    gap: 10px;
+    padding: 0 10px;
+}
+.bar-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+.bar-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+.bar {
+    width: 70%;
+    max-width: 50px;
+    background: linear-gradient(180deg, #409EFF, #66b1ff);
+    border-radius: 4px 4px 0 0;
+    min-height: 4px;
+    position: relative;
+    transition: height 0.5s ease;
+}
+.bar-value {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #409EFF;
+    font-weight: bold;
+}
+.bar-label {
+    font-size: 12px;
+    color: #999;
+    margin-top: 8px;
+}
+.top-articles {
+    margin-top: 10px;
+}
+.top-articles .chart-title {
+    margin-bottom: 10px;
 }
 </style>
